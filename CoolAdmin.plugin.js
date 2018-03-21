@@ -146,7 +146,7 @@ class CoolAdmin {
 		}
 		if (typeof BDfunctionsDevilBro === "object") {
 			BDfunctionsDevilBro.loadMessage(this);
-			BDfunctionsDevilBro.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
+			this.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
 			var observertarget = null;
 			this.MemberPerms = BDfunctionsDevilBro.WebModules.findByProperties(["getNicknames", "getNick"]);
 			this.UserStore = BDfunctionsDevilBro.WebModules.findByProperties(['getCurrentUser']);
@@ -412,5 +412,21 @@ class CoolAdmin {
 		textarea.dispatchEvent(press);
 	}
 
-	
+	checkUpdate(pluginName, downloadUrl) {
+		let request = require("request");
+		request(downloadUrl, (error, response, result) => {
+			if (error) return;
+			var remoteVersion = result.match(/['"][0-9]+\.[0-9]+\.[0-9]+['"]/i);
+			if (!remoteVersion) return;
+			remoteVersion = remoteVersion.toString().replace(/['"]/g, "");
+			var ver = remoteVersion.split(".");
+			var lver = window.PluginUpdates.plugins[downloadUrl].version.split(".");
+			var hasUpdate = false;
+			if (ver[0] > lver[0]) hasUpdate = true;
+			else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
+			else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
+			else hasUpdate = false;
+			if (hasUpdate) BDfunctionsDevilBro.downloadPlugin (pluginName, downloadUrl, null);
+		});
+	};
 }
