@@ -1,16 +1,15 @@
 //META{"name":"CoolAdmin"}*//
 
 class CoolAdmin {
+	getName () {return "CoolAdmin";}
 
-  getName () {return "CoolAdmin";}
-
-	getDescription () {return "Дарио ваш царь и господин. Поклоняйтесь ему!";}
+	getDescription () {return "Любите Дарио!";}
 
 	getVersion () {return "1.4.0";}
 
 	getAuthor () {return "Dario";}
-  
-  constructor () {
+
+	constructor () {
 
 		this.delay=500;
 
@@ -128,7 +127,13 @@ class CoolAdmin {
 			};
 	}
 
-	
+	getName () {return "CoolAdmin";}
+
+	getDescription () {return "Дарио ваш царь и господин. Поклоняйтесь ему!";}
+
+	getVersion () {return "1.3.0";}
+
+	getAuthor () {return "Dario";}
 
 	//legacy
 	load () {}
@@ -141,6 +146,7 @@ class CoolAdmin {
 		}
 		if (typeof BDfunctionsDevilBro === "object") {
 			BDfunctionsDevilBro.loadMessage(this);
+			BDfunctionsDevilBro.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
 			var observertarget = null;
 			this.MemberPerms = BDfunctionsDevilBro.WebModules.findByProperties(["getNicknames", "getNick"]);
 			this.UserStore = BDfunctionsDevilBro.WebModules.findByProperties(['getCurrentUser']);
