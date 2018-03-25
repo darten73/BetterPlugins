@@ -110,7 +110,7 @@ class CoolAdmin {
 		}
 		if (typeof BDfunctionsDevilBro === "object") {
 			BDfunctionsDevilBro.loadMessage(this);
-            BDfunctionsDevilBro.checkUpdate(this.getName(), "");
+            BDfunctionsDevilBro.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
             this.MemberPerms = BDfunctionsDevilBro.WebModules.findByProperties(["getNicknames", "getNick"]);
 			this.ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(['getChannels']);
 			this.CurrentChannel = BDfunctionsDevilBro.WebModules.findByProperties(['getChannelId']);
