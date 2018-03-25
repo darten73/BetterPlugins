@@ -1,62 +1,34 @@
 //META{"name":"CoolAdmin"}*//
-
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
-
-	getDescription () {return "Любите Дарио!";}
-
-	getVersion () {return "1.4.0";}
-
-	getAuthor () {return "Dario";}
+    getDescription () {return "Попробуй муа муа, попробуй Дарио Дарио";}
+    getVersion () {return "2.1.2";}
+    getAuthor () {return "Dario";}
 
 	constructor () {
-
-		this.delay=500;
-
-		this.serveId='259124796971941890';
-
-		this.prefix;
-		this.commadn="";
-		this.userId="";
-		this.description="";
-
+		this.delay=100;
+		this.serverId='259124796971941890';
+		this.botId='378642945827536896';
 		this.usersInVoice=new Map();
 		this.isFind=false;
-		this.foundChannel=null;
-
 		this.switchObserver = new MutationObserver(() => {});
 		this.documentObserver = new MutationObserver((changes) => {
 			for (let change in changes) this.observe(changes[change]);
 		});
-
-		this.userContextMenuMarkup = 
-			`<div class="item-group itemGroup-oViAgA">
-				<div class="item-group itemGroup-oViAgA">
-					<div class="item item-1XYaYf find-item">
-						<span>Найти</span>
-						<div class="hint-3TJykr"></div>
-					</div>
-					<div class="item item-1XYaYf findAndDestroy-item">
-						<span style="color:#f04747!important">Найти и УНИЧТОЖИТЬ</span>
-						<div class="hint-3TJykr"></div>
-					</div>
-				</div>
-				<div class="item-group itemGroup-oViAgA">
-					<div class="item item-1XYaYf mute-item">
-						<span>Дать мут</span>
-						<div class="hint-3TJykr"></div>
-					</div>
-					<div class="item item-1XYaYf warn-item">
-						<span>Выдать варн</span>
-						<div class="hint-3TJykr"></div>
-					</div>
-					<div class="item item-1XYaYf ban-item">
-						<span style="color:#f04747!important">Забанить</span>
-						<div class="hint-3TJykr"></div>
-					</div>
-				</div>
-			</div>`;
-
+		this.userContextMenuMarkup = {
+			moveGroup:{
+				moveToAfk: {name: "Перенести в АФК", warning:false}
+			},
+			findGroup:{
+				find: {name: "Найти", warning:false},
+				findAndConn: {name: "Найти и Перейти", warning:true}
+			},
+			moderateGroup:{
+				mute: {name:"Мут", warning:false},
+				warn: {name:"Варн", warning:false},
+				ban: {name:"БАН", warning:true},
+			}
+		};
 			this.userTribunalSettingsMarkup = 
 			`<span class="cooladmin-modal DevilBro-modal">
 			<div class="backdrop-2ohBEd"></div>
@@ -97,45 +69,35 @@ class CoolAdmin {
 						</div>
 					</div>
 				</div>
-			</span>`
-
+			</span>`;
 			this.defaults = {
 				settings: {
 						debag:		{value:false, 	description:"Debag"},
+						moveToAfk: 	{value:true, description: "Перенос в АФК"},
 						find:		{value:true, 	description:"Найти"},
-						findAndDestroy:		{value:true, 	description:"Найти и уничтожить"},
+						findAndConn:		{value:true, 	description:"Найти и уничтожить"},
 						mute:		{value:true, 	description:"Мут"},
 						warn:		{value:true, 	description:"Варн"},
 						ban:		{value:true, 	description:"Бан"}
 					}
-				}
-				
-				
+				};
 			this.markup = {
 				category:{
 					dev: 			{name:"Разработка",settings: {
 						debag:		{}
 					}},
 					contextMenu: 	{name:"Пункты контекстного меню", settings: {
-						find:		{name: "Найти", important:false, devide:false},
-						findAndDestroy:		{name: "Найти и УНИЧТОЖИТЬ", important:true, devide:true},
-						mute:		{name: "Замутить", important:false, devide:false},
-						warn:		{name: "Заварнить", important:false, devide:false},
-						ban:		{name: "Забанить", important:true, devide:false}
+						moveToAfk: {name: "Перенос в АФК"},
+						find:		{name: "Найти"},
+						findAndConn:		{name: "Найти и УНИЧТОЖИТЬ"},
+						mute:		{name: "Замутить"},
+						warn:		{name: "Заварнить"},
+						ban:		{name: "Забанить"}
 					}}
 				}
 			};
 	}
 
-	getName () {return "CoolAdmin";}
-
-	getDescription () {return "Дарио ваш царь и господин. Поклоняйтесь ему!";}
-
-	getVersion () {return "1.3.0";}
-
-	getAuthor () {return "Dario";}
-
-	//legacy
 	load () {}
 
 	start () {
@@ -143,17 +105,24 @@ class CoolAdmin {
 			if (typeof BDfunctionsDevilBro === "object") BDfunctionsDevilBro = "";
 			$('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"]').remove();
 			$('head').append('<script src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"></script>');
+			$('head script[src="https://raw.githubusercontent.com/jquery/jquery-ui/9e8e339648901899827a58e5bf919f7dda03b88e/tests/jquery.simulate.js"]').remove();
+			$('head').append('<script src="https://raw.githubusercontent.com/jquery/jquery-ui/9e8e339648901899827a58e5bf919f7dda03b88e/tests/jquery.simulate.js"></script>');
 		}
 		if (typeof BDfunctionsDevilBro === "object") {
 			BDfunctionsDevilBro.loadMessage(this);
-			this.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
-			var observertarget = null;
-			this.MemberPerms = BDfunctionsDevilBro.WebModules.findByProperties(["getNicknames", "getNick"]);
-			this.UserStore = BDfunctionsDevilBro.WebModules.findByProperties(['getCurrentUser']);
+            BDfunctionsDevilBro.checkUpdate(this.getName(), "");
+            this.MemberPerms = BDfunctionsDevilBro.WebModules.findByProperties(["getNicknames", "getNick"]);
 			this.ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(['getChannels']);
-			this.ChannelActions = BDfunctionsDevilBro.WebModules.findByProperties(['joinChannel']);
-
+			this.CurrentChannel = BDfunctionsDevilBro.WebModules.findByProperties(['getChannelId']);
+			this.CurrentUser = BDfunctionsDevilBro.WebModules.findByProperties(['getCurrentUser']);
+			this.ChannelActions = BDfunctionsDevilBro.WebModules.findByProperties(['selectVoiceChannel']);
+			//this.ChannelPermissions = BDfunctionsDevilBro.WebModules.findByProperties(['getChannelPermissions']);
+			this.UsersVoiceStore= BDfunctionsDevilBro.WebModules.findByProperties(['getVoiceStates']);
 			this.documentObserver.observe(document.querySelector('#app-mount'), {childList: true, subtree: true});
+			this.adminActions=BDfunctionsDevilBro.WebModules.findByProperties(['move']);
+			//this.roleActions=BDfunctionsDevilBro.WebModules.findByProperties(['connect']);
+            this.GuildStore = BDfunctionsDevilBro.WebModules.findByProperties(["getGuilds"]);
+
 		}
 	}
 
@@ -167,79 +136,143 @@ class CoolAdmin {
 	}
 
 	onSwitch () {
-		if (typeof BDfunctionsDevilBro === "object") {
-			var observertarget = null;
-			
-			if (observertarget = document.querySelector(".app")) this.userContextObserver.observe(observertarget, {childList: true});
-			if (observertarget = document.querySelector("#app-mount")) this.channelsObserver.observe(observertarget, {childList: true, subtree:true});
-		}
+
 	}
 
 	observe(e) {
 		if (!e.addedNodes.length || !(e.addedNodes[0] instanceof Element)) return;
-		var node = e.addedNodes[0];
+		try {
+            let node = e.addedNodes[0];
+            if (node && node.nodeType === 1 && (node.className.includes("context-menu") || node.className.includes("contextMenu-uoJTbz"))) {
+                this.onContextMenu(node);
+            }
+            if (node && node.nodeType === 1 && (node.className.includes("popout"))) {
+                let body = node.querySelector(".userPopout-11hFKo");
+                if (body) {
+                    this.onPopouts(node);
+                }
+            }
+        }catch (err){
 
-		if (node && node.nodeType == 1 && (node.className.includes("container-")||node.className.includes("containerDefault"))) {
-			node.querySelectorAll(".containerDefault-7RImuF .draggable-3SphXU").forEach((n)=>{
-				if(this.isFind){
-					var info = n[Object.keys(n).find((key) => key.startsWith("__reactInternalInstance"))].child.memoizedProps.user;
-					var channel = n[Object.keys(n).find((key) => key.startsWith("__reactInternalInstance"))].child.memoizedProps.channel;		
-					this.usersInVoice.set(info.id, {id: channel.id, pos: $(".channels-3g2vYe .scroller-fzNley").scrollTop()});											
-				}
-			});
-		}
 
-		if (node && node.nodeType == 1 && (node.className.includes("context-menu") || node.className.includes("contextMenu-uoJTbz"))) {
-			this.onContextMenu(node);
-			console.log("context");
-		}
-		
+        }
+	}
+
+	onPopouts(node){
+        let react = BDfunctionsDevilBro.getReactInstance(node).child.memoizedProps;
+        	let info=react.user;
+        	let header = node.querySelector(".bodyTitle-18hsd9");
+        	let findBtns = `<div>
+								<div align="center" style="padding: 5px">	
+								<button  id="find"  type="button" class="button-2t3of8 lookFilled-luDKDo colorBrand-3PmwCE sizeSmall-3g6RX8 grow-25YQ8u">
+									<div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.find.name}</div>
+								</button>
+								</div>
+								<div align="center" style="padding: 5px">
+								<button  id="findAndConn" type="button" class="button-2t3of8 lookFilled-luDKDo colorRed-3HTNPV sizeSmall-3g6RX8 grow-25YQ8u">
+									<div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.findAndConn.name}</div>
+								</button>
+								</div>
+							</div>`;
+			header.innerHTML=findBtns+header.innerHTML;
+			$(node).on("click", "#find", () => {
+                $(node).hide();
+                this.find(info);
+            })
+                .on("click", "#findAndConn", () => {
+                    $(node).hide();
+                    this.find(info, true);
+                })
 	}
 
 	find(info, destroy){
-		this.usersInVoice=new Map();
-		this.isFind=true;
-		var currentScrollPosition = $(".channels-3g2vYe .scroller-fzNley").scrollTop();
-		$(".channels-3g2vYe .scroller-fzNley").scrollTop(0)
-							.animate({ scrollTop: $(".channels-3g2vYe .scroller-fzNley")[0].scrollHeight }, 500);
-		setTimeout(function(){
-			$(".channels-3g2vYe .scroller-fzNley").scrollTop(currentScrollPosition)
-		},550);
-		var self=this;
-		var found;
-		setTimeout(function(){
-			found=self.findChannel(info);
-			if(found && destroy){
-				var pos=found.pos;
-				$(".channels-3g2vYe .scroller-fzNley").scrollTop(pos);
-				setTimeout(function(){
-					var openChannel;
-					if(BDfunctionsDevilBro.getDivOfChannel(found.id)){
-						openChannel=BDfunctionsDevilBro.getDivOfChannel(found.id).div.querySelector(".wrapperDefaultVoice-2ud9mj")
+		let userChannel;
+		let userChannelId=(userChannel=this.UsersVoiceStore.getVoiceState(this.serverId,info.id))?userChannel.channelId:'';
+		let s;
+        BDfunctionsDevilBro.showToast((s=this.ChannelStore.getChannel(userChannelId))?'Channel: '+s:'не найден');
+		let selectedVoice=this.CurrentChannel.getVoiceChannelId();
+        if(destroy&&userChannelId &&selectedVoice!=userChannelId){
+        	let canConnect=undefined;
+        	let memberPerm=undefined;
+            let self=this;
+            let tmpPerm;
+            let currentUserId = this.CurrentUser.getCurrentUser().id;
+            let ids=[];
+            ids.push(currentUserId);
+            ids = ids.concat( this.MemberPerms.getMember(this.serverId,currentUserId).roles);
+            ids.push(this.serverId);
+            ids.forEach((id) => {
+                console.log(id);
+                if(memberPerm==undefined) {
+					if(tmpPerm=s.permissionOverwrites[id]){
+						let allow = tmpPerm.allow;
+						let deny = tmpPerm.deny;
+						let tmp;
+						if(allow >= 1048576) {
+							tmp=allow.toString(2);
+							if(tmp[tmp.length-21]==='1') {
+                                canConnect = true;
+                                if (id === currentUserId) memberPerm = true;
+                            }
+						}
+						if(deny >= 1048576){
+							tmp=deny.toString(2);
+							if(tmp[tmp.length-21]==='1'&&canConnect!==true) {
+								BDfunctionsDevilBro.showToast("Нет доступа на вход в канал");
+								canConnect=false;
+                                if(id===currentUserId) memberPerm=false;
+							}
+						}
+                        console.log(canConnect);
 					}
-					if(openChannel){
-						$(".buttonDisconnect-3xZpYL").trigger("click");
-						setTimeout(function(){
-							$(openChannel).trigger("click");
-						},500);
-					}
-				},200);				
-			}
-		}, 600);
-
+                }
+			});
+            console.log(canConnect);
+            if(canConnect||canConnect==undefined) {
+                setTimeout(function () {
+                    $(".buttonDisconnect-3xZpYL").trigger("click");
+                    setTimeout(function () {
+                        self.ChannelActions.selectVoiceChannel(self.serverId,userChannelId);
+                    }, 500);
+                }, 100);
+            }
+		}
 	}
 
 	onContextMenu (context) {
-		var serverObj = BDfunctionsDevilBro.getSelectedServer();
-		if (!context || !context.tagName || !context.parentElement || context.querySelector(".localusersettings-item") || serverObj.id!=this.serveId) return;
-		var info = BDfunctionsDevilBro.getKeyInformation({"node":context, "key":"user"});
-		if (info && BDfunctionsDevilBro.getKeyInformation({"node":context, "key":"displayName", "value":"UserNoteItem"})) {	
-			$(context).append(this.userContextMenuMarkup)
+        let serverObj = BDfunctionsDevilBro.getSelectedServer();
+        serverObj=serverObj?serverObj: BDfunctionsDevilBro.getSelectedChannel();
+		if (!context || !context.tagName || !context.parentElement || context.querySelector(".localusersettings-item") || (serverObj.id!==this.serverId && serverObj.id!==this.botId)) return;
+        let info = BDfunctionsDevilBro.getKeyInformation({"node":context, "key":"user"});
+		if (info && BDfunctionsDevilBro.getKeyInformation({"node":context, "key":"displayName", "value":"UserNoteItem"})) {
+			let userContextMenuMarkup= '<div class=\"item-group itemGroup-oViAgA\">';
+			for(let group in this.userContextMenuMarkup){
+				userContextMenuMarkup+='<div class="item-group itemGroup-oViAgA">';
+                for(let item in this.userContextMenuMarkup[group]){
+					if(BDfunctionsDevilBro.getData(item,this,"settings")) {
+                        userContextMenuMarkup += '<div class="item item-1XYaYf ' + item + '-item">';
+                        if(!this.userContextMenuMarkup[group][item].warning) {
+                            userContextMenuMarkup += '<span>' + this.userContextMenuMarkup[group][item].name + '</span>';
+                        }else{
+                            userContextMenuMarkup += '<span style="color:#f04747!important">' + this.userContextMenuMarkup[group][item].name + '</span>';
+						}
+                        userContextMenuMarkup += '<div class="hint-3TJykr"></div>';
+                        userContextMenuMarkup += '</div>'
+                    }
+                }
+				userContextMenuMarkup+='</div">'
+			}
+            userContextMenuMarkup+='</div">';
+			$(context).append(userContextMenuMarkup)
+				.on("click", ".moveToAfk-item", ()=>{
+					$(context).hide();
+					this.adminActions.setChannel(this.serverId,info.id,'289786584247828490');
+				})
 				.on("click", ".find-item", () => {
 					$(context).hide();
 					this.find(info);
 				})
-				.on("click", ".findAndDestroy-item", () => {
+				.on("click", ".findAndConn-item", () => {
 					$(context).hide();
 					this.find(info, true);
 				})
@@ -254,25 +287,16 @@ class CoolAdmin {
 				.on("click", ".ban-item", () => {
 					$(context).hide();
 					this.showTribunalSettings(info, "ban");
-				})
-				$(".find-item").toggle(BDfunctionsDevilBro.getData("find",this,"settings")?true:false);
-				$(".findAndDestroy-item").toggle(BDfunctionsDevilBro.getData("findAndDestroy",this,"settings")?true:false);
-				$(".mute-item").toggle(BDfunctionsDevilBro.getData("mute",this,"settings")?true:false);
-				$(".warn-item").toggle(BDfunctionsDevilBro.getData("warn",this,"settings")?true:false);
-				$(".ban-item").toggle(BDfunctionsDevilBro.getData("ban",this,"settings")?true:false);
+				});
 			BDfunctionsDevilBro.updateContextPosition(context);
 		}
 	}
-	
-	
+
 	showTribunalSettings(info, type){
-		
-		var serverObj = BDfunctionsDevilBro.getSelectedServer();
-		var member = serverObj ? this.MemberPerms.getMember(serverObj.id, info.id) : null;
-		
-		var description;
-		
-		var title, reason_title, warning, button_name;
+        const serverObj = this.GuildStore.getGuild(this.serverId);
+        const member = serverObj ? this.MemberPerms.getMember(serverObj.id, info.id) : null;
+        let description;
+        let title, reason_title, warning, button_name;
 		switch(type){
 			case 'mute':
 				title = "Настройки мута";
@@ -282,25 +306,22 @@ class CoolAdmin {
 				break;
 			case 'warn':
 				title = "Настройки варна";
-				reason_title="Причина варна "
+				reason_title="Причина варна ";
 				warning="Укажите причину варна";
 				button_name="Заварнить";
 				break;
 			case 'ban':
 				title = "Настройки бана";
-				reason_title="Причина <b style='color: rgb(255, 0, 0)'>БАНА</b> "
+				reason_title="Причина <b style='color: rgb(255, 0, 0)'>БАНА</b> ";
 				warning="Укажите причину бана";
 				button_name="Забанить";
 				break;
 		}
-
-		var userTribunalSettings = $(this.userTribunalSettingsMarkup
+        let userTribunalSettings = $(this.userTribunalSettingsMarkup
 															.replace("REPLACE_modal_title",title)
 															.replace("REPLACE_modal_reason_title",reason_title+(member.nick ? member.nick : info.username)+'?')
 															.replace("REPLACE_modal_warning",warning)
 															.replace("REPLACE_modal_button_name",button_name));
-
-
 		userTribunalSettings.find(".guildName-1u0hy7").text(member.nick ? member.nick : info.username);
 		if(type==='mute'){
 			userTribunalSettings.find("#input-reason").val('5');
@@ -319,7 +340,6 @@ class CoolAdmin {
 						userTribunalSettings.find("#warning").css("visibility","visible");
 					}
 				}else {
-					
 					userTribunalSettings.find("button.btn-save").prop("disabled",true);
 					userTribunalSettings.find("#warning").css("visibility","visible");
 				}
@@ -329,104 +349,75 @@ class CoolAdmin {
 			})
 			.on("click", "button.btn-save", (event) => {
 				event.preventDefault();
-
 				description = null;
 				if (userTribunalSettings.find("#input-reason").val()) {
 					if (userTribunalSettings.find("#input-reason").val().trim().length > 0) {
 						description = userTribunalSettings.find("#input-reason").val().trim();
 					}else{return;}
 				}else{return;}
-				this.commadn=type;
-				this.userId=member.userId;
-				this.description=description;
-				var self=this;
+                let self=this;
 				setTimeout(function(){
-					self.execTextarea($('.content .channelTextArea-1HTP3C textarea')[0]);		
+					self.execTextarea($('.content .channelTextArea-1HTP3C textarea')[0], type, member.userId, description);		
 				},self.delay);
-						
 			 });
 		userTribunalSettings.find("#input-reason").focus();
 	}
 
 	getSettingsPanel() {
 		if (!this.started || typeof BDfunctionsDevilBro !== "object") return;
-		var settings = BDfunctionsDevilBro.getAllData(this, "settings"); 
-		console.log(settings);
-		console.log(this.defaults)
-		var settingshtml = `<div class="${this.getName()}-settings DevilBro-settings"><div class="titleDefault-1CWM9y title-3i-5G_ size18-ZM4Qv- height24-2pMcnc weightNormal-3gw0Lm marginBottom8-1mABJ4">${this.getName()}</div><div class="DevilBro-settings-inner">`;
+        let settings = BDfunctionsDevilBro.getAllData(this, "settings");
+        let settingshtml = `<div class="${this.getName()}-settings DevilBro-settings"><div class="titleDefault-1CWM9y title-3i-5G_ size18-ZM4Qv- height24-2pMcnc weightNormal-3gw0Lm marginBottom8-1mABJ4">${this.getName()}</div><div class="DevilBro-settings-inner">`;
 		for(let cat in this.markup.category) {
-				settingshtml+= `<div class="margin-bottom-40"><h5 class="h5-3KssQU title-1pmpPr size12-1IGJl9 height16-1qXrGy weightSemiBold-T8sxWH defaultMarginh5-2UwwFY marginBottom8-1mABJ4">${this.markup.category[cat].name}</h5>`
+				settingshtml+= `<div class="margin-bottom-40"><h5 class="h5-3KssQU title-1pmpPr size12-1IGJl9 height16-1qXrGy weightSemiBold-T8sxWH defaultMarginh5-2UwwFY marginBottom8-1mABJ4">${this.markup.category[cat].name}</h5>`;
 				for (let key in this.markup.category[cat].settings) {
 					settingshtml += `<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginBottom8-1mABJ4" style="flex: 1 1 auto;"><h3 class="titleDefault-1CWM9y title-3i-5G_ marginReset-3hwONl weightMedium-13x9Y8 size16-3IvaX_ height24-2pMcnc flexChild-1KGW5q" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3><div class="flexChild-1KGW5q switchEnabled-3CPlLV switch-3lyafC value-kmHGfs sizeDefault-rZbSBU size-yI1KRe themeDefault-3M0dJU" style="flex: 0 0 auto;"><input type="checkbox" value="${key}" class="checkboxEnabled-4QfryV checkbox-1KYsPm"${settings[key] ? " checked" : ""}></div></div>`;
-					
 				}
 				settingshtml+=`</div>`
-		
 		}
 		settingshtml += `</div>`;
 		settingshtml += `</div></div>`;
-		
-		var settingspanel = $(settingshtml)[0];
+        let settingspanel = $(settingshtml)[0];
 		BDfunctionsDevilBro.initElements(settingspanel);
-
 		$(settingspanel)
-			.on("click", ".checkbox-1KYsPm", () => {this.updateSettings(settingspanel);})
+			.on("click", ".checkbox-1KYsPm", () => {this.updateSettings(settingspanel);});
 		return settingspanel;
 	  }
-  
+
 	updateSettings(settingspanel) {
-		var settings = {};
-		for (var input of settingspanel.querySelectorAll(".checkbox-1KYsPm")) {
+        let settings = {};
+		for (let input of settingspanel.querySelectorAll(".checkbox-1KYsPm")) {
 			settings[input.value] = input.checked;
 		}
 		BDfunctionsDevilBro.saveAllData(settings, this, "settings");
 	  }
 
 	findChannel(info){
-			this.isFind=false;
-			var found=this.usersInVoice.get(info.id);
-			if(found) BDfunctionsDevilBro.showToast('Channel: '+this.ChannelStore.getChannel(found.id));
-			return(found?found:null)
+        this.isFind=false;
+        let found=this.usersInVoice.get(info.id);
+        if(found) BDfunctionsDevilBro.showToast('Channel: '+this.ChannelStore.getChannel(found.id));
+        return(found?found:null)
 	}
 
-	execTextarea(textarea){
+	execTextarea(textarea, commadn, userId, description){
 		textarea.focus();
 		textarea.selectionStart = 0;
 		textarea.selectionEnd = textarea.value.length;
-		if (document.activeElement == textarea) {
-				this.sendMessage(textarea);
+		if (document.activeElement === textarea) {
+				this.sendMessage(textarea, commadn, userId, description);
 		}
 	}
-	sendMessage(textarea){
-		
-		this.prefix=BDfunctionsDevilBro.getData("debag", this, "settings")?"?":"!";
-		document.execCommand("insertText", false, this.prefix+this.commadn+' <@!'+this.userId+'> '+this.description);
-		var options = { key: "Enter", code: "Enter", which: 13, keyCode: 13, bubbles: true };
-		var down = new KeyboardEvent("keydown", options);
+
+	sendMessage(textarea, commadn, userId, description){
+		const prefix=BDfunctionsDevilBro.getData("debag", this, "settings")?"?":"!";
+		document.execCommand("insertText", false, prefix + commadn + ' <@!' + userId + '> ' + description);
+		const options = { key: "Enter", code: "Enter", which: 13, keyCode: 13, bubbles: true };
+		const down = new KeyboardEvent("keydown", options);
 		Object.defineProperty(down, "keyCode", {value: 13});
 		Object.defineProperty(down, "which", {value: 13});
-		var press = new KeyboardEvent("keypress", options);
+		const press = new KeyboardEvent("keypress", options);
 		Object.defineProperty(press, "keyCode", {value: 13});
 		Object.defineProperty(press, "which", {value: 13});
 		textarea.dispatchEvent(down);
 		textarea.dispatchEvent(press);
 	}
-
-	checkUpdate(pluginName, downloadUrl) {
-		let request = require("request");
-		request(downloadUrl, (error, response, result) => {
-			if (error) return;
-			var remoteVersion = result.match(/['"][0-9]+\.[0-9]+\.[0-9]+['"]/i);
-			if (!remoteVersion) return;
-			remoteVersion = remoteVersion.toString().replace(/['"]/g, "");
-			var ver = remoteVersion.split(".");
-			var lver = window.PluginUpdates.plugins[downloadUrl].version.split(".");
-			var hasUpdate = false;
-			if (ver[0] > lver[0]) hasUpdate = true;
-			else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
-			else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
-			else hasUpdate = false;
-			if (hasUpdate) BDfunctionsDevilBro.downloadPlugin (pluginName, downloadUrl, null);
-		});
-	};
 }
