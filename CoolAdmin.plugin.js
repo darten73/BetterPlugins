@@ -1,8 +1,8 @@
 //META{"name":"CoolAdmin"}*//
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
-    getDescription () {return "Попробуй муа муа, попробуй Дарио Дарио";}
-    getVersion () {return "2.1.2";}
+    getDescription () {return "ДАААРИИИИИООООО";}
+    getVersion () {return "2.1.3";}
     getAuthor () {return "Dario";}
 
 	constructor () {
