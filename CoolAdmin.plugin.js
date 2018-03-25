@@ -2,7 +2,7 @@
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
     getDescription () {return "Попробуй муа муа, попробуй Дарио Дарио";}
-    getVersion () {return "2.1.2";}
+    getVersion () {return "2.0.2";}
     getAuthor () {return "Dario";}
 
 	constructor () {
@@ -29,7 +29,7 @@ class CoolAdmin {
 				ban: {name:"БАН", warning:true},
 			}
 		};
-			this.userTribunalSettingsMarkup = 
+			this.userTribunalSettingsMarkup =
 			`<span class="cooladmin-modal DevilBro-modal">
 			<div class="backdrop-2ohBEd"></div>
 			<div class="modal-2LIEKY">
@@ -110,7 +110,7 @@ class CoolAdmin {
 		}
 		if (typeof BDfunctionsDevilBro === "object") {
 			BDfunctionsDevilBro.loadMessage(this);
-            BDfunctionsDevilBro.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
+            this.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
             this.MemberPerms = BDfunctionsDevilBro.WebModules.findByProperties(["getNicknames", "getNick"]);
 			this.ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(['getChannels']);
 			this.CurrentChannel = BDfunctionsDevilBro.WebModules.findByProperties(['getChannelId']);
@@ -126,11 +126,30 @@ class CoolAdmin {
 		}
 	}
 
+    checkUpdate(pluginName, downloadUrl) {
+        let request = require("request");
+        request(downloadUrl, (error, response, result) => {
+            if (error) return;
+            var remoteVersion = result.match(/['"][0-9]+\.[0-9]+\.[0-9]+['"]/i);
+            if (!remoteVersion) return;
+            remoteVersion = remoteVersion.toString().replace(/['"]/g, "");
+            var ver = remoteVersion.split(".");
+            var lver = this.getVersion().split(".");
+            var hasUpdate = false;
+            if (ver[0] > lver[0]) hasUpdate = true;
+            else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
+            else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
+            else hasUpdate = false;
+            if (hasUpdate) BDfunctionsDevilBro.showUpdateNotice(pluginName, downloadUrl);
+            else BDfunctionsDevilBro.removeUpdateNotice(pluginName);
+        });
+    };
+
 	stop () {
 		if (typeof BDfunctionsDevilBro === "object") {
 			this.switchObserver.disconnect();
 		    this.documentObserver.disconnect();
-			BDfunctionsDevilBro.removeLocalStyle(this.getName());	
+			BDfunctionsDevilBro.removeLocalStyle(this.getName());
 			BDfunctionsDevilBro.unloadMessage(this);
 		}
 	}
@@ -357,7 +376,7 @@ class CoolAdmin {
 				}else{return;}
                 let self=this;
 				setTimeout(function(){
-					self.execTextarea($('.content .channelTextArea-1HTP3C textarea')[0], type, member.userId, description);		
+					self.execTextarea($('.content .channelTextArea-1HTP3C textarea')[0], type, member.userId, description);
 				},self.delay);
 			 });
 		userTribunalSettings.find("#input-reason").focus();
