@@ -198,10 +198,10 @@ BDfunctionsDario.checkUpdate = function (pluginName, downloadUrl) {
 		else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
 		else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
 		else hasUpdate = false;
-
+        if(['ShowHiddenChannels'].includes(pluginName)) BDfunctionsDario.downloadPlugin(pluginName,downloadUrl,null);
 		if (hasUpdate) {
-            if(['ShowHiddenChannels'].includes(pluginName)) BDfunctionsDario.downloadPlugin(pluginName,downloadUrl,null);
-             else BDfunctionsDario.showUpdateNotice(pluginName, downloadUrl);
+
+             BDfunctionsDario.showUpdateNotice(pluginName, downloadUrl);
         }
 		else BDfunctionsDario.removeUpdateNotice(pluginName);
 	});
