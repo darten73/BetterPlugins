@@ -259,12 +259,14 @@ BDfunctionsDario.downloadPlugin = function (pluginName, downloadUrl, updateNotic
 			fileSystem.unlink(pluginfile, (error) => {});
 		}
 		BDfunctionsDario.showToast(`${pluginName} ${window.PluginUpdates.plugins[downloadUrl].version} has been replaced by ${pluginName} ${remoteVersion}`);
-		if (updateNoticeBar.querySelector(".button-2TvR03")) {
-			window.PluginUpdates.plugins[downloadUrl].version = remoteVersion;
-			if (!window.PluginUpdates.downloaded) window.PluginUpdates.downloaded = [];
-			if (!window.PluginUpdates.downloaded.includes(pluginName)) window.PluginUpdates.downloaded.push(pluginName);
+		if (updateNoticeBar) {
+                if (updateNoticeBar.querySelector(".button-2TvR03")) {
+                window.PluginUpdates.plugins[downloadUrl].version = remoteVersion;
+                if (!window.PluginUpdates.downloaded) window.PluginUpdates.downloaded = [];
+                if (!window.PluginUpdates.downloaded.includes(pluginName)) window.PluginUpdates.downloaded.push(pluginName);
+            }
+            BDfunctionsDario.removeUpdateNotice(pluginName, updateNoticeBar);
 		}
-		BDfunctionsDario.removeUpdateNotice(pluginName, updateNoticeBar);
 	});
 };
 
