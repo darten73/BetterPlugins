@@ -28,10 +28,11 @@ BDfunctionsDario.loadMessage = function (plugin, forceUpdate) {
 	
 	var downloadUrl = "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/" + pluginName + ".plugin.js";
 	BDfunctionsDario.checkUpdate(pluginName, downloadUrl);
-	if(forceUpdate) {
-	    console.log("force");
+    console.log("force"+forceUpdate);
+	/*if(forceUpdate) {
+
 	    BDfunctionsDario.downloadPlugin(pluginName, downloadUrl);
-    }
+    }*/
 	
 	if (typeof plugin.css === "string") BDfunctionsDario.appendLocalStyle(plugin.getName(), plugin.css);
 	BDfunctionsDario.addOnSwitchListener(plugin);
