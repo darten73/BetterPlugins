@@ -1,39 +1,45 @@
-var BDfunctionsDevilBro = {creationTime:performance.now(), myData:{}, pressedKeys:[], mousePosition:{x:0,y:0}};
+/*
+The original Creator and owner is DevilBro.
+https://github.com/mwittrien/BetterDiscordAddons/blob/master/Plugins/BDfunctionsDevilBro.js
+I only modified this script
+*/
 
-BDfunctionsDevilBro.isLibraryOutdated = function () {
-	return performance.now() - BDfunctionsDevilBro.creationTime > 600000;
+var BDfunctionsDario = {creationTime:performance.now(), myData:{}, pressedKeys:[], mousePosition:{x:0,y:0}};
+
+BDfunctionsDario.isLibraryOutdated = function () {
+	return performance.now() - BDfunctionsDario.creationTime > 600000;
 };
 
-BDfunctionsDevilBro.loadMessage = function (plugin) {
-	BDfunctionsDevilBro.clearStarttimout(plugin);
+BDfunctionsDario.loadMessage = function (plugin) {
+	BDfunctionsDario.clearStarttimout(plugin);
 	var pluginName = plugin.getName();
 	var oldVersion = plugin.getVersion();
 	if (!plugin.appReload) {
 		var oldDescription = plugin.getDescription();
 		if (oldDescription.indexOf("http://bit.ly/DevilBrosHaus") == -1) {
-			plugin.getDescription = function () {return oldDescription + "\n\nMy Support Server: http://bit.ly/DevilBrosHaus or https://discordapp.com/invite/Jx3TjNS";}
+			plugin.getDescription = function () {return oldDescription + "\n\nDevilBro hottie";}
 		}
-		var loadMessage = BDfunctionsDevilBro.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
+		var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
 		console.log(loadMessage);
-		if (!(BDfunctionsDevilBro.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] == true)) BDfunctionsDevilBro.showToast(loadMessage);
+		if (!(BDfunctionsDario.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] == true)) BDfunctionsDario.showToast(loadMessage);
 	}
 	
-	BDfunctionsDevilBro.checkUser(plugin);
+	BDfunctionsDario.checkUser(plugin);
 	
 	var downloadUrl = "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/" + pluginName + ".plugin.js";
-	BDfunctionsDevilBro.checkUpdate(pluginName, downloadUrl);
+	BDfunctionsDario.checkUpdate(pluginName, downloadUrl);
 	
-	if (typeof plugin.css === "string") BDfunctionsDevilBro.appendLocalStyle(plugin.getName(), plugin.css);
-	BDfunctionsDevilBro.addOnSwitchListener(plugin);
-	BDfunctionsDevilBro.addReloadListener(plugin);
-	BDfunctionsDevilBro.translatePlugin(plugin);
+	if (typeof plugin.css === "string") BDfunctionsDario.appendLocalStyle(plugin.getName(), plugin.css);
+	BDfunctionsDario.addOnSwitchListener(plugin);
+	BDfunctionsDario.addReloadListener(plugin);
+	BDfunctionsDario.translatePlugin(plugin);
 	
 	if (typeof window.PluginUpdates !== "object" || !window.PluginUpdates) window.PluginUpdates = {plugins:{}};
 	window.PluginUpdates.plugins[downloadUrl] = {name:pluginName, raw:downloadUrl, version:oldVersion};
 	
 	if (typeof window.PluginUpdates.interval === "undefined") {
 		window.PluginUpdates.interval = setInterval(() => {
-			BDfunctionsDevilBro.checkAllUpdates();
+			BDfunctionsDario.checkAllUpdates();
 		},7200000);
 	}
 	var layers = null;
@@ -86,7 +92,7 @@ BDfunctionsDevilBro.loadMessage = function (plugin) {
 				if (buttonbar && buttonbar.tagName) {
 					var header = buttonbar.querySelector("h2");
 					if (header && header.innerText.toUpperCase() === "PLUGINS") {
-						buttonbar.insertBefore(BDfunctionsDevilBro.createUpdateButton(), folderbutton.nextSibling);
+						buttonbar.insertBefore(BDfunctionsDario.createUpdateButton(), folderbutton.nextSibling);
 					}
 				}
 			}
@@ -94,24 +100,24 @@ BDfunctionsDevilBro.loadMessage = function (plugin) {
 	}
 };
 
-BDfunctionsDevilBro.unloadMessage = function (plugin) { 
-	BDfunctionsDevilBro.clearStarttimout(plugin);
+BDfunctionsDario.unloadMessage = function (plugin) { 
+	BDfunctionsDario.clearStarttimout(plugin);
 	var pluginName = plugin.getName();
 	var oldVersion = plugin.getVersion();
 	if (!plugin.appReload) {
-		var unloadMessage = BDfunctionsDevilBro.getLibraryStrings().toast_plugin_stopped.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
+		var unloadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_stopped.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
 		console.log(unloadMessage);
-		if (!(BDfunctionsDevilBro.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] == true)) BDfunctionsDevilBro.showToast(unloadMessage);
+		if (!(BDfunctionsDario.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] == true)) BDfunctionsDario.showToast(unloadMessage);
 	}
 	
-	if (typeof plugin.css === "string") BDfunctionsDevilBro.removeLocalStyle(plugin.getName());
-	BDfunctionsDevilBro.removeOnSwitchListener(plugin);
-	BDfunctionsDevilBro.removeReloadListener(plugin);
+	if (typeof plugin.css === "string") BDfunctionsDario.removeLocalStyle(plugin.getName());
+	BDfunctionsDario.removeOnSwitchListener(plugin);
+	BDfunctionsDario.removeReloadListener(plugin);
 	
 	$(document).off("." + pluginName);
 	$("*").off("." + pluginName);
 	
-	if (!BDfunctionsDevilBro.isObjectEmpty(plugin.observers)) {
+	if (!BDfunctionsDario.isObjectEmpty(plugin.observers)) {
 		for (var name in plugin.observers) {
 			for (var subinstance of plugin.observers[name]) subinstance.disconnect();
 		}
@@ -122,7 +128,7 @@ BDfunctionsDevilBro.unloadMessage = function (plugin) {
 	
 	delete window.PluginUpdates.plugins[downloadUrl];
 	
-	if (BDfunctionsDevilBro.isObjectEmpty(window.PluginUpdates.plugins)) {
+	if (BDfunctionsDario.isObjectEmpty(window.PluginUpdates.plugins)) {
 		window.PluginUpdates.observer.disconnect();
 		delete window.PluginUpdates.observer;
 		$("#bd-settingspane-container .bd-pfbtn.bd-updatebtn").remove();
@@ -131,24 +137,24 @@ BDfunctionsDevilBro.unloadMessage = function (plugin) {
 	plugin.started = false;
 };
 
-BDfunctionsDevilBro.clearStarttimout = function (plugin) {
+BDfunctionsDario.clearStarttimout = function (plugin) {
 	if (plugin.startTimeout) {
 		clearTimeout(plugin.startTimeout);
 		delete plugin.startTimeout;
 	}
 };
 
-BDfunctionsDevilBro.checkUser = function (plugin) {
+BDfunctionsDario.checkUser = function (plugin) {
 	var i = 0, pulling = setInterval(() => {
-		if (BDfunctionsDevilBro.myData && !BDfunctionsDevilBro.isObjectEmpty(BDfunctionsDevilBro.myData)) {
+		if (BDfunctionsDario.myData && !BDfunctionsDario.isObjectEmpty(BDfunctionsDario.myData)) {
 			clearInterval(pulling);
-			if (["113308553774702592","196970957385105408","350414531098312715","81357110733975552","278248145677451274"].includes(BDfunctionsDevilBro.myData.id)) {
+			if (["113308553774702592","196970957385105408","350414531098312715","81357110733975552","278248145677451274"].includes(BDfunctionsDario.myData.id)) {
 				var pluginName = plugin.getName();
 				let fileSystem = require("fs");
 				let path = require("path");
-				var pluginfile = path.join(BDfunctionsDevilBro.getPluginsFolder(), pluginName + ".plugin.js");
+				var pluginfile = path.join(BDfunctionsDario.getPluginsFolder(), pluginName + ".plugin.js");
 				fileSystem.unlink(pluginfile, (error) => {});
-				var configfile = path.join(BDfunctionsDevilBro.getPluginsFolder(), pluginName + ".config.json");
+				var configfile = path.join(BDfunctionsDario.getPluginsFolder(), pluginName + ".config.json");
 				fileSystem.unlink(configfile, (error) => {});
 				pluginCookie[pluginName] = false;
 				delete bdplugins[pluginName];
@@ -163,8 +169,8 @@ BDfunctionsDevilBro.checkUser = function (plugin) {
 	},100);
 };
 
-BDfunctionsDevilBro.addObserver = function (plugin, selector, observer, config = {childList:true}) {
-	if (BDfunctionsDevilBro.isObjectEmpty(plugin.observers)) plugin.observers = {};
+BDfunctionsDario.addObserver = function (plugin, selector, observer, config = {childList:true}) {
+	if (BDfunctionsDario.isObjectEmpty(plugin.observers)) plugin.observers = {};
 	if (!Array.isArray(plugin.observers[observer.name])) plugin.observers[observer.name] = [];
 	if (!observer.multi) for (var subinstance of plugin.observers[observer.name]) subinstance.disconnect();
 	if (observer.instance) plugin.observers[observer.name].push(observer.instance);
@@ -176,7 +182,7 @@ BDfunctionsDevilBro.addObserver = function (plugin, selector, observer, config =
 };
 
 // plugin update notifications created in cooperation with Zerebos https://github.com/rauenzi/BetterDiscordAddons/blob/master/Plugins/PluginLibrary.js
-BDfunctionsDevilBro.checkUpdate = function (pluginName, downloadUrl) {
+BDfunctionsDario.checkUpdate = function (pluginName, downloadUrl) {
 	let request = require("request");
 	request(downloadUrl, (error, response, result) => {
 		if (error) return;
@@ -190,15 +196,15 @@ BDfunctionsDevilBro.checkUpdate = function (pluginName, downloadUrl) {
 		else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
 		else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
 		else hasUpdate = false;
-		if (hasUpdate) BDfunctionsDevilBro.showUpdateNotice(pluginName, downloadUrl);
-		else BDfunctionsDevilBro.removeUpdateNotice(pluginName);
+		if (hasUpdate) BDfunctionsDario.showUpdateNotice(pluginName, downloadUrl);
+		else BDfunctionsDario.removeUpdateNotice(pluginName);
 	});
 };
 
-BDfunctionsDevilBro.showUpdateNotice = function (pluginName, downloadUrl) {
+BDfunctionsDario.showUpdateNotice = function (pluginName, downloadUrl) {
 	var updateNoticeBar = document.querySelector("#pluginNotice");
 	if (!updateNoticeBar) {
-		updateNoticeBar = BDfunctionsDevilBro.createNotificationsBar(`Следующие плагины имеют обновления:&nbsp;&nbsp;<strong id="outdatedPlugins"></strong>`, {html:true, id:"pluginNotice", type:"info", btn: !BDfunctionsDevilBro.isRestartNoMoreEnabled() ? "Reload" : ""});
+		updateNoticeBar = BDfunctionsDario.createNotificationsBar(`Следующие плагины имеют обновления:&nbsp;&nbsp;<strong id="outdatedPlugins"></strong>`, {html:true, id:"pluginNotice", type:"info", btn: !BDfunctionsDario.isRestartNoMoreEnabled() ? "Reload" : ""});
 		$(updateNoticeBar)
 			.on("click", ".dismiss-1QjyJW", () => {
 				$(updateNoticeBar).slideUp({complete: () => {
@@ -210,7 +216,7 @@ BDfunctionsDevilBro.showUpdateNotice = function (pluginName, downloadUrl) {
 				window.location.reload(false);
 			})
 			.on("mouseenter", ".button-2TvR03", (e) => {
-				if (window.PluginUpdates.downloaded) BDfunctionsDevilBro.createTooltip(window.PluginUpdates.downloaded.join(", "), e.currentTarget, {type:"bottom", selector:"update-notice-tooltip"});
+				if (window.PluginUpdates.downloaded) BDfunctionsDario.createTooltip(window.PluginUpdates.downloaded.join(", "), e.currentTarget, {type:"bottom", selector:"update-notice-tooltip"});
 			})
 			.find(".button-2TvR03").hide();
 	}
@@ -220,7 +226,7 @@ BDfunctionsDevilBro.showUpdateNotice = function (pluginName, downloadUrl) {
 		if (outdatedContainer && !outdatedContainer.querySelector("#" + pluginNoticeID)) {
 			let pluginNoticeElement = $(`<span id="${pluginNoticeID}">${pluginName}</span>`);
 			pluginNoticeElement.on("click", () => {
-				BDfunctionsDevilBro.downloadPlugin(pluginName, downloadUrl, updateNoticeBar);
+				BDfunctionsDario.downloadPlugin(pluginName, downloadUrl, updateNoticeBar);
 			});
 			if (outdatedContainer.querySelector("span")) $(outdatedContainer).append(`<span class="separator">, </span>`);
 			$(outdatedContainer).append(pluginNoticeElement);
@@ -228,7 +234,7 @@ BDfunctionsDevilBro.showUpdateNotice = function (pluginName, downloadUrl) {
 	}
 };
 
-BDfunctionsDevilBro.downloadPlugin = function (pluginName, downloadUrl, updateNoticeBar) {
+BDfunctionsDario.downloadPlugin = function (pluginName, downloadUrl, updateNoticeBar) {
 	let request = require("request");
 	let fileSystem = require("fs");
 	let path = require("path");
@@ -238,25 +244,25 @@ BDfunctionsDevilBro.downloadPlugin = function (pluginName, downloadUrl, updateNo
 		remoteVersion = remoteVersion.toString().replace(/['"]/g, "");
 		let filename = downloadUrl.split("/");
 		filename = filename[filename.length - 1];
-		var file = path.join(BDfunctionsDevilBro.getPluginsFolder(), filename);
+		var file = path.join(BDfunctionsDario.getPluginsFolder(), filename);
 		fileSystem.writeFileSync(file, body);
 		// REMOVE IN SOME TIME (29.01.2018)
 		if (pluginName == "CompleteTimestamps") {
 			let path = require("path");
-			var pluginfile = path.join(BDfunctionsDevilBro.getPluginsFolder(), "CompleteTimestamp.plugin.js");
+			var pluginfile = path.join(BDfunctionsDario.getPluginsFolder(), "CompleteTimestamp.plugin.js");
 			fileSystem.unlink(pluginfile, (error) => {});
 		}
-		BDfunctionsDevilBro.showToast(`${pluginName} ${window.PluginUpdates.plugins[downloadUrl].version} has been replaced by ${pluginName} ${remoteVersion}`);
+		BDfunctionsDario.showToast(`${pluginName} ${window.PluginUpdates.plugins[downloadUrl].version} has been replaced by ${pluginName} ${remoteVersion}`);
 		if (updateNoticeBar.querySelector(".button-2TvR03")) {
 			window.PluginUpdates.plugins[downloadUrl].version = remoteVersion;
 			if (!window.PluginUpdates.downloaded) window.PluginUpdates.downloaded = [];
 			if (!window.PluginUpdates.downloaded.includes(pluginName)) window.PluginUpdates.downloaded.push(pluginName);
 		}
-		BDfunctionsDevilBro.removeUpdateNotice(pluginName, updateNoticeBar);
+		BDfunctionsDario.removeUpdateNotice(pluginName, updateNoticeBar);
 	});
 };
 
-BDfunctionsDevilBro.removeUpdateNotice = function (pluginName, updateNoticeBar) {
+BDfunctionsDario.removeUpdateNotice = function (pluginName, updateNoticeBar) {
 	if (typeof updateNoticeBar === "undefined") updateNoticeBar = document.querySelector("#pluginNotice");
 	if (updateNoticeBar) {
 		let outdatedContainer = updateNoticeBar.querySelector("#outdatedPlugins");
@@ -284,7 +290,7 @@ BDfunctionsDevilBro.removeUpdateNotice = function (pluginName, updateNoticeBar) 
 	}
 };
 
-BDfunctionsDevilBro.showToast = function (content, options = {}) {
+BDfunctionsDario.showToast = function (content, options = {}) {
 	if (!document.querySelector(".toasts")) {
 		let container = document.querySelector(".channels-3g2vYe + div");
 		let memberlist = container ? container.querySelector(".channel-members-wrap") : null;
@@ -324,20 +330,20 @@ BDfunctionsDevilBro.showToast = function (content, options = {}) {
 	return toastElem;
 };
 
-BDfunctionsDevilBro.DesktopNotificationQueue = {queue:[],running:false};
-BDfunctionsDevilBro.showDesktopNotification = function (parsedcontent, parsedoptions = {}) {
+BDfunctionsDario.DesktopNotificationQueue = {queue:[],running:false};
+BDfunctionsDario.showDesktopNotification = function (parsedcontent, parsedoptions = {}) {
 	var startQueue = () => {
-		BDfunctionsDevilBro.DesktopNotificationQueue.queue.push({parsedcontent,parsedoptions});
+		BDfunctionsDario.DesktopNotificationQueue.queue.push({parsedcontent,parsedoptions});
 		runQueue();
 	}
 	var runQueue = () => {
-		if (!BDfunctionsDevilBro.DesktopNotificationQueue.running) {
-			let notifyconfig = BDfunctionsDevilBro.DesktopNotificationQueue.queue.shift();
+		if (!BDfunctionsDario.DesktopNotificationQueue.running) {
+			let notifyconfig = BDfunctionsDario.DesktopNotificationQueue.queue.shift();
 			if (notifyconfig) notify(notifyconfig.parsedcontent, notifyconfig.parsedoptions);
 		}
 	}
 	var notify = (content, options) => {
-		BDfunctionsDevilBro.DesktopNotificationQueue.running = true;
+		BDfunctionsDario.DesktopNotificationQueue.running = true;
 		let mute = options.silent;
 		options.silent = options.silent || options.sound ? true : false;
 		let notificationEle = new Notification(content, options);
@@ -355,7 +361,7 @@ BDfunctionsDevilBro.showDesktopNotification = function (parsedcontent, parsedopt
 		var close = () => {
 			audio.pause();
 			notificationEle.close();
-			BDfunctionsDevilBro.DesktopNotificationQueue.running = false;
+			BDfunctionsDario.DesktopNotificationQueue.running = false;
 			setTimeout(() => {runQueue();},1000);
 		}
 	}
@@ -374,7 +380,7 @@ BDfunctionsDevilBro.showDesktopNotification = function (parsedcontent, parsedopt
 	}
 };
 
-BDfunctionsDevilBro.createTooltip = function (content, container, options = {}) {
+BDfunctionsDario.createTooltip = function (content, container, options = {}) {
 	if (!document.querySelector(".tooltips") || !content || !container || ($(container).offset().left == 0 && $(container).offset().top == 0)) return null;
 	let id = Math.round(Math.random()*10000000000000000);
 	let tooltip = document.createElement("div");
@@ -382,7 +388,7 @@ BDfunctionsDevilBro.createTooltip = function (content, container, options = {}) 
 	if (options.type) tooltip.classList.add("tooltip-" + options.type);
 	if (options.id) tooltip.id = options.id.split(" ")[0];
 	if (options.selector) options.selector.split(" ").forEach(selector => {if(selector) tooltip.classList.add(selector);});
-	if (options.css) BDfunctionsDevilBro.appendLocalStyle("customTooltipDevilBro" + id, options.css);
+	if (options.css) BDfunctionsDario.appendLocalStyle("customTooltipDevilBro" + id, options.css);
 	if (options.html === true) tooltip.innerHTML = content;
 	else tooltip.innerText = content;
 	
@@ -422,21 +428,21 @@ BDfunctionsDevilBro.createTooltip = function (content, container, options = {}) 
 			if (ownMatch || directMatch || parentMatch) {
 				tooltipObserver.disconnect();
 				tooltip.remove();
-				$(container).off("mouseleave.BDfunctionsDevilBroTooltip" + id);
-				BDfunctionsDevilBro.removeLocalStyle("customTooltipDevilBro" + id);
+				$(container).off("mouseleave.BDfunctionsDarioTooltip" + id);
+				BDfunctionsDario.removeLocalStyle("customTooltipDevilBro" + id);
 			}
 		});
 	});
 	tooltipObserver.observe(document.body, {subtree: true, childList: true});
 	
-	$(container).on("mouseleave.BDfunctionsDevilBroTooltip" + id, () => {
+	$(container).on("mouseleave.BDfunctionsDarioTooltip" + id, () => {
 		tooltip.remove();
 	});
 	
 	return tooltip;
 };
 
-BDfunctionsDevilBro.createNotificationsBar = function (content, options = {}) {
+BDfunctionsDario.createNotificationsBar = function (content, options = {}) {
 	if (!content) return;
 	let id = Math.round(Math.random()*10000000000000000);
 	let notifiybar = document.createElement("div");
@@ -465,13 +471,13 @@ BDfunctionsDevilBro.createNotificationsBar = function (content, options = {}) {
 	if (options.btn) $(`<button class="button-2TvR03 size14-1wjlWP weightMedium-13x9Y8">${options.btn}</button>`).insertAfter(notifiybarinner);
 	if (options.id) notifiybar.id = options.id.split(" ")[0];
 	if (options.selector) options.selector.split(" ").forEach(selector => {if(selector) notifiybar.classList.add(selector);});
-	if (options.css) BDfunctionsDevilBro.appendLocalStyle("customNotificationsBarDevilBro" + id, options.css);
+	if (options.css) BDfunctionsDario.appendLocalStyle("customNotificationsBarDevilBro" + id, options.css);
 	if (options.html === true) notifiybarinner.innerHTML = content;
 	else {
 		var urltest = document.createElement("a");
 		var newcontent = [];
 		for (let word of content.split(" ")) {
-			let encodedword = BDfunctionsDevilBro.encodeToHTML(word);
+			let encodedword = BDfunctionsDario.encodeToHTML(word);
 			urltest.href = word;
 			newcontent.push((urltest.host && urltest.host != window.location.host) ? `<label class="textLink-3eOiS-">${encodedword}</label>` : encodedword);
 		}
@@ -500,11 +506,11 @@ BDfunctionsDevilBro.createNotificationsBar = function (content, options = {}) {
 		}
 	}
 	if (!type) {
-		var comp = BDfunctionsDevilBro.color2COMP(options.color);
+		var comp = BDfunctionsDario.color2COMP(options.color);
 		var color = comp && comp[0] > 180 && comp[1] > 180 && comp[2] > 180 ? "#000" : "#FFF";
-		var bgColor = comp ? BDfunctionsDevilBro.color2HEX(comp) : "#F26522";
+		var bgColor = comp ? BDfunctionsDario.color2HEX(comp) : "#F26522";
 		var dismissFilter = comp && comp[0] > 180 && comp[1] > 180 && comp[2] > 180 ? "brightness(0%)" : "brightness(100%)";
-		BDfunctionsDevilBro.appendLocalStyle("customNotificationsBarColorCorrectionDevilBro" + id, 
+		BDfunctionsDario.appendLocalStyle("customNotificationsBarColorCorrectionDevilBro" + id, 
 			`.DevilBro-notice.notice-${id} {
 				background-color: ${bgColor} !important;
 			}
@@ -525,8 +531,8 @@ BDfunctionsDevilBro.createNotificationsBar = function (content, options = {}) {
 	}
 	$(notifiybar).on("click", ".dismiss-1QjyJW", () => {
 		$(notifiybar).slideUp({complete: () => {
-			BDfunctionsDevilBro.removeLocalStyle("customNotificationsBarDevilBro" + id);
-			BDfunctionsDevilBro.removeLocalStyle("customNotificationsBarColorCorrectionDevilBro" + id);
+			BDfunctionsDario.removeLocalStyle("customNotificationsBarDevilBro" + id);
+			BDfunctionsDario.removeLocalStyle("customNotificationsBarColorCorrectionDevilBro" + id);
 			notifiybar.remove();
 		}});
 	});
@@ -535,7 +541,7 @@ BDfunctionsDevilBro.createNotificationsBar = function (content, options = {}) {
 };
 
 // Plugins/Themes folder resolver from Square
-BDfunctionsDevilBro.getPluginsFolder = function () {
+BDfunctionsDario.getPluginsFolder = function () {
 	let process = require("process");
 	let path = require("path");
 	switch (process.platform) {
@@ -548,7 +554,7 @@ BDfunctionsDevilBro.getPluginsFolder = function () {
 	}
 };
 
-BDfunctionsDevilBro.getThemesFolder = function () {
+BDfunctionsDario.getThemesFolder = function () {
 	let process = require("process");
 	let path = require("path");
 	switch (process.platform) {
@@ -561,15 +567,15 @@ BDfunctionsDevilBro.getThemesFolder = function () {
 	}
 };
 
-BDfunctionsDevilBro.createUpdateButton = function () {
+BDfunctionsDario.createUpdateButton = function () {
 	var updateButton = document.createElement("button");
 	updateButton.className = "bd-pfbtn bd-updatebtn";
 	updateButton.innerText = "Check for Updates";
 	updateButton.onclick = function () {
-		BDfunctionsDevilBro.checkAllUpdates();
+		BDfunctionsDario.checkAllUpdates();
 	};			
 	updateButton.onmouseenter = function () {
-		BDfunctionsDevilBro.createTooltip("Only checks for updates of plugins, which support the updatecheck. Rightclick for a list.", updateButton, {type:"top",selector:"update-button-tooltip"});
+		BDfunctionsDario.createTooltip("Only checks for updates of plugins, which support the updatecheck. Rightclick for a list.", updateButton, {type:"top",selector:"update-button-tooltip"});
 		
 	};
 	updateButton.oncontextmenu = function () {
@@ -578,36 +584,36 @@ BDfunctionsDevilBro.createUpdateButton = function () {
 			for (var plugin in window.PluginUpdates.plugins) {
 				list.push(window.PluginUpdates.plugins[plugin].name);
 			}
-			BDfunctionsDevilBro.createTooltip(list.sort().join(", "), updateButton, {type:"bottom",selector:"update-list-tooltip"});
+			BDfunctionsDario.createTooltip(list.sort().join(", "), updateButton, {type:"bottom",selector:"update-list-tooltip"});
 		}
 	};
 	return updateButton;
 };
 
-BDfunctionsDevilBro.checkAllUpdates = function () {
+BDfunctionsDario.checkAllUpdates = function () {
 	for (let key in window.PluginUpdates.plugins) {
 		let plugin = window.PluginUpdates.plugins[key];
-		BDfunctionsDevilBro.checkUpdate(plugin.name, plugin.raw);
+		BDfunctionsDario.checkUpdate(plugin.name, plugin.raw);
 	}
 };
 
-BDfunctionsDevilBro.translatePlugin = function (plugin) {
+BDfunctionsDario.translatePlugin = function (plugin) {
 	if (typeof plugin.setLabelsByLanguage === "function" || typeof plugin.changeLanguageStrings === "function") {
 		var translateInterval = setInterval(() => {
 			if (document.querySelector("html").lang) {
 				clearInterval(translateInterval);
-				var language = BDfunctionsDevilBro.getDiscordLanguage();
+				var language = BDfunctionsDario.getDiscordLanguage();
 				if (typeof plugin.setLabelsByLanguage === "function") 		plugin.labels = plugin.setLabelsByLanguage(language.id);
 				if (typeof plugin.changeLanguageStrings === "function") 	plugin.changeLanguageStrings();
 				if (!plugin.appReload) {
-					console.log(BDfunctionsDevilBro.getLibraryStrings().toast_plugin_translated.replace("${pluginName}", plugin.getName()).replace("${ownlang}", language.ownlang));
+					console.log(BDfunctionsDario.getLibraryStrings().toast_plugin_translated.replace("${pluginName}", plugin.getName()).replace("${ownlang}", language.ownlang));
 				}
 			}
 		},100);
 	}
 };
 
-BDfunctionsDevilBro.languages = {
+BDfunctionsDario.languages = {
 	"$discord":	{name:"Discord (English (US))",		id:"en-US",		ownlang:"English (US)",				integrated:false,		dic:false,		deepl:false},
 	"af":		{name:"Afrikaans",					id:"af",		ownlang:"Afrikaans",				integrated:false,		dic:true,		deepl:false},
 	"sq":		{name:"Albanian",					id:"sq",		ownlang:"Shqiptar",					integrated:false,		dic:false,		deepl:false},
@@ -727,44 +733,44 @@ var pulling = setInterval(() => {
 		var languageID = document.querySelector("html").lang;
 		if (languageID) {
 			clearInterval(pulling);
-			BDfunctionsDevilBro.languages.$discord.name = "Discord (" + BDfunctionsDevilBro.languages[languageID].name + ")";
-			BDfunctionsDevilBro.languages.$discord.id = BDfunctionsDevilBro.languages[languageID].id;
-			BDfunctionsDevilBro.languages.$discord.ownlang = BDfunctionsDevilBro.languages[languageID].ownlang;
+			BDfunctionsDario.languages.$discord.name = "Discord (" + BDfunctionsDario.languages[languageID].name + ")";
+			BDfunctionsDario.languages.$discord.id = BDfunctionsDario.languages[languageID].id;
+			BDfunctionsDario.languages.$discord.ownlang = BDfunctionsDario.languages[languageID].ownlang;
 		}
 	},100);
 })();
 
-BDfunctionsDevilBro.getDiscordBuilt = function () {
+BDfunctionsDario.getDiscordBuilt = function () {
 	return require(require('electron').remote.app.getAppPath() + "/build_info.json").releaseChannel.toLowerCase();
 };
 
-BDfunctionsDevilBro.getDiscordVersion = function () {
+BDfunctionsDario.getDiscordVersion = function () {
 	return require(require('electron').remote.app.getAppPath() + "/build_info.json").version.toLowerCase();
 };
 
-BDfunctionsDevilBro.getDiscordLanguage = function () {
+BDfunctionsDario.getDiscordLanguage = function () {
 	var languageCode = document.querySelector("html").lang || "en-US";
 	var codeParts = languageCode.split("-");
 	var prefix = codeParts[0];
 	var suffix = codeParts[1] ? codeParts[1] : "";
 	languageCode = suffix && prefix.toUpperCase() != suffix.toUpperCase() ? prefix + "-" + suffix : prefix;
-	return BDfunctionsDevilBro.languages[languageCode] || BDfunctionsDevilBro.languages["en-US"];
+	return BDfunctionsDario.languages[languageCode] || BDfunctionsDario.languages["en-US"];
 };
 
-BDfunctionsDevilBro.getDiscordTheme = function () {
+BDfunctionsDario.getDiscordTheme = function () {
 	if ($(".theme-light").length > $(".theme-dark").length) return "theme-light";
 	else return "theme-dark";
 };
 	
-BDfunctionsDevilBro.getReactInstance = function (node) { 
+BDfunctionsDario.getReactInstance = function (node) { 
 	if (!node) return null;
 	return node[Object.keys(node).find((key) => key.startsWith("__reactInternalInstance"))];
 };
 
-BDfunctionsDevilBro.getOwnerInstance = function (config) { 
+BDfunctionsDario.getOwnerInstance = function (config) { 
 	if (config === undefined) return null;
 	if (!config.node || (!config.name && (!config.props || !Array.isArray(config.props)))) return null;
-	var inst = BDfunctionsDevilBro.getReactInstance(config.node);
+	var inst = BDfunctionsDario.getReactInstance(config.node);
 	if (!inst) return null;
 	
 	var depth = -1;
@@ -781,7 +787,7 @@ BDfunctionsDevilBro.getOwnerInstance = function (config) {
 	
 	function searchOwnerInReact (ele) {
 		depth++;
-		if (!ele || BDfunctionsDevilBro.getReactInstance(ele) || depth > maxDepth || performance.now() - start > maxTime) result = null;
+		if (!ele || BDfunctionsDario.getReactInstance(ele) || depth > maxDepth || performance.now() - start > maxTime) result = null;
 		else {
 			var keys = Object.getOwnPropertyNames(ele);
 			var result = null;
@@ -805,11 +811,11 @@ BDfunctionsDevilBro.getOwnerInstance = function (config) {
 	}
 };
 
-BDfunctionsDevilBro.getKeyInformation = function (config) {
+BDfunctionsDario.getKeyInformation = function (config) {
 	if (config === undefined) return null;
 	if (!config.node || !config.key) return null;
 	
-	var inst = BDfunctionsDevilBro.getReactInstance(config.node);
+	var inst = BDfunctionsDario.getReactInstance(config.node);
 	if (!inst) return null;
 	
 	var depth = -1;
@@ -847,7 +853,7 @@ BDfunctionsDevilBro.getKeyInformation = function (config) {
 
 	function searchKeyInReact (ele) {
 		depth++;
-		if (!ele || BDfunctionsDevilBro.getReactInstance(ele) || depth > maxDepth || performance.now() - start > maxTime) result = null;
+		if (!ele || BDfunctionsDario.getReactInstance(ele) || depth > maxDepth || performance.now() - start > maxTime) result = null;
 		else {
 			var keys = Object.getOwnPropertyNames(ele);
 			var result = null;
@@ -866,7 +872,7 @@ BDfunctionsDevilBro.getKeyInformation = function (config) {
 						else if (config.noCopies) {
 							var included = false;
 							for (var j = 0; j < resultArray.length; j++) {
-								if (BDfunctionsDevilBro.equals(value, resultArray[j])) {
+								if (BDfunctionsDario.equals(value, resultArray[j])) {
 									included = true;
 									break;
 								}
@@ -885,10 +891,10 @@ BDfunctionsDevilBro.getKeyInformation = function (config) {
 	}
 };
 
-BDfunctionsDevilBro.WebModules = {};
+BDfunctionsDario.WebModules = {};
 // code in this closure based on code by samogot and edited by myself
 // https://github.com/samogot/betterdiscord-plugins/blob/master/v2/1Lib%20Discord%20Internals/plugin.js
-BDfunctionsDevilBro.WebModules.find = function (filter) {
+BDfunctionsDario.WebModules.find = function (filter) {
 	const req = webpackJsonp([], {"__extra_id__": (module, exports, req) => exports.default = req}, ["__extra_id__"]).default;
 	delete req.c["__extra_id__"];
 	for (let i in req.c) { 
@@ -900,19 +906,19 @@ BDfunctionsDevilBro.WebModules.find = function (filter) {
 	}
 };
 
-BDfunctionsDevilBro.WebModules.findByProperties = function (properties) {
-	return BDfunctionsDevilBro.WebModules.find((module) => properties.every(prop => module[prop] !== undefined));
+BDfunctionsDario.WebModules.findByProperties = function (properties) {
+	return BDfunctionsDario.WebModules.find((module) => properties.every(prop => module[prop] !== undefined));
 };
 
-BDfunctionsDevilBro.WebModules.findByName = function (name) {
-	return BDfunctionsDevilBro.WebModules.find((module) => module.displayName === name);
+BDfunctionsDario.WebModules.findByName = function (name) {
+	return BDfunctionsDario.WebModules.find((module) => module.displayName === name);
 };
 
-BDfunctionsDevilBro.WebModules.findByPrototypes = function (prototypes) {
-	return BDfunctionsDevilBro.WebModules.find((module) => module.prototype && prototypes.every(proto => module.prototype[proto] !== undefined));
+BDfunctionsDario.WebModules.findByPrototypes = function (prototypes) {
+	return BDfunctionsDario.WebModules.find((module) => module.prototype && prototypes.every(proto => module.prototype[proto] !== undefined));
 };
 
-BDfunctionsDevilBro.WebModules.addListener = function (internalModule, moduleFunction, callback) {
+BDfunctionsDario.WebModules.addListener = function (internalModule, moduleFunction, callback) {
 	if (typeof internalModule !== "object" || !moduleFunction || typeof callback !== "function") return;
 	if (!internalModule[moduleFunction] || typeof(internalModule[moduleFunction]) !== "function") return;
 	if (!internalModule.__internalListeners) internalModule.__internalListeners = {};
@@ -920,7 +926,7 @@ BDfunctionsDevilBro.WebModules.addListener = function (internalModule, moduleFun
 	
 	if (!internalModule.__listenerPatches) internalModule.__listenerPatches = {};
 	if (!internalModule.__listenerPatches[moduleFunction]) {
-		internalModule.__listenerPatches[moduleFunction] = BDfunctionsDevilBro.WebModules.monkeyPatch(internalModule, moduleFunction, {after: (data) => {
+		internalModule.__listenerPatches[moduleFunction] = BDfunctionsDario.WebModules.monkeyPatch(internalModule, moduleFunction, {after: (data) => {
 			for (let listener of internalModule.__internalListeners[moduleFunction]) listener();
 		}});
 	}
@@ -928,7 +934,7 @@ BDfunctionsDevilBro.WebModules.addListener = function (internalModule, moduleFun
 	internalModule.__internalListeners[moduleFunction].add(callback);
 };
 
-BDfunctionsDevilBro.WebModules.removeListener = function (internalModule, moduleFunction, callback) {
+BDfunctionsDario.WebModules.removeListener = function (internalModule, moduleFunction, callback) {
 	if (typeof internalModule !== "object" || !moduleFunction || typeof callback !== "function") return;
 	if (!internalModule[moduleFunction] || typeof(internalModule[moduleFunction]) !== "function") return;
 	if (!internalModule.__internalListeners || !internalModule.__internalListeners[moduleFunction] || !internalModule.__internalListeners[moduleFunction].size) return;
@@ -941,7 +947,7 @@ BDfunctionsDevilBro.WebModules.removeListener = function (internalModule, module
 	}
 };
 
-BDfunctionsDevilBro.WebModules.monkeyPatch = function (internalModule, moduleFunction, {before, after, instead, once = false, silent = false} = options) {
+BDfunctionsDario.WebModules.monkeyPatch = function (internalModule, moduleFunction, {before, after, instead, once = false, silent = false} = options) {
 	const origMethod = internalModule[moduleFunction];
 	const cancel = function () {
 		internalModule[moduleFunction] = origMethod;
@@ -980,7 +986,7 @@ BDfunctionsDevilBro.WebModules.monkeyPatch = function (internalModule, moduleFun
 	return cancel;
 };
 
-BDfunctionsDevilBro.WebModules.findFunction = function (filter) {
+BDfunctionsDario.WebModules.findFunction = function (filter) {
 	const req = webpackJsonp([], {"__extra_id__": (module, exports, req) => exports.default = req}, ["__extra_id__"]).default;
 	delete req.c["__extra_id__"];
 	for (let i in req.m) { 
@@ -993,7 +999,7 @@ BDfunctionsDevilBro.WebModules.findFunction = function (filter) {
 	return null;
 };
 
-BDfunctionsDevilBro.WebModules.patchFunction = function (newOutput, index) {
+BDfunctionsDario.WebModules.patchFunction = function (newOutput, index) {
 	const req = webpackJsonp([], {"__extra_id__": (module, exports, req) => exports.default = req}, ["__extra_id__"]).default;
 	try {
 		var output = {};
@@ -1015,14 +1021,14 @@ BDfunctionsDevilBro.WebModules.patchFunction = function (newOutput, index) {
 		};
 	}
 	catch (err) {
-		console.warn("BDfunctionsDevilBro: Could not patch Function. Error: " + err);
+		console.warn("BDfunctionsDario: Could not patch Function. Error: " + err);
 	}
 };
 
-BDfunctionsDevilBro.addOnSwitchListener = function (plugin) {
+BDfunctionsDario.addOnSwitchListener = function (plugin) {
 	if (typeof plugin.onSwitch === "function") {
-		BDfunctionsDevilBro.removeOnSwitchListener(plugin);
-		if (!BDfunctionsDevilBro.zacksFork()) {
+		BDfunctionsDario.removeOnSwitchListener(plugin);
+		if (!BDfunctionsDario.zacksFork()) {
 			plugin.onSwitch = plugin.onSwitch.bind(plugin);
 			require("electron").remote.getCurrentWindow().webContents.addListener("did-navigate-in-page", plugin.onSwitch);
 		}
@@ -1056,18 +1062,18 @@ BDfunctionsDevilBro.addOnSwitchListener = function (plugin) {
 	}
 };
 
-BDfunctionsDevilBro.removeOnSwitchListener = function (plugin) {
+BDfunctionsDario.removeOnSwitchListener = function (plugin) {
 	if (typeof plugin.onSwitch === "function") {
-		if (!BDfunctionsDevilBro.zacksFork()) {
+		if (!BDfunctionsDario.zacksFork()) {
 			require("electron").remote.getCurrentWindow().webContents.removeListener("did-navigate-in-page", plugin.onSwitch);
 		}
 		if (typeof plugin.onSwitchFix === "object") plugin.onSwitchFix.disconnect();
 	}
 };
 
-BDfunctionsDevilBro.addReloadListener = function (plugin) {
+BDfunctionsDario.addReloadListener = function (plugin) {
 	if (typeof plugin.initialize === "function") {
-		BDfunctionsDevilBro.removeReloadListener(plugin);
+		BDfunctionsDario.removeReloadListener(plugin);
 		var appwindow = document.querySelector(".app-XZYfmp");
 		if (appwindow) {
 			plugin.reloadFix = new MutationObserver((changes, _) => {
@@ -1093,13 +1099,13 @@ BDfunctionsDevilBro.addReloadListener = function (plugin) {
 	}
 };
 
-BDfunctionsDevilBro.removeReloadListener = function (plugin) {
+BDfunctionsDario.removeReloadListener = function (plugin) {
 	if (typeof plugin.initialize === "function") {
 		if (typeof plugin.reloadFix === "object") plugin.reloadFix.disconnect();
 	}
 };
 
-BDfunctionsDevilBro.getLanguageTable = function (lang) {
+BDfunctionsDario.getLanguageTable = function (lang) {
 	var ti = {
 		"bg":		"холандски",		//bulgarian
 		"cs":		"Nizozemština",		//czech
@@ -1129,13 +1135,13 @@ BDfunctionsDevilBro.getLanguageTable = function (lang) {
 		"zh-CN":	"荷兰语",			//chinese(china)
 		"zh-TW":	"荷蘭文"				//chinese(traditional)
 	};
-	lang = lang ? lang : BDfunctionsDevilBro.getDiscordLanguage().id;
-	return BDfunctionsDevilBro.WebModules.find(function (m) {
+	lang = lang ? lang : BDfunctionsDario.getDiscordLanguage().id;
+	return BDfunctionsDario.WebModules.find(function (m) {
 		return m.nl === ti[lang];
 	});
 };
 
-BDfunctionsDevilBro.equals = function (check1, check2, compareOrder) {
+BDfunctionsDario.equals = function (check1, check2, compareOrder) {
 	var depth = -1;
 	
 	if (compareOrder === undefined || typeof compareOrder !== "boolean") compareOrder = false;
@@ -1175,66 +1181,66 @@ BDfunctionsDevilBro.equals = function (check1, check2, compareOrder) {
 	}
 };
 
-BDfunctionsDevilBro.filterObject = function (obj, predicate) {
+BDfunctionsDario.filterObject = function (obj, predicate) {
 return Object.keys(obj).filter(key => predicate(obj[key])).reduce((res, key) => (res[key] = obj[key], res), {});
 };
 
-BDfunctionsDevilBro.isObjectEmpty = function (obj) {
+BDfunctionsDario.isObjectEmpty = function (obj) {
 	return typeof obj !== "object" || Object.getOwnPropertyNames(obj).length == 0;
 };
 
-BDfunctionsDevilBro.removeFromArray = function (array, value) {
+BDfunctionsDario.removeFromArray = function (array, value) {
 	if (!array || !value || !Array.isArray(array) || !array.includes(value)) return;
 	array.splice(array.indexOf(value), 1);
 };
 
 (() => {
 var pulling = setInterval(() => {
-		var UserActions = BDfunctionsDevilBro.WebModules.findByProperties(["getCurrentUser"]);
+		var UserActions = BDfunctionsDario.WebModules.findByProperties(["getCurrentUser"]);
 		var userData = UserActions && typeof UserActions.getCurrentUser == "function" ? UserActions.getCurrentUser() : null;
-		if (userData && !BDfunctionsDevilBro.isObjectEmpty(userData)) {
+		if (userData && !BDfunctionsDario.isObjectEmpty(userData)) {
 			clearInterval(pulling);
-			BDfunctionsDevilBro.myData = userData;
+			BDfunctionsDario.myData = userData;
 		}
 	},100);
 })();
 
-BDfunctionsDevilBro.getMyUserStatus = function () {
+BDfunctionsDario.getMyUserStatus = function () {
 	var userStatus = "invisible";
 	var status = document.querySelector(".container-iksrDt .status");
 	if (status) userStatus = status.classList[1].split("-")[1];
 	return userStatus;
 };
 
-BDfunctionsDevilBro.readServerList = function () {
-	var server, id, info, foundServers = [], GuildStore = BDfunctionsDevilBro.WebModules.findByProperties(["getGuilds"]);
+BDfunctionsDario.readServerList = function () {
+	var server, id, info, foundServers = [], GuildStore = BDfunctionsDario.WebModules.findByProperties(["getGuilds"]);
 	for (server of document.querySelectorAll(".guild-separator ~ .guild")) {
-		id = BDfunctionsDevilBro.getIdOfServer(server);
+		id = BDfunctionsDario.getIdOfServer(server);
 		info = id ? GuildStore.getGuild(id) : null;
 		if (info) foundServers.push(Object.assign({},info,{div:server,data:info}));
 	}
 	return foundServers;
 };
 
-BDfunctionsDevilBro.readUnreadServerList = function (servers) {
+BDfunctionsDario.readUnreadServerList = function (servers) {
 	var serverObj, foundServers = [];
-	for (serverObj of (servers === undefined || !Array.isArray(servers) ? BDfunctionsDevilBro.readServerList() : servers)) {
+	for (serverObj of (servers === undefined || !Array.isArray(servers) ? BDfunctionsDario.readServerList() : servers)) {
 		if (serverObj && serverObj.div && (serverObj.div.classList.contains("unread") || serverObj.div.querySelector(".badge"))) foundServers.push(serverObj);
 	}
 	return foundServers;
 };
 
-BDfunctionsDevilBro.getSelectedServer = function () {
-	var server, info, GuildStore = BDfunctionsDevilBro.WebModules.findByProperties(["getGuilds"]);
+BDfunctionsDario.getSelectedServer = function () {
+	var server, info, GuildStore = BDfunctionsDario.WebModules.findByProperties(["getGuilds"]);
 	for (server of document.querySelectorAll(".guild-separator ~ .guild.selected")) {
-		id = BDfunctionsDevilBro.getIdOfServer(server);
+		id = BDfunctionsDario.getIdOfServer(server);
 		info = id ? GuildStore.getGuild(id) : null;
 		if (info) return Object.assign({},info,{div:server,data:info});
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.getIdOfServer = function (server) {
+BDfunctionsDario.getIdOfServer = function (server) {
 	if (!server || !server.classList || !server.classList.contains("guild") || server.classList.contains("copy") || server.classList.contains("folder")) return;
 	var switchlink, id;
 	switchlink = server.querySelector("a");
@@ -1242,64 +1248,64 @@ BDfunctionsDevilBro.getIdOfServer = function (server) {
 	return id && id.length > 3 && !isNaN(parseInt(id[4])) ? id[4] : null;
 };
 
-BDfunctionsDevilBro.getDivOfServer = function (id) {
-	for (var serverObj of BDfunctionsDevilBro.readServerList()) {
+BDfunctionsDario.getDivOfServer = function (id) {
+	for (var serverObj of BDfunctionsDario.readServerList()) {
 		if (serverObj && serverObj.id == id) return serverObj;
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.readChannelList = function () {
-	var channel, info, foundChannels = [], ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels"]);
+BDfunctionsDario.readChannelList = function () {
+	var channel, info, foundChannels = [], ChannelStore = BDfunctionsDario.WebModules.findByProperties(["getChannels"]);
 	for (channel of document.querySelectorAll(".containerDefault-7RImuF, .containerDefault-1bbItS")) {
-		info = BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"channel"});
+		info = BDfunctionsDario.getKeyInformation({"node":channel, "key":"channel"});
 		if (info) info = ChannelStore.getChannel(info.id);
 		if (info) foundChannels.push(Object.assign({},info,{div:channel,data:info}));
 	}
 	for (channel of document.querySelectorAll(".channel.private")) {
-		info = BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"user"}) || BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"channel"});
+		info = BDfunctionsDario.getKeyInformation({"node":channel, "key":"user"}) || BDfunctionsDario.getKeyInformation({"node":channel, "key":"channel"});
 		if (info) info = ChannelStore.getChannel(ChannelStore.getDMFromUserId(info.id)) || ChannelStore.getChannel(info.id)
 		if (info) foundChannels.push(Object.assign({},info,{div:channel,data:info}));
 	}
 	return foundChannels;
 };
 
-BDfunctionsDevilBro.getSelectedChannel = function () {
-	var channel, info, ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels"]);
+BDfunctionsDario.getSelectedChannel = function () {
+	var channel, info, ChannelStore = BDfunctionsDario.WebModules.findByProperties(["getChannels"]);
 	for (channel of document.querySelectorAll(".wrapperSelectedText-31jJa8")) {
-		info = BDfunctionsDevilBro.getKeyInformation({"node":channel.parentElement, "key":"channel"});
+		info = BDfunctionsDario.getKeyInformation({"node":channel.parentElement, "key":"channel"});
 		if (info) info = ChannelStore.getChannel(info.id);
 		if (info) return Object.assign({},info,{div:channel,data:info});
 	}
 	for (channel of document.querySelectorAll(".channel.private.selected")) {
-		info = BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"user"}) || BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"channel"});
+		info = BDfunctionsDario.getKeyInformation({"node":channel, "key":"user"}) || BDfunctionsDario.getKeyInformation({"node":channel, "key":"channel"});
 		if (info) info = ChannelStore.getChannel(ChannelStore.getDMFromUserId(info.id)) || ChannelStore.getChannel(info.id)
 		if (info) return Object.assign({},info,{div:channel,data:info});
 	}
-	info = BDfunctionsDevilBro.getKeyInformation({"node":document.querySelector(".chat"), "key":"channel"});
+	info = BDfunctionsDario.getKeyInformation({"node":document.querySelector(".chat"), "key":"channel"});
 	if (info) info = ChannelStore.getChannel(info.id)
 	if (info) return Object.assign({},info,{div:null,data:info});
 	return null;
 };
 
-BDfunctionsDevilBro.getDivOfChannel = function (id) {
-	for (var channelObj of BDfunctionsDevilBro.readChannelList()) {
+BDfunctionsDario.getDivOfChannel = function (id) {
+	for (var channelObj of BDfunctionsDario.readChannelList()) {
 		if (channelObj && channelObj.id == id) return channelObj;
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.readDmList = function () {
-	var dm, info, foundDMs = [], ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels"]);
+BDfunctionsDario.readDmList = function () {
+	var dm, info, foundDMs = [], ChannelStore = BDfunctionsDario.WebModules.findByProperties(["getChannels"]);
 	for (dm of document.querySelectorAll(".dms > .guild")) {
-		id = BDfunctionsDevilBro.getIdOfDM(dm);
+		id = BDfunctionsDario.getIdOfDM(dm);
 		info = id ? ChannelStore.getChannel(id) : null;
 		if (info) foundDMs.push(Object.assign({},info,{div:dm,data:info}));
 	}
 	return foundDMs;
 };
 
-BDfunctionsDevilBro.getIdOfDM = function (dm) {
+BDfunctionsDario.getIdOfDM = function (dm) {
 	if (!dm || !dm.classList || !dm.classList.contains("guild") || dm.classList.contains("copy") || dm.classList.contains("folder")) return;
 	if (!dm.parentElement || !dm.parentElement.classList || !dm.parentElement.classList("dms")) return;
 	var switchlink, id;
@@ -1308,28 +1314,28 @@ BDfunctionsDevilBro.getIdOfDM = function (dm) {
 	return id && id.length > 3 && !isNaN(parseInt(id[5])) ? id[5] : null;
 };
 
-BDfunctionsDevilBro.getDivOfDM = function (id) {
-	for (var dmObj of BDfunctionsDevilBro.readDmList()) {
+BDfunctionsDario.getDivOfDM = function (id) {
+	for (var dmObj of BDfunctionsDario.readDmList()) {
 		if (dmObj && dmObj.id == id) return dmObj;
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.saveAllData = function (settings, plugin, keyName) {
+BDfunctionsDario.saveAllData = function (settings, plugin, keyName) {
 	bdPluginStorage.set(typeof plugin === "string" ? plugin : plugin.getName(), keyName, settings);
 };
 
-BDfunctionsDevilBro.loadAllData = function (plugin, keyName) {
+BDfunctionsDario.loadAllData = function (plugin, keyName) {
 	return bdPluginStorage.get(typeof plugin === "string" ? plugin : plugin.getName(), keyName) || {};
 };
 
-BDfunctionsDevilBro.removeAllData = function (plugin, keyName) {
-	BDfunctionsDevilBro.saveAllData({}, plugin, keyName);
+BDfunctionsDario.removeAllData = function (plugin, keyName) {
+	BDfunctionsDario.saveAllData({}, plugin, keyName);
 };
 
-BDfunctionsDevilBro.getAllData = function (plugin, keyName, compareObject) {
+BDfunctionsDario.getAllData = function (plugin, keyName, compareObject) {
 	if (!plugin.defaults || !plugin.defaults[keyName]) return {};
-	var oldData = BDfunctionsDevilBro.loadAllData(plugin, keyName), newData = {}, saveData = false;
+	var oldData = BDfunctionsDario.loadAllData(plugin, keyName), newData = {}, saveData = false;
 	for (let key in plugin.defaults[keyName]) {
 		if (oldData[key] == null) {
 			newData[key] = plugin.defaults[keyName][key].value;
@@ -1343,43 +1349,43 @@ BDfunctionsDevilBro.getAllData = function (plugin, keyName, compareObject) {
 			saveData = true;
 		}
 	}
-	if (saveData) BDfunctionsDevilBro.saveAllData(newData, plugin, keyName);
+	if (saveData) BDfunctionsDario.saveAllData(newData, plugin, keyName);
 	return newData;
 };
 
-BDfunctionsDevilBro.saveData = function (id, value, plugin, keyName) {
-	var data = BDfunctionsDevilBro.loadAllData(plugin, keyName);
+BDfunctionsDario.saveData = function (id, value, plugin, keyName) {
+	var data = BDfunctionsDario.loadAllData(plugin, keyName);
 	
 	data[id] = value;
 	
-	BDfunctionsDevilBro.saveAllData(data, plugin, keyName);
+	BDfunctionsDario.saveAllData(data, plugin, keyName);
 };
 
-BDfunctionsDevilBro.loadData = function (id, plugin, keyName) {
-	var data = BDfunctionsDevilBro.loadAllData(plugin, keyName);
+BDfunctionsDario.loadData = function (id, plugin, keyName) {
+	var data = BDfunctionsDario.loadAllData(plugin, keyName);
 	
 	var value = data[id];
 	
 	return value === undefined ? null : value;
 };
 	
-BDfunctionsDevilBro.removeData = function (id, plugin, keyName) {
-	var data = BDfunctionsDevilBro.loadAllData(plugin, keyName);
+BDfunctionsDario.removeData = function (id, plugin, keyName) {
+	var data = BDfunctionsDario.loadAllData(plugin, keyName);
 	
 	delete data[id];
 	
-	BDfunctionsDevilBro.saveAllData(data, plugin, keyName);
+	BDfunctionsDario.saveAllData(data, plugin, keyName);
 };
 
-BDfunctionsDevilBro.getData = function (id, plugin, keyName, compareObject) {
-	var data = BDfunctionsDevilBro.getAllData(plugin, keyName, compareObject);
+BDfunctionsDario.getData = function (id, plugin, keyName, compareObject) {
+	var data = BDfunctionsDario.getAllData(plugin, keyName, compareObject);
 	
 	var value = data[id];
 	
 	return value === undefined ? null : value;
 };
 
-BDfunctionsDevilBro.appendWebScript = function (filepath) {
+BDfunctionsDario.appendWebScript = function (filepath) {
 	$('head script[src="' + filepath + '"]').remove();
 	
 	var ele = document.createElement("script");
@@ -1388,7 +1394,7 @@ BDfunctionsDevilBro.appendWebScript = function (filepath) {
 	$("head").append(ele);
 };
 
-BDfunctionsDevilBro.appendWebStyle = function (filepath) {
+BDfunctionsDario.appendWebStyle = function (filepath) {
 	$('head link[href="' + filepath + '"]').remove();
 
 	var ele = document.createElement("link");
@@ -1399,7 +1405,7 @@ BDfunctionsDevilBro.appendWebStyle = function (filepath) {
 	$("head").append(ele);
 };
 
-BDfunctionsDevilBro.appendLocalStyle = function (cssname, css) {
+BDfunctionsDario.appendLocalStyle = function (cssname, css) {
 	$('head style[id="' + cssname + 'CSS"]').remove();
 
 	var ele = document.createElement("style");
@@ -1409,11 +1415,11 @@ BDfunctionsDevilBro.appendLocalStyle = function (cssname, css) {
 	$("head").append(ele);
 };
 
-BDfunctionsDevilBro.removeLocalStyle = function (cssname) {
+BDfunctionsDario.removeLocalStyle = function (cssname) {
 	$('head style[id="' + cssname + 'CSS"]').remove();
 };
 
-BDfunctionsDevilBro.sortArrayByKey = function (array, key, except) {
+BDfunctionsDario.sortArrayByKey = function (array, key, except) {
 	if (except === undefined) except = null;
 	return array.sort(function (a, b) {
 		var x = a[key]; var y = b[key];
@@ -1423,15 +1429,15 @@ BDfunctionsDevilBro.sortArrayByKey = function (array, key, except) {
 	});
 };
 
-BDfunctionsDevilBro.highlightText = function (string, searchstring) {
+BDfunctionsDario.highlightText = function (string, searchstring) {
 	if (!(searchstring.length > 0)) return string;
 	var added = 0, copy = string, wrapperopen = `<span class="highlight">`, wrapperclose = `</span>`;
-	BDfunctionsDevilBro.getAllIndexes(string.toUpperCase(), searchstring.toUpperCase()).forEach((start) => {
+	BDfunctionsDario.getAllIndexes(string.toUpperCase(), searchstring.toUpperCase()).forEach((start) => {
 		let offset = added*(wrapperopen.length + wrapperclose.length);
 		start = start + offset;
 		let end = start + searchstring.length;
-		let openIndexes = [-1].concat(BDfunctionsDevilBro.getAllIndexes(string.substring(0, start), "<"));
-		let closedIndexes = [-1].concat(BDfunctionsDevilBro.getAllIndexes(string.substring(0, start), ">"));
+		let openIndexes = [-1].concat(BDfunctionsDario.getAllIndexes(string.substring(0, start), "<"));
+		let closedIndexes = [-1].concat(BDfunctionsDario.getAllIndexes(string.substring(0, start), ">"));
 		if (openIndexes[openIndexes.length-1] > closedIndexes[closedIndexes.length-1]) return;
 		string = string.substring(0, start) + wrapperopen + string.substring(start, end) + wrapperclose + string.substring(end);
 		added++;
@@ -1439,7 +1445,7 @@ BDfunctionsDevilBro.highlightText = function (string, searchstring) {
 	return string ? string : copy;
 };
 
-BDfunctionsDevilBro.getAllIndexes = function (array, val) {
+BDfunctionsDario.getAllIndexes = function (array, val) {
 	var indexes = [], i = -1;
 	while ((i = array.indexOf(val, i+1)) != -1){
 		indexes.push(i);
@@ -1447,16 +1453,16 @@ BDfunctionsDevilBro.getAllIndexes = function (array, val) {
 	return indexes;
 };
 
-BDfunctionsDevilBro.formatBytes = function (a, b) {
+BDfunctionsDario.formatBytes = function (a, b) {
 	if (a == 0) return "0 Bytes";
 	if (a == 1) return "1 Byte";
 	var c = 1024, d = b < 1 ? 0 : b > 20 ? 20: b || 2, e = ["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"], f = Math.floor(Math.log(a)/Math.log(c));
 	return parseFloat((a/Math.pow(c,f)).toFixed(d)) + " " + e[f];
 };
 
-BDfunctionsDevilBro.color2COMP = function (color) {
+BDfunctionsDario.color2COMP = function (color) {
 	if (color) {
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDfunctionsDario.checkColorType(color)) {
 			case "comp":
 				return color;
 			case "rgb":
@@ -1489,17 +1495,17 @@ BDfunctionsDevilBro.color2COMP = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.color2RGB = function (color) {
+BDfunctionsDario.color2RGB = function (color) {
 	if (color) {
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDfunctionsDario.checkColorType(color)) {
 			case "comp":
 				return "rgb(" + (color[0]) + ", " + (color[1]) + ", " + (color[2]) + ")";
 			case "rgb":
 				return color;
 			case "hsl":
-				return BDfunctionsDevilBro.color2RGB(BDfunctionsDevilBro.color2COMP(color));
+				return BDfunctionsDario.color2RGB(BDfunctionsDario.color2COMP(color));
 			case "hex":
-				return BDfunctionsDevilBro.color2RGB(BDfunctionsDevilBro.color2COMP(color));
+				return BDfunctionsDario.color2RGB(BDfunctionsDario.color2COMP(color));
 			default:
 				return null;
 		}
@@ -1507,9 +1513,9 @@ BDfunctionsDevilBro.color2RGB = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.color2HSL = function (color) {
+BDfunctionsDario.color2HSL = function (color) {
 	if (color) {
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDfunctionsDario.checkColorType(color)) {
 			case "comp":
 				var r = parseInt(color[0]), g = parseInt(color[1]), b = parseInt(color[2]);
 				var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min, h, s = (max === 0 ? 0 : d / max), l = max / 255;
@@ -1521,11 +1527,11 @@ BDfunctionsDevilBro.color2HSL = function (color) {
 				}
 				return "hsl(" + Math.round(h*360) + ", " + s + ", " + l + ")";
 			case "rgb":
-				return BDfunctionsDevilBro.color2HSL(BDfunctionsDevilBro.color2COMP(color));
+				return BDfunctionsDario.color2HSL(BDfunctionsDario.color2COMP(color));
 			case "hsl":
 				return color;
 			case "hex":
-				return BDfunctionsDevilBro.color2HSL(BDfunctionsDevilBro.color2COMP(color));
+				return BDfunctionsDario.color2HSL(BDfunctionsDario.color2COMP(color));
 			default:
 				return null;
 		}
@@ -1533,15 +1539,15 @@ BDfunctionsDevilBro.color2HSL = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.color2HEX = function (color) {
+BDfunctionsDario.color2HEX = function (color) {
 	if (color) {
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDfunctionsDario.checkColorType(color)) {
 			case "comp":
 				return ("#" + (0x1000000 + ((color[2]) | ((color[1]) << 8) | ((color[0]) << 16))).toString(16).slice(1)).toUpperCase();
 			case "rgb":
-				return BDfunctionsDevilBro.color2HEX(BDfunctionsDevilBro.color2COMP(color));
+				return BDfunctionsDario.color2HEX(BDfunctionsDario.color2COMP(color));
 			case "hsl":
-				return BDfunctionsDevilBro.color2HEX(BDfunctionsDevilBro.color2COMP(color));
+				return BDfunctionsDario.color2HEX(BDfunctionsDario.color2COMP(color));
 			case "hex":
 				return color;
 			default:
@@ -1551,21 +1557,21 @@ BDfunctionsDevilBro.color2HEX = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.colorCHANGE = function (color, value) {
+BDfunctionsDario.colorCHANGE = function (color, value) {
 	if (color) {
-		var comp = BDfunctionsDevilBro.color2COMP(color);
+		var comp = BDfunctionsDario.color2COMP(color);
 		if (!comp || value === undefined || typeof value != "number") return null;
 		comp = comp.map(Number);
 		comp = [(comp[0]+value).toString(),(comp[1]+value).toString(),(comp[2]+value).toString()];
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDfunctionsDario.checkColorType(color)) {
 			case "comp":
 				return comp;
 			case "rgb":
-				return BDfunctionsDevilBro.color2RGB(comp);
+				return BDfunctionsDario.color2RGB(comp);
 			case "hsl":
-				return BDfunctionsDevilBro.color2HSL(comp);
+				return BDfunctionsDario.color2HSL(comp);
 			case "hex":
-				return BDfunctionsDevilBro.color2HEX(comp);
+				return BDfunctionsDario.color2HEX(comp);
 			default:
 				return null;
 		}
@@ -1573,43 +1579,43 @@ BDfunctionsDevilBro.colorCHANGE = function (color, value) {
 	return null;
 };
 
-BDfunctionsDevilBro.colorCOMPARE = function (color1, color2) {
+BDfunctionsDario.colorCOMPARE = function (color1, color2) {
 	if (color1 && color2) {
-		color1 = BDfunctionsDevilBro.color2RGB(color1);
-		color2 = BDfunctionsDevilBro.color2RGB(color2);
-		return BDfunctionsDevilBro.equals(color1,color2);
+		color1 = BDfunctionsDario.color2RGB(color1);
+		color2 = BDfunctionsDario.color2RGB(color2);
+		return BDfunctionsDario.equals(color1,color2);
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.colorINV = function (color, conv) {
+BDfunctionsDario.colorINV = function (color, conv) {
 	if (color) {
-		var type = BDfunctionsDevilBro.checkColorType(color);
+		var type = BDfunctionsDario.checkColorType(color);
 		if (type) {
 			if (conv === undefined) {
-				var inv = BDfunctionsDevilBro.color2COMP(color);
+				var inv = BDfunctionsDario.color2COMP(color);
 				inv = [(255-inv[0]), (255-inv[1]), (255-inv[2])];
-				switch (BDfunctionsDevilBro.checkColorType(color)) {
+				switch (BDfunctionsDario.checkColorType(color)) {
 					case "comp":
 						return inv;
 					case "rgb":
-						return BDfunctionsDevilBro.color2RGB(inv);
+						return BDfunctionsDario.color2RGB(inv);
 					case "hsl":
-						return BDfunctionsDevilBro.color2HSL(inv);
+						return BDfunctionsDario.color2HSL(inv);
 					case "hex":
-						return BDfunctionsDevilBro.color2HEX(inv);
+						return BDfunctionsDario.color2HEX(inv);
 				}
 			}
 			else {
 				switch (conv.toLowerCase()) {
 					case "comp":
-						return BDfunctionsDevilBro.colorINV(BDfunctionsDevilBro.color2COMP(color));
+						return BDfunctionsDario.colorINV(BDfunctionsDario.color2COMP(color));
 					case "rgb":
-						return BDfunctionsDevilBro.colorINV(BDfunctionsDevilBro.color2RGB(color));
+						return BDfunctionsDario.colorINV(BDfunctionsDario.color2RGB(color));
 					case "hsl":
-						return BDfunctionsDevilBro.colorINV(BDfunctionsDevilBro.color2HSL(color));
+						return BDfunctionsDario.colorINV(BDfunctionsDario.color2HSL(color));
 					case "hex":
-						return BDfunctionsDevilBro.colorINV(BDfunctionsDevilBro.color2HEX(color));
+						return BDfunctionsDario.colorINV(BDfunctionsDario.color2HEX(color));
 					default:
 						return null;
 				}
@@ -1619,7 +1625,7 @@ BDfunctionsDevilBro.colorINV = function (color, conv) {
 	return null;
 };
 
-BDfunctionsDevilBro.checkColorType = function (color) {
+BDfunctionsDario.checkColorType = function (color) {
 	if (color) {
 		if (typeof color === "object" && color.length == 3) {
 			return "comp";
@@ -1637,38 +1643,38 @@ BDfunctionsDevilBro.checkColorType = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.setInnerText = function (div, text) {
+BDfunctionsDario.setInnerText = function (div, text) {
 	if (!div) return;
 	var textNode = $(div).contents().filter(function () {return this.nodeType == Node.TEXT_NODE;})[0];
 	if (textNode) textNode.textContent = text;
 };
 	
-BDfunctionsDevilBro.getInnerText = function (div) {
+BDfunctionsDario.getInnerText = function (div) {
 	if (!div) return;
 	var textNode = $(div).contents().filter(function () {return this.nodeType == Node.TEXT_NODE;})[0];
 	return textNode ? textNode.textContent : undefined;
 };
 	
-BDfunctionsDevilBro.encodeToHTML = function (string) {
+BDfunctionsDario.encodeToHTML = function (string) {
 	var ele = document.createElement("div");
 	ele.innerText = string;
 	return ele.innerHTML;
 };
 
-BDfunctionsDevilBro.regEscape = function (string) {
+BDfunctionsDario.regEscape = function (string) {
 	return string.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
 };
 
-BDfunctionsDevilBro.insertNRST = function (string) {
+BDfunctionsDario.insertNRST = function (string) {
 	return string
-		.replace(new RegExp(BDfunctionsDevilBro.regEscape("\\n"),"g"),"\n")
-		.replace(new RegExp(BDfunctionsDevilBro.regEscape("\\r"),"g"),"\r")
-		.replace(new RegExp(BDfunctionsDevilBro.regEscape("\\s"),"g")," ")
-		.replace(new RegExp(BDfunctionsDevilBro.regEscape("\\t"),"g"),"\t");
+		.replace(new RegExp(BDfunctionsDario.regEscape("\\n"),"g"),"\n")
+		.replace(new RegExp(BDfunctionsDario.regEscape("\\r"),"g"),"\r")
+		.replace(new RegExp(BDfunctionsDario.regEscape("\\s"),"g")," ")
+		.replace(new RegExp(BDfunctionsDario.regEscape("\\t"),"g"),"\t");
 };
 
-BDfunctionsDevilBro.clearReadNotifications = function (servers) {
-	var GuildActions = BDfunctionsDevilBro.WebModules.findByProperties(["markGuildAsRead"]);
+BDfunctionsDario.clearReadNotifications = function (servers) {
+	var GuildActions = BDfunctionsDario.WebModules.findByProperties(["markGuildAsRead"]);
 	if (!servers || !GuildActions) return;
 	servers = Array.isArray(servers) ? servers : Array.from(servers);
 	servers.forEach((serverObj, i) => {
@@ -1677,7 +1683,7 @@ BDfunctionsDevilBro.clearReadNotifications = function (servers) {
 	}); 
 };
 
-BDfunctionsDevilBro.triggerSend = function (textarea) {
+BDfunctionsDario.triggerSend = function (textarea) {
 	setImmediate(() => {
 		var press = new KeyboardEvent("keypress", {key: "Enter", code: "Enter", which: 13, keyCode: 13, bubbles: true});
 		Object.defineProperty(press, "keyCode", {value: 13});
@@ -1686,7 +1692,7 @@ BDfunctionsDevilBro.triggerSend = function (textarea) {
 	});
 };
 
-BDfunctionsDevilBro.initElements = function (container) {
+BDfunctionsDario.initElements = function (container) {
 	$(container)
 		.off(".BDFDBinitElements")
 		.on("click.BDFDBinitElements", ".checkbox-1KYsPm", (e) => {
@@ -1764,7 +1770,7 @@ BDfunctionsDevilBro.initElements = function (container) {
 	$(container).find(".tab").first().addClass("selected");
 	$(container).find(".tab-content").first().addClass("open");
 	
-	var libraryStrings = BDfunctionsDevilBro.getLibraryStrings();
+	var libraryStrings = BDfunctionsDario.getLibraryStrings();
 	$(container).find(".btn-save .contents-4L4hQM").text(libraryStrings.btn_save_text);
 	$(container).find(".btn-cancel .contents-4L4hQM").text(libraryStrings.btn_cancel_text);
 	$(container).find(".btn-all .contents-4L4hQM").text(libraryStrings.btn_all_text);
@@ -1794,7 +1800,7 @@ BDfunctionsDevilBro.initElements = function (container) {
 		});
 };
 
-BDfunctionsDevilBro.appendModal = function (modal) {
+BDfunctionsDario.appendModal = function (modal) {
 	let id = Math.round(Math.random()*10000000000000000);
 	var container = document.querySelector(".app-XZYfmp ~ [class^='theme-']:not([class*='popouts'])");
 	if (!container) return;
@@ -1808,7 +1814,7 @@ BDfunctionsDevilBro.appendModal = function (modal) {
 		});
 		
 	
-	BDfunctionsDevilBro.initElements(modal);
+	BDfunctionsDario.initElements(modal);
 		
 	$(document)
 		.off("keydown.modalEscapeListenerDevilBro" + id)
@@ -1817,11 +1823,11 @@ BDfunctionsDevilBro.appendModal = function (modal) {
 		});
 };
 
-BDfunctionsDevilBro.updateContextPosition = function (context) {
+BDfunctionsDario.updateContextPosition = function (context) {
 	var app = document.querySelector(".appMount-14L89u");
 	var menuWidth = $(context).outerWidth();
 	var menuHeight = $(context).outerHeight();
-	var position = BDfunctionsDevilBro.mousePosition;
+	var position = BDfunctionsDario.mousePosition;
 	var newposition = {
 		x: position.x - menuWidth,
 		y: position.y - menuHeight
@@ -1831,7 +1837,7 @@ BDfunctionsDevilBro.updateContextPosition = function (context) {
 		.css("top", (position.y + menuHeight > app.offsetHeight ? (newposition.y < 0 ? 10 : newposition.y) : position.y) + "px");
 };
 
-BDfunctionsDevilBro.appendContextMenu = function (context, e) {
+BDfunctionsDario.appendContextMenu = function (context, e) {
 	$(".tooltips").before(context);
 	var app = document.querySelector(".appMount-14L89u");
 	var menuWidth = $(context).outerWidth();
@@ -1840,40 +1846,40 @@ BDfunctionsDevilBro.appendContextMenu = function (context, e) {
 		.toggleClass("invertX", e.pageX + menuWidth > app.offsetWidth)
 		.toggleClass("invertChildX", e.pageX + menuWidth > app.offsetWidth)
 		.toggleClass("invertY", e.pageY + menuHeight > app.offsetHeight)
-		.addClass(BDfunctionsDevilBro.getDiscordTheme());
+		.addClass(BDfunctionsDario.getDiscordTheme());
 		
-	BDfunctionsDevilBro.updateContextPosition(context);
+	BDfunctionsDario.updateContextPosition(context);
 	
-	$(document).on("mousedown.BDfunctionsDevilBroContextMenu", (e2) => {
+	$(document).on("mousedown.BDfunctionsDarioContextMenu", (e2) => {
 		if ($(context).has(e2.target).length == 0 && context != e2.target) {
-			$(document).off("mousedown.BDfunctionsDevilBroContextMenu");
+			$(document).off("mousedown.BDfunctionsDarioContextMenu");
 			context.remove();
 		}
 		else {
 			var item = $(".item-1XYaYf").has(e2.target)[0];
 			if (item && !$(item).hasClass("disabled-dlOjhg") && !$(item).hasClass("itemSubMenu-3ZgIw-") && !$(item).hasClass("itemToggle-e7vkml")) {
-				$(document).off("mousedown.BDfunctionsDevilBroContextMenu");
+				$(document).off("mousedown.BDfunctionsDarioContextMenu");
 			}
 		}
 	});
 };
 
-BDfunctionsDevilBro.appendSubMenu = function (target, menu) {
+BDfunctionsDario.appendSubMenu = function (target, menu) {
 	$(target).append(menu);
 	var offsets = $(target).offset();
 	var menuHeight = $(menu).outerHeight();
 	$(menu)
-		.addClass(BDfunctionsDevilBro.getDiscordTheme())
+		.addClass(BDfunctionsDario.getDiscordTheme())
 		.css("left", offsets.left + "px")
 		.css("top", offsets.top + menuHeight > window.outerHeight ? (offsets.top - menuHeight + $(target).outerHeight()) + "px" : offsets.top + "px");
 		
-	$(target).on("mouseleave.BDfunctionsDevilBroSubContextMenu", () => {
-		$(target).off("mouseleave.BDfunctionsDevilBroSubContextMenu");
+	$(target).on("mouseleave.BDfunctionsDarioSubContextMenu", () => {
+		$(target).off("mouseleave.BDfunctionsDarioSubContextMenu");
 		menu.remove();
 	});
 };
 
-BDfunctionsDevilBro.setColorSwatches = function (currentCOMP, wrapper, swatch) {
+BDfunctionsDario.setColorSwatches = function (currentCOMP, wrapper, swatch) {
 	var wrapperDiv = $(wrapper);
 		
 	var colourList = 
@@ -1899,8 +1905,8 @@ BDfunctionsDevilBro.setColorSwatches = function (currentCOMP, wrapper, swatch) {
 	$(swatches).appendTo(wrapperDiv);
 	
 	if (currentCOMP) {
-		var currentRGB = BDfunctionsDevilBro.color2RGB(currentCOMP);
-		var invRGB = BDfunctionsDevilBro.colorINV(currentRGB);
+		var currentRGB = BDfunctionsDario.color2RGB(currentCOMP);
+		var invRGB = BDfunctionsDario.colorINV(currentRGB);
 		
 		var selection = colourList.indexOf(currentRGB);
 		
@@ -1929,7 +1935,7 @@ BDfunctionsDevilBro.setColorSwatches = function (currentCOMP, wrapper, swatch) {
 	wrapperDiv.on("click", ".ui-color-picker-" + swatch + ":not(.custom)", (e) => {
 		if (wrapperDiv.hasClass("disabled")) return;
 		var bgColor = $(e.target).css("background-color");
-		var newInvRGB = BDfunctionsDevilBro.checkColorType(bgColor) ? BDfunctionsDevilBro.colorINV(bgColor,"rgb") : "black";
+		var newInvRGB = BDfunctionsDario.checkColorType(bgColor) ? BDfunctionsDario.colorINV(bgColor,"rgb") : "black";
 		
 		wrapperDiv.find(".ui-color-picker-" + swatch + ".selected.nocolor")
 			.removeClass("selected")
@@ -1946,12 +1952,12 @@ BDfunctionsDevilBro.setColorSwatches = function (currentCOMP, wrapper, swatch) {
 	
 	wrapperDiv.on("click", ".ui-color-picker-" + swatch + ".custom", (e) => {
 		if (wrapperDiv.hasClass("disabled")) return;
-		BDfunctionsDevilBro.openColorPicker(e.currentTarget.style.backgroundColor, swatch);
+		BDfunctionsDario.openColorPicker(e.currentTarget.style.backgroundColor, swatch);
 	});
 };
 
-BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
-	var libraryStrings = BDfunctionsDevilBro.getLibraryStrings();
+BDfunctionsDario.openColorPicker = function (currentColor, swatch) {
+	var libraryStrings = BDfunctionsDario.getLibraryStrings();
 	var inputs = {
 		HEX: 	{type:"text", 		name:"hex",				group:"hex", 	min:null,	max:null,	length:7,		default:"#000000"},
 		R: 		{type:"number", 	name:"red",				group:"rgb", 	min:0,		max:255,	length:null,	default:0},
@@ -2031,12 +2037,12 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 		</span>`;
 		
 	var colorPickerModal = $(colorPickerModalMarkup)[0];
-	BDfunctionsDevilBro.appendModal(colorPickerModal);
+	BDfunctionsDario.appendModal(colorPickerModal);
 	$(colorPickerModal)
 		.on("click", ".btn-ok", () => {
 			var newRGB = colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.backgroundColor;
-			var newCOMP = BDfunctionsDevilBro.color2COMP(newRGB);
-			var newInvRGB = BDfunctionsDevilBro.colorINV(newRGB);
+			var newCOMP = BDfunctionsDario.color2COMP(newRGB);
+			var newInvRGB = BDfunctionsDario.colorINV(newRGB);
 			
 			$(".ui-color-picker-" + swatch + ".selected.nocolor")
 				.removeClass("selected")
@@ -2077,7 +2083,7 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 	var sMinY = $(spane).offset().top;
 	var sMaxY = sMinY + spane.offsetHeight;
 	
-	[hue, saturation, lightness] = BDfunctionsDevilBro.color2HSL(currentColor).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
+	[hue, saturation, lightness] = BDfunctionsDario.color2HSL(currentColor).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
 	saturation *= 100;
 	lightness *= 100;
 	updateAllValues();
@@ -2085,7 +2091,7 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 	
 	$(ppane)
 		.on("mousedown", (e) => {
-			BDfunctionsDevilBro.appendLocalStyle("crossHairColorPicker", `* {cursor: crosshair !important;}`);
+			BDfunctionsDario.appendLocalStyle("crossHairColorPicker", `* {cursor: crosshair !important;}`);
 			
 			switchPreviews(e.button);
 			
@@ -2100,14 +2106,14 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 			
 			$(pcursor).offset({"left":pX,"top":pY});
 			
-			saturation = BDfunctionsDevilBro.mapRange([pMinX - pHalfW, pMaxX - pHalfW], [0, 100], pX);
-			lightness = BDfunctionsDevilBro.mapRange([pMinY - pHalfH, pMaxY - pHalfH], [100, 0], pY);
+			saturation = BDfunctionsDario.mapRange([pMinX - pHalfW, pMaxX - pHalfW], [0, 100], pX);
+			lightness = BDfunctionsDario.mapRange([pMinY - pHalfH, pMaxY - pHalfH], [100, 0], pY);
 			updateAllValues();
 			
 			$(document)
 				.off("mouseup.ColorPicker").off("mousemove.ColorPicker")
 				.on("mouseup.ColorPicker", () => {
-					BDfunctionsDevilBro.removeLocalStyle("crossHairColorPicker");
+					BDfunctionsDario.removeLocalStyle("crossHairColorPicker");
 					$(document).off("mouseup.ColorPicker").off("mousemove.ColorPicker");
 				})
 				.on("mousemove.ColorPicker", (e2) => {
@@ -2115,15 +2121,15 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 					pY = e2.clientY > pMaxY ? pMaxY - pHalfH : (e2.clientY < pMinY ? pMinY - pHalfH : e2.clientY - pHalfH);
 					$(pcursor).offset({"left":pX,"top":pY});
 					
-					saturation = BDfunctionsDevilBro.mapRange([pMinX - pHalfW, pMaxX - pHalfW], [0, 100], pX);
-					lightness = BDfunctionsDevilBro.mapRange([pMinY - pHalfH, pMaxY - pHalfH], [100, 0], pY);
+					saturation = BDfunctionsDario.mapRange([pMinX - pHalfW, pMaxX - pHalfW], [0, 100], pX);
+					lightness = BDfunctionsDario.mapRange([pMinY - pHalfH, pMaxY - pHalfH], [100, 0], pY);
 					updateAllValues();
 				});
 		});
 	
 	$(spane)
 		.on("mousedown", (e) => {
-			BDfunctionsDevilBro.appendLocalStyle("crossHairColorPicker", `* {cursor: crosshair !important;}`);
+			BDfunctionsDario.appendLocalStyle("crossHairColorPicker", `* {cursor: crosshair !important;}`);
 			
 			switchPreviews(e.button);
 			
@@ -2134,20 +2140,20 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 			
 			$(scursor).offset({"top":sY});
 			
-			hue = BDfunctionsDevilBro.mapRange([sMinY - sHalfH, sMaxY - sHalfH], [360, 0], sY);
+			hue = BDfunctionsDario.mapRange([sMinY - sHalfH, sMaxY - sHalfH], [360, 0], sY);
 			updateAllValues();
 			
 			$(document)
 				.off("mouseup.ColorPicker").off("mousemove.ColorPicker")
 				.on("mouseup.ColorPicker", () => {
-					BDfunctionsDevilBro.removeLocalStyle("crossHairColorPicker");
+					BDfunctionsDario.removeLocalStyle("crossHairColorPicker");
 					$(document).off("mouseup.ColorPicker").off("mousemove.ColorPicker");
 				})
 				.on("mousemove.ColorPicker", (e2) => {
 					sY = e2.clientY > sMaxY ? sMaxY - sHalfH : (e2.clientY < sMinY ? sMinY - sHalfH : e2.clientY - sHalfH);
 					$(scursor).offset({"top":sY});
 					
-					hue = BDfunctionsDevilBro.mapRange([sMinY - sHalfH, sMaxY - sHalfH], [360, 0], sY);
+					hue = BDfunctionsDario.mapRange([sMinY - sHalfH, sMaxY - sHalfH], [360, 0], sY);
 					updateAllValues();
 				});
 		});
@@ -2162,7 +2168,7 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 			colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.borderColor = "transparent";
 			colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").classList.remove("selected");
 			e.currentTarget.classList.add("selected");
-			[hue, saturation, lightness] = BDfunctionsDevilBro.color2HSL(e.currentTarget.style.backgroundColor).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
+			[hue, saturation, lightness] = BDfunctionsDario.color2HSL(e.currentTarget.style.backgroundColor).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
 			saturation *= 100;
 			lightness *= 100;
 			updateAllValues();
@@ -2180,8 +2186,8 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 			case "hex":
 				hex = colorPickerModal.querySelector(".colorpicker-hex").value;
 				if (/^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.test(hex)) {
-					[red, green, blue] = BDfunctionsDevilBro.color2COMP(hex);
-					[hue, saturation, lightness] = BDfunctionsDevilBro.color2HSL(hex).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
+					[red, green, blue] = BDfunctionsDario.color2COMP(hex);
+					[hue, saturation, lightness] = BDfunctionsDario.color2HSL(hex).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
 					saturation *= 100;
 					lightness *= 100;
 					colorPickerModal.querySelector(".colorpicker-hue").value = Math.round(hue);
@@ -2197,10 +2203,10 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 				green = colorPickerModal.querySelector(".colorpicker-green").value;
 				blue = colorPickerModal.querySelector(".colorpicker-blue").value;
 				if (red && red >= 0 && red <= 255 && green && green >= 0 && green <= 255 && blue && blue >= 0 && blue <= 255) {
-					[hue, saturation, lightness] = BDfunctionsDevilBro.color2HSL([red, green, blue]).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
+					[hue, saturation, lightness] = BDfunctionsDario.color2HSL([red, green, blue]).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
 					saturation *= 100;
 					lightness *= 100;
-					colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDevilBro.color2HEX([red, green, blue]);
+					colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDario.color2HEX([red, green, blue]);
 					colorPickerModal.querySelector(".colorpicker-hue").value = Math.round(hue);
 					colorPickerModal.querySelector(".colorpicker-saturation").value = Math.round(saturation);
 					colorPickerModal.querySelector(".colorpicker-lightness").value = Math.round(lightness);
@@ -2211,8 +2217,8 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 				saturation = colorPickerModal.querySelector(".colorpicker-saturation").value;
 				lightness = colorPickerModal.querySelector(".colorpicker-lightness").value;
 				if (hue && hue >= 0 && hue <= 360 && saturation && saturation >= 0 && saturation <= 100 && lightness && lightness >= 0 && lightness <= 100) {
-					[red, green, blue] = BDfunctionsDevilBro.color2COMP("hsl(" + hue + ", " + saturation/100 + ", " + lightness/100 + ")");
-					colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDevilBro.color2HEX([red, green, blue]);
+					[red, green, blue] = BDfunctionsDario.color2COMP("hsl(" + hue + ", " + saturation/100 + ", " + lightness/100 + ")");
+					colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDario.color2HEX([red, green, blue]);
 					colorPickerModal.querySelector(".colorpicker-red").value = red;
 					colorPickerModal.querySelector(".colorpicker-green").value = green;
 					colorPickerModal.querySelector(".colorpicker-blue").value = blue;
@@ -2226,7 +2232,7 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 	function updateCursors () {
 		sHalfH = scursor.offsetHeight/2;
 		sMinY = $(spane).offset().top;
-		sY = BDfunctionsDevilBro.mapRange([360, 0], [sMinY - sHalfH, sMaxY - sHalfH], hue);
+		sY = BDfunctionsDario.mapRange([360, 0], [sMinY - sHalfH, sMaxY - sHalfH], hue);
 		
 		pHalfW = pcursor.offsetWidth/2;
 		pHalfH = pcursor.offsetHeight/2;
@@ -2234,18 +2240,18 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 		pMaxX = pMinX + ppane.offsetWidth;
 		pMinY = $(ppane).offset().top;
 		pMaxY = pMinY + ppane.offsetHeight;
-		pX = BDfunctionsDevilBro.mapRange([0, 100], [pMinX - pHalfW, pMaxX - pHalfW], saturation);
-		pY = BDfunctionsDevilBro.mapRange([100, 0], [pMinY - pHalfH, pMaxY - pHalfH], lightness);
+		pX = BDfunctionsDario.mapRange([0, 100], [pMinX - pHalfW, pMaxX - pHalfW], saturation);
+		pY = BDfunctionsDario.mapRange([100, 0], [pMinY - pHalfH, pMaxY - pHalfH], lightness);
 		
 		$(scursor).offset({"top":sY});
 		$(pcursor).offset({"left":pX,"top":pY});
-		$(pcursor).find("circle").attr("stroke", BDfunctionsDevilBro.colorINV([red, green, blue], "rgb"));
-		$(scursor).find("path").attr("stroke", BDfunctionsDevilBro.color2RGB("hsl(" + hue + ", 1, 1)"));
+		$(pcursor).find("circle").attr("stroke", BDfunctionsDario.colorINV([red, green, blue], "rgb"));
+		$(scursor).find("path").attr("stroke", BDfunctionsDario.color2RGB("hsl(" + hue + ", 1, 1)"));
 	}
 	
 	function updateAllValues () {
-		[red, green, blue] = BDfunctionsDevilBro.color2COMP("hsl(" + hue + ", " + saturation/100 + ", " + lightness/100 + ")");
-		colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDevilBro.color2HEX([red, green, blue]);
+		[red, green, blue] = BDfunctionsDario.color2COMP("hsl(" + hue + ", " + saturation/100 + ", " + lightness/100 + ")");
+		colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDario.color2HEX([red, green, blue]);
 		colorPickerModal.querySelector(".colorpicker-hue").value = Math.round(hue);
 		colorPickerModal.querySelector(".colorpicker-saturation").value = Math.round(saturation);
 		colorPickerModal.querySelector(".colorpicker-lightness").value = Math.round(lightness);
@@ -2255,43 +2261,43 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 		
 		updateColors();
 		
-		$(pcursor).find("circle").attr("stroke", BDfunctionsDevilBro.colorINV([red, green, blue], "rgb"));
-		$(scursor).find("path").attr("stroke", BDfunctionsDevilBro.color2RGB("hsl(" + hue + ", 1, 1)"));
+		$(pcursor).find("circle").attr("stroke", BDfunctionsDario.colorINV([red, green, blue], "rgb"));
+		$(scursor).find("path").attr("stroke", BDfunctionsDario.color2RGB("hsl(" + hue + ", 1, 1)"));
 	}
 	
 	function updateColors () {
-		colorPickerModal.querySelector(".colorpicker-color").style.background = BDfunctionsDevilBro.color2RGB("hsl(" + hue + ", 1, 1)");
-		colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.background = BDfunctionsDevilBro.color2RGB([red, green, blue]);
-		colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.borderColor = BDfunctionsDevilBro.colorINV([red, green, blue], "rgb");
+		colorPickerModal.querySelector(".colorpicker-color").style.background = BDfunctionsDario.color2RGB("hsl(" + hue + ", 1, 1)");
+		colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.background = BDfunctionsDario.color2RGB([red, green, blue]);
+		colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.borderColor = BDfunctionsDario.colorINV([red, green, blue], "rgb");
 	}
 };
 
-BDfunctionsDevilBro.mapRange = function (from, to, number) {
+BDfunctionsDario.mapRange = function (from, to, number) {
 	return to[0] + (number - from[0]) * (to[1] - to[0]) / (from[1] - from[0]);
 };
 
-BDfunctionsDevilBro.getSwatchColor = function (swatch) {
-	return !$(".ui-color-picker-" + swatch + ".nocolor.selected")[0] ? BDfunctionsDevilBro.color2COMP($(".ui-color-picker-" + swatch + ".selected").css("background-color")) : null;
+BDfunctionsDario.getSwatchColor = function (swatch) {
+	return !$(".ui-color-picker-" + swatch + ".nocolor.selected")[0] ? BDfunctionsDario.color2COMP($(".ui-color-picker-" + swatch + ".selected").css("background-color")) : null;
 };
 
-BDfunctionsDevilBro.isPluginEnabled = function (name) {
+BDfunctionsDario.isPluginEnabled = function (name) {
 	return window.bdplugins[name] && window.pluginCookie[name];
 };
 
-BDfunctionsDevilBro.isRestartNoMoreEnabled = function () {
-	return BDfunctionsDevilBro.isPluginEnabled("Restart-No-More") || BDfunctionsDevilBro.isPluginEnabled("Restart No More");
+BDfunctionsDario.isRestartNoMoreEnabled = function () {
+	return BDfunctionsDario.isPluginEnabled("Restart-No-More") || BDfunctionsDario.isPluginEnabled("Restart No More");
 };
 
-BDfunctionsDevilBro.isThemeEnabled = function (name) {
+BDfunctionsDario.isThemeEnabled = function (name) {
 	return window.bdthemes[name] && window.themeCookie[name];
 };
 
-BDfunctionsDevilBro.zacksFork = function () {
+BDfunctionsDario.zacksFork = function () {
 	return (typeof bdpluginErrors === "object" && typeof bdthemeErrors === "object" && typeof bbdVersion === "string");
 };
 
-BDfunctionsDevilBro.getLibraryStrings = function () {
-	switch (BDfunctionsDevilBro.getDiscordLanguage().id) {
+BDfunctionsDario.getLibraryStrings = function () {
+	switch (BDfunctionsDario.getDiscordLanguage().id) {
 		case "hr": 		//croatian
 			return {
 				toast_plugin_started:			"${pluginName} ${oldVersion} je započeo.",
@@ -2590,20 +2596,20 @@ BDfunctionsDevilBro.getLibraryStrings = function () {
 };
 
 $(window)
-	.off("keydown.BDfunctionsDevilBroPressedKeys")
-	.off("keyup.BDfunctionsDevilBroPressedKeys")
-	.off("mousedown.BDfunctionsDevilBroMousePosition")
-	.on("keydown.BDfunctionsDevilBroPressedKeys", (e) => {
-		if (!BDfunctionsDevilBro.pressedKeys.includes(e.which)) BDfunctionsDevilBro.pressedKeys.push(e.which);
+	.off("keydown.BDfunctionsDarioPressedKeys")
+	.off("keyup.BDfunctionsDarioPressedKeys")
+	.off("mousedown.BDfunctionsDarioMousePosition")
+	.on("keydown.BDfunctionsDarioPressedKeys", (e) => {
+		if (!BDfunctionsDario.pressedKeys.includes(e.which)) BDfunctionsDario.pressedKeys.push(e.which);
 	})
-	.on("keyup.BDfunctionsDevilBroPressedKeys", (e) => {
-		BDfunctionsDevilBro.removeFromArray(BDfunctionsDevilBro.pressedKeys, e.which);
+	.on("keyup.BDfunctionsDarioPressedKeys", (e) => {
+		BDfunctionsDario.removeFromArray(BDfunctionsDario.pressedKeys, e.which);
 	})
-	.on("mousedown.BDfunctionsDevilBroMousePosition", (e) => {
-		BDfunctionsDevilBro.mousePosition = {x:e.pageX,y:e.pageY};
+	.on("mousedown.BDfunctionsDarioMousePosition", (e) => {
+		BDfunctionsDario.mousePosition = {x:e.pageX,y:e.pageY};
 	});
 
-BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
+BDfunctionsDario.appendLocalStyle("BDfunctionsDario", `
 	#bd-settingspane-container .ui-form-title {
 		display: inline-block;
 	}

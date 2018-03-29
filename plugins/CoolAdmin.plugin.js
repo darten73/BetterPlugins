@@ -101,27 +101,27 @@ class CoolAdmin {
 	load () {}
 
 	start () {
-		if (typeof BDfunctionsDevilBro !== "object" || BDfunctionsDevilBro.isLibraryOutdated()) {
-			if (typeof BDfunctionsDevilBro === "object") BDfunctionsDevilBro = "";
-			$('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"]').remove();
-			$('head').append('<script src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"></script>');
+		if (typeof BDfunctionsDario !== "object" || BDfunctionsDario.isLibraryOutdated()) {
+			if (typeof BDfunctionsDario === "object") BDfunctionsDario = "";
+			$('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDario.js"]').remove();
+			$('head').append('<script src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDario.js"></script>');
 			$('head script[src="https://raw.githubusercontent.com/jquery/jquery-ui/9e8e339648901899827a58e5bf919f7dda03b88e/tests/jquery.simulate.js"]').remove();
 			$('head').append('<script src="https://raw.githubusercontent.com/jquery/jquery-ui/9e8e339648901899827a58e5bf919f7dda03b88e/tests/jquery.simulate.js"></script>');
 		}
-		if (typeof BDfunctionsDevilBro === "object") {
-			BDfunctionsDevilBro.loadMessage(this);
-            this.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
-            this.MemberPerms = BDfunctionsDevilBro.WebModules.findByProperties(["getNicknames", "getNick"]);
-			this.ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(['getChannels']);
-			this.CurrentChannel = BDfunctionsDevilBro.WebModules.findByProperties(['getChannelId']);
-			this.CurrentUser = BDfunctionsDevilBro.WebModules.findByProperties(['getCurrentUser']);
-			this.ChannelActions = BDfunctionsDevilBro.WebModules.findByProperties(['selectVoiceChannel']);
-			//this.ChannelPermissions = BDfunctionsDevilBro.WebModules.findByProperties(['getChannelPermissions']);
-			this.UsersVoiceStore= BDfunctionsDevilBro.WebModules.findByProperties(['getVoiceStates']);
+		if (typeof BDfunctionsDario === "object") {
+			BDfunctionsDario.loadMessage(this);
+            //this.checkUpdate(this.getName(), "https://raw.githubusercontent.com/darten73/BetterPlugins/master/CoolAdmin.plugin.js");
+            this.MemberPerms = BDfunctionsDario.WebModules.findByProperties(["getNicknames", "getNick"]);
+			this.ChannelStore = BDfunctionsDario.WebModules.findByProperties(['getChannels']);
+			this.CurrentChannel = BDfunctionsDario.WebModules.findByProperties(['getChannelId']);
+			this.CurrentUser = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']);
+			this.ChannelActions = BDfunctionsDario.WebModules.findByProperties(['selectVoiceChannel']);
+			//this.ChannelPermissions = BDfunctionsDario.WebModules.findByProperties(['getChannelPermissions']);
+			this.UsersVoiceStore= BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']);
 			this.documentObserver.observe(document.querySelector('#app-mount'), {childList: true, subtree: true});
-			this.adminActions=BDfunctionsDevilBro.WebModules.findByProperties(['move']);
-			//this.roleActions=BDfunctionsDevilBro.WebModules.findByProperties(['connect']);
-            this.GuildStore = BDfunctionsDevilBro.WebModules.findByProperties(["getGuilds"]);
+			this.adminActions=BDfunctionsDario.WebModules.findByProperties(['move']);
+			//this.roleActions=BDfunctionsDario.WebModules.findByProperties(['connect']);
+            this.GuildStore = BDfunctionsDario.WebModules.findByProperties(["getGuilds"]);
 
 		}
 	}
@@ -140,17 +140,17 @@ class CoolAdmin {
             else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
             else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
             else hasUpdate = false;
-            if (hasUpdate) BDfunctionsDevilBro.showUpdateNotice(pluginName, downloadUrl);
-            else BDfunctionsDevilBro.removeUpdateNotice(pluginName);
+            if (hasUpdate) BDfunctionsDario.showUpdateNotice(pluginName, downloadUrl);
+            else BDfunctionsDario.removeUpdateNotice(pluginName);
         });
     };
 
 	stop () {
-		if (typeof BDfunctionsDevilBro === "object") {
+		if (typeof BDfunctionsDario === "object") {
 			this.switchObserver.disconnect();
 		    this.documentObserver.disconnect();
-			BDfunctionsDevilBro.removeLocalStyle(this.getName());
-			BDfunctionsDevilBro.unloadMessage(this);
+			BDfunctionsDario.removeLocalStyle(this.getName());
+			BDfunctionsDario.unloadMessage(this);
 		}
 	}
 
@@ -178,7 +178,7 @@ class CoolAdmin {
 	}
 
 	onPopouts(node){
-        let react = BDfunctionsDevilBro.getReactInstance(node).child.memoizedProps;
+        let react = BDfunctionsDario.getReactInstance(node).child.memoizedProps;
         	let info=react.user;
         	let header = node.querySelector(".bodyTitle-18hsd9");
         	let findBtns = `<div>
@@ -208,7 +208,7 @@ class CoolAdmin {
 		let userChannel;
 		let userChannelId=(userChannel=this.UsersVoiceStore.getVoiceState(this.serverId,info.id))?userChannel.channelId:'';
 		let s;
-        BDfunctionsDevilBro.showToast((s=this.ChannelStore.getChannel(userChannelId))?'Channel: '+s:'не найден');
+        BDfunctionsDario.showToast((s=this.ChannelStore.getChannel(userChannelId))?'Channel: '+s:'не найден');
 		let selectedVoice=this.CurrentChannel.getVoiceChannelId();
         if(destroy&&userChannelId &&selectedVoice!=userChannelId){
         	let canConnect=undefined;
@@ -237,7 +237,7 @@ class CoolAdmin {
 						if(deny >= 1048576){
 							tmp=deny.toString(2);
 							if(tmp[tmp.length-21]==='1'&&canConnect!==true) {
-								BDfunctionsDevilBro.showToast("Нет доступа на вход в канал");
+								BDfunctionsDario.showToast("Нет доступа на вход в канал");
 								canConnect=false;
                                 if(id===currentUserId) memberPerm=false;
 							}
@@ -259,16 +259,16 @@ class CoolAdmin {
 	}
 
 	onContextMenu (context) {
-        let serverObj = BDfunctionsDevilBro.getSelectedServer();
-        serverObj=serverObj?serverObj: BDfunctionsDevilBro.getSelectedChannel();
+        let serverObj = BDfunctionsDario.getSelectedServer();
+        serverObj=serverObj?serverObj: BDfunctionsDario.getSelectedChannel();
 		if (!context || !context.tagName || !context.parentElement || context.querySelector(".localusersettings-item") || (serverObj.id!==this.serverId && serverObj.id!==this.botId)) return;
-        let info = BDfunctionsDevilBro.getKeyInformation({"node":context, "key":"user"});
-		if (info && BDfunctionsDevilBro.getKeyInformation({"node":context, "key":"displayName", "value":"UserNoteItem"})) {
+        let info = BDfunctionsDario.getKeyInformation({"node":context, "key":"user"});
+		if (info && BDfunctionsDario.getKeyInformation({"node":context, "key":"displayName", "value":"UserNoteItem"})) {
 			let userContextMenuMarkup= '<div class=\"item-group itemGroup-oViAgA\">';
 			for(let group in this.userContextMenuMarkup){
 				userContextMenuMarkup+='<div class="item-group itemGroup-oViAgA">';
                 for(let item in this.userContextMenuMarkup[group]){
-					if(BDfunctionsDevilBro.getData(item,this,"settings")) {
+					if(BDfunctionsDario.getData(item,this,"settings")) {
                         userContextMenuMarkup += '<div class="item item-1XYaYf ' + item + '-item">';
                         if(!this.userContextMenuMarkup[group][item].warning) {
                             userContextMenuMarkup += '<span>' + this.userContextMenuMarkup[group][item].name + '</span>';
@@ -307,7 +307,7 @@ class CoolAdmin {
 					$(context).hide();
 					this.showTribunalSettings(info, "ban");
 				});
-			BDfunctionsDevilBro.updateContextPosition(context);
+			BDfunctionsDario.updateContextPosition(context);
 		}
 	}
 
@@ -347,7 +347,7 @@ class CoolAdmin {
 			userTribunalSettings.find("#warning").css("visibility","hidden");
 			userTribunalSettings.find("button.btn-save").prop("disabled",false);
 		}
-		BDfunctionsDevilBro.appendModal(userTribunalSettings);
+		BDfunctionsDario.appendModal(userTribunalSettings);
 		userTribunalSettings
 			.on("input change keyup paste", "#input-reason", (event) =>{
 				if(userTribunalSettings.find("#input-reason").val()){
@@ -383,8 +383,8 @@ class CoolAdmin {
 	}
 
 	getSettingsPanel() {
-		if (!this.started || typeof BDfunctionsDevilBro !== "object") return;
-        let settings = BDfunctionsDevilBro.getAllData(this, "settings");
+		if (!this.started || typeof BDfunctionsDario !== "object") return;
+        let settings = BDfunctionsDario.getAllData(this, "settings");
         let settingshtml = `<div class="${this.getName()}-settings DevilBro-settings"><div class="titleDefault-1CWM9y title-3i-5G_ size18-ZM4Qv- height24-2pMcnc weightNormal-3gw0Lm marginBottom8-1mABJ4">${this.getName()}</div><div class="DevilBro-settings-inner">`;
 		for(let cat in this.markup.category) {
 				settingshtml+= `<div class="margin-bottom-40"><h5 class="h5-3KssQU title-1pmpPr size12-1IGJl9 height16-1qXrGy weightSemiBold-T8sxWH defaultMarginh5-2UwwFY marginBottom8-1mABJ4">${this.markup.category[cat].name}</h5>`;
@@ -396,7 +396,7 @@ class CoolAdmin {
 		settingshtml += `</div>`;
 		settingshtml += `</div></div>`;
         let settingspanel = $(settingshtml)[0];
-		BDfunctionsDevilBro.initElements(settingspanel);
+		BDfunctionsDario.initElements(settingspanel);
 		$(settingspanel)
 			.on("click", ".checkbox-1KYsPm", () => {this.updateSettings(settingspanel);});
 		return settingspanel;
@@ -407,13 +407,13 @@ class CoolAdmin {
 		for (let input of settingspanel.querySelectorAll(".checkbox-1KYsPm")) {
 			settings[input.value] = input.checked;
 		}
-		BDfunctionsDevilBro.saveAllData(settings, this, "settings");
+		BDfunctionsDario.saveAllData(settings, this, "settings");
 	  }
 
 	findChannel(info){
         this.isFind=false;
         let found=this.usersInVoice.get(info.id);
-        if(found) BDfunctionsDevilBro.showToast('Channel: '+this.ChannelStore.getChannel(found.id));
+        if(found) BDfunctionsDario.showToast('Channel: '+this.ChannelStore.getChannel(found.id));
         return(found?found:null)
 	}
 
@@ -427,7 +427,7 @@ class CoolAdmin {
 	}
 
 	sendMessage(textarea, commadn, userId, description){
-		const prefix=BDfunctionsDevilBro.getData("debag", this, "settings")?"?":"!";
+		const prefix=BDfunctionsDario.getData("debag", this, "settings")?"?":"!";
 		document.execCommand("insertText", false, prefix + commadn + ' <@!' + userId + '> ' + description);
 		const options = { key: "Enter", code: "Enter", which: 13, keyCode: 13, bubbles: true };
 		const down = new KeyboardEvent("keydown", options);
