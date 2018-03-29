@@ -102,8 +102,8 @@ class CoolAdmin {
 	start () {
 		if (typeof BDfunctionsDario !== "object" || BDfunctionsDario.isLibraryOutdated()) {
 			if (typeof BDfunctionsDario === "object") BDfunctionsDario = "";
-			$('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDario.js"]').remove();
-			$('head').append('<script src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDario.js"></script>');
+			$('head script[src="https://raw.githubusercontent.com/darten73/BetterPlugins/master/BDfunctionsDario.js"]').remove();
+			$('head').append('<script src="https://raw.githubusercontent.com/darten73/BetterPlugins/master/BDfunctionsDario.js"></script>');
 			$('head script[src="https://raw.githubusercontent.com/jquery/jquery-ui/9e8e339648901899827a58e5bf919f7dda03b88e/tests/jquery.simulate.js"]').remove();
 			$('head').append('<script src="https://raw.githubusercontent.com/jquery/jquery-ui/9e8e339648901899827a58e5bf919f7dda03b88e/tests/jquery.simulate.js"></script>');
 		}
