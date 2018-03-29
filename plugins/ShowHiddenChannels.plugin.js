@@ -127,7 +127,7 @@ class ShowHiddenChannels {
 
 	initialize () {
 		if (typeof BDfunctionsDario === "object") {
-			BDfunctionsDario.loadMessage(this);
+			BDfunctionsDario.loadMessage(this, true);
 			
 			this.UserStore = BDfunctionsDario.WebModules.findByProperties(["getUsers", "getUser"]);
 			this.MemberStore = BDfunctionsDario.WebModules.findByProperties(["getMember", "getMembers"]);
