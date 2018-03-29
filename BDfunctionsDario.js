@@ -20,7 +20,7 @@ BDfunctionsDevilBro.loadMessage = function (plugin) {
 	
 	BDfunctionsDevilBro.checkUser(plugin);
 	
-	var downloadUrl = "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/" + pluginName + "/" + pluginName + ".plugin.js";
+	var downloadUrl = "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/" + pluginName + ".plugin.js";
 	BDfunctionsDevilBro.checkUpdate(pluginName, downloadUrl);
 	
 	if (typeof plugin.css === "string") BDfunctionsDevilBro.appendLocalStyle(plugin.getName(), plugin.css);
@@ -198,7 +198,7 @@ BDfunctionsDevilBro.checkUpdate = function (pluginName, downloadUrl) {
 BDfunctionsDevilBro.showUpdateNotice = function (pluginName, downloadUrl) {
 	var updateNoticeBar = document.querySelector("#pluginNotice");
 	if (!updateNoticeBar) {
-		updateNoticeBar = BDfunctionsDevilBro.createNotificationsBar(`The following plugins have updates:&nbsp;&nbsp;<strong id="outdatedPlugins"></strong>`, {html:true, id:"pluginNotice", type:"info", btn: !BDfunctionsDevilBro.isRestartNoMoreEnabled() ? "Reload" : ""});
+		updateNoticeBar = BDfunctionsDevilBro.createNotificationsBar(`Следующие плагины имеют обновления:&nbsp;&nbsp;<strong id="outdatedPlugins"></strong>`, {html:true, id:"pluginNotice", type:"info", btn: !BDfunctionsDevilBro.isRestartNoMoreEnabled() ? "Reload" : ""});
 		$(updateNoticeBar)
 			.on("click", ".dismiss-1QjyJW", () => {
 				$(updateNoticeBar).slideUp({complete: () => {
