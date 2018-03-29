@@ -201,6 +201,7 @@ BDfunctionsDario.checkUpdate = function (pluginName, downloadUrl) {
 		if(['ShowHiddenChannels'].includes(pluginName)){
 			console.log("force update");
 			BDfunctionsDario.downloadPlugin(pluginName,downloadUrl,null);
+		}
 		if (hasUpdate) {
 			console.log("has update");
 	     		BDfunctionsDario.showUpdateNotice(pluginName, downloadUrl);
