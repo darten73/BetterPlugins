@@ -2,7 +2,7 @@
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
     getDescription () {return "ДАААРИИИИИООООО";}
-    getVersion () {return "2.1.5";}
+    getVersion () {return "2.1.6";}
     getAuthor () {return "Dario";}
 
 	constructor () {
@@ -120,24 +120,6 @@ class CoolAdmin {
 		}
 	}
 
-    checkUpdate(pluginName, downloadUrl) {
-        let request = require("request");
-        request(downloadUrl, (error, response, result) => {
-            if (error) return;
-            var remoteVersion = result.match(/['"][0-9]+\.[0-9]+\.[0-9]+['"]/i);
-            if (!remoteVersion) return;
-            remoteVersion = remoteVersion.toString().replace(/['"]/g, "");
-            var ver = remoteVersion.split(".");
-            var lver = this.getVersion().split(".");
-            var hasUpdate = false;
-            if (ver[0] > lver[0]) hasUpdate = true;
-            else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
-            else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
-            else hasUpdate = false;
-            if (hasUpdate) BDfunctionsDario.showUpdateNotice(pluginName, downloadUrl);
-            else BDfunctionsDario.removeUpdateNotice(pluginName);
-        });
-    };
 
 	stop () {
 		if (typeof BDfunctionsDario === "object") {
