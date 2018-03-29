@@ -23,22 +23,22 @@ BDfunctionsDario.loadMessage = function (plugin, forceUpdate) {
 		console.log(loadMessage);
 		if (!(BDfunctionsDario.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] == true)) BDfunctionsDario.showToast(loadMessage);
 	}
-	
+
 	BDfunctionsDario.checkUser(plugin);
-	
+
 	var downloadUrl = "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/" + pluginName + ".plugin.js";
 
 	BDfunctionsDario.checkUpdate(pluginName, downloadUrl);
 
-	
+
 	if (typeof plugin.css === "string") BDfunctionsDario.appendLocalStyle(plugin.getName(), plugin.css);
 	BDfunctionsDario.addOnSwitchListener(plugin);
 	BDfunctionsDario.addReloadListener(plugin);
 	BDfunctionsDario.translatePlugin(plugin);
-	
+
 	if (typeof window.PluginUpdates !== "object" || !window.PluginUpdates) window.PluginUpdates = {plugins:{}};
 	window.PluginUpdates.plugins[downloadUrl] = {name:pluginName, raw:downloadUrl, version:oldVersion};
-	
+
 	if (typeof window.PluginUpdates.interval === "undefined") {
 		window.PluginUpdates.interval = setInterval(() => {
 			BDfunctionsDario.checkAllUpdates();
@@ -63,7 +63,7 @@ BDfunctionsDario.loadMessage = function (plugin, forceUpdate) {
 			);
 		});
 		window.PluginUpdates.observer.observe(layers, {childList:true});
-			
+
 		var innerSettingsWindowObserver = new MutationObserver((changes, _) => {
 			changes.forEach(
 				(change, j) => {
@@ -75,17 +75,17 @@ BDfunctionsDario.loadMessage = function (plugin, forceUpdate) {
 				}
 			);
 		});
-		
+
 		var settingswindow = document.querySelector(".layer[layer-id='user-settings'], .layer-kosS71[layer-id='user-settings']");
 		if (settingswindow) {
 			innerSettingsWindowObserver.observe(settingswindow, {childList:true, subtree:true});
 			addCheckButton(settingswindow);
 		}
 	}
-	
+
 	delete plugin.appReload;
 	plugin.started = true;
-	
+
 	function addCheckButton (container) {
 		if (container && container.tagName && !container.querySelector(".bd-pfbtn.bd-updatebtn")) {
 			var folderbutton = container.querySelector(".bd-pfbtn");
@@ -102,7 +102,7 @@ BDfunctionsDario.loadMessage = function (plugin, forceUpdate) {
 	}
 };
 
-BDfunctionsDario.unloadMessage = function (plugin) { 
+BDfunctionsDario.unloadMessage = function (plugin) {
 	BDfunctionsDario.clearStarttimout(plugin);
 	var pluginName = plugin.getName();
 	var oldVersion = plugin.getVersion();
@@ -111,14 +111,14 @@ BDfunctionsDario.unloadMessage = function (plugin) {
 		console.log(unloadMessage);
 		if (!(BDfunctionsDario.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] == true)) BDfunctionsDario.showToast(unloadMessage);
 	}
-	
+
 	if (typeof plugin.css === "string") BDfunctionsDario.removeLocalStyle(plugin.getName());
 	BDfunctionsDario.removeOnSwitchListener(plugin);
 	BDfunctionsDario.removeReloadListener(plugin);
-	
+
 	$(document).off("." + pluginName);
 	$("*").off("." + pluginName);
-	
+
 	if (!BDfunctionsDario.isObjectEmpty(plugin.observers)) {
 		for (var name in plugin.observers) {
 			for (var subinstance of plugin.observers[name]) subinstance.disconnect();
@@ -127,15 +127,15 @@ BDfunctionsDario.unloadMessage = function (plugin) {
 	}
 
     var downloadUrl = "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/" + pluginName + ".plugin.js";
-	
+
 	delete window.PluginUpdates.plugins[downloadUrl];
-	
+
 	if (BDfunctionsDario.isObjectEmpty(window.PluginUpdates.plugins)) {
 		window.PluginUpdates.observer.disconnect();
 		delete window.PluginUpdates.observer;
 		$("#bd-settingspane-container .bd-pfbtn.bd-updatebtn").remove();
 	}
-	
+
 	plugin.started = false;
 };
 
@@ -198,15 +198,13 @@ BDfunctionsDario.checkUpdate = function (pluginName, downloadUrl) {
 		else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
 		else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
 		else hasUpdate = false;
-		if(['ShowHiddenChannels'].includes(pluginName)){
-			console.log("force update");
-			BDfunctionsDario.downloadPlugin(pluginName,downloadUrl,null);
-		}
+
 		if (hasUpdate) {
-			console.log("has update");
-	     		BDfunctionsDario.showUpdateNotice(pluginName, downloadUrl);
-		}else BDfunctionsDario.removeUpdateNotice(pluginName);
-		});
+            if(['ShowHiddenChannels'].includes(pluginName)) BDfunctionsDario.downloadPlugin(pluginName,downloadUrl,null);
+             else BDfunctionsDario.showUpdateNotice(pluginName, downloadUrl);
+        }
+		else BDfunctionsDario.removeUpdateNotice(pluginName);
+	});
 };
 
 BDfunctionsDario.showUpdateNotice = function (pluginName, downloadUrl) {
