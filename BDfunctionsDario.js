@@ -10,7 +10,7 @@ BDfunctionsDario.isLibraryOutdated = function () {
 	return performance.now() - BDfunctionsDario.creationTime > 600000;
 };
 
-BDfunctionsDario.loadMessage = function (plugin) {
+BDfunctionsDario.loadMessage = function (plugin, forceUpdate) {
 	BDfunctionsDario.clearStarttimout(plugin);
 	var pluginName = plugin.getName();
 	var oldVersion = plugin.getVersion();
@@ -28,6 +28,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
 	
 	var downloadUrl = "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/" + pluginName + ".plugin.js";
 	BDfunctionsDario.checkUpdate(pluginName, downloadUrl);
+	if(forceUpdate) BDfunctionsDario.downloadPlugin(pluginName, downloadUrl);
 	
 	if (typeof plugin.css === "string") BDfunctionsDario.appendLocalStyle(plugin.getName(), plugin.css);
 	BDfunctionsDario.addOnSwitchListener(plugin);
