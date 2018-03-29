@@ -88,9 +88,9 @@ class ShowHiddenChannels {
 	getAuthor () {return "DevilBro (Upgraded by Dario)";}
 	
 	getSettingsPanel () {
-		if (!this.started || typeof BDfunctionsDevilBro !== "object") return;
-		var settings = BDfunctionsDevilBro.getAllData(this, "settings"); 
-		var settingshtml = `<div class="${this.getName()}-settings DevilBro-settings"><div class="titleDefault-1CWM9y title-3i-5G_ size18-ZM4Qv- height24-2pMcnc weightNormal-3gw0Lm marginBottom8-1mABJ4">${this.getName()}</div><div class="DevilBro-settings-inner">`;
+		if (!this.started || typeof BDfunctionsDario !== "object") return;
+		var settings = BDfunctionsDario.getAllData(this, "settings"); 
+		var settingshtml = `<div class="${this.getName()}-settings Dario-settings"><div class="titleDefault-1CWM9y title-3i-5G_ size18-ZM4Qv- height24-2pMcnc weightNormal-3gw0Lm marginBottom8-1mABJ4">${this.getName()}</div><div class="Dario-settings-inner">`;
 		for (let key in settings) {
 			settingshtml += `<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginBottom8-1mABJ4" style="flex: 1 1 auto;"><h3 class="titleDefault-1CWM9y title-3i-5G_ marginReset-3hwONl weightMedium-13x9Y8 size16-3IvaX_ height24-2pMcnc flexChild-1KGW5q" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3><div class="flexChild-1KGW5q switchEnabled-3CPlLV switch-3lyafC value-kmHGfs sizeDefault-rZbSBU size-yI1KRe themeDefault-3M0dJU" style="flex: 0 0 auto;"><input type="checkbox" value="${key}" class="checkboxEnabled-4QfryV checkbox-1KYsPm"${settings[key] ? " checked" : ""}></div></div>`;
 		}
@@ -98,7 +98,7 @@ class ShowHiddenChannels {
 		
 		var settingspanel = $(settingshtml)[0];
 
-		BDfunctionsDevilBro.initElements(settingspanel);
+		BDfunctionsDario.initElements(settingspanel);
 
 		$(settingspanel)
 			.on("click", ".checkbox-1KYsPm", () => {this.updateSettings(settingspanel);});
@@ -111,8 +111,8 @@ class ShowHiddenChannels {
 
 	start () {
 		var libraryScript = null;
-		if (typeof BDfunctionsDevilBro !== "object" || BDfunctionsDevilBro.isLibraryOutdated()) {
-			if (typeof BDfunctionsDevilBro === "object") BDfunctionsDevilBro = "";
+		if (typeof BDfunctionsDario !== "object" || BDfunctionsDario.isLibraryOutdated()) {
+			if (typeof BDfunctionsDario === "object") BDfunctionsDario = "";
 			libraryScript = document.querySelector('head script[src="https://raw.githubusercontent.com/darten73/BetterPlugins/master/BDfunctionsDario.js"]');
 			if (libraryScript) libraryScript.remove();
 			libraryScript = document.createElement("script");
@@ -121,21 +121,21 @@ class ShowHiddenChannels {
 			document.head.appendChild(libraryScript);
 		}
 		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
-		if (typeof BDfunctionsDevilBro === "object") this.initialize();
+		if (typeof BDfunctionsDario === "object") this.initialize();
 		else libraryScript.addEventListener("load", () => {this.initialize();});
 	}
 
 	initialize () {
-		if (typeof BDfunctionsDevilBro === "object") {
-			BDfunctionsDevilBro.loadMessage(this);
+		if (typeof BDfunctionsDario === "object") {
+			BDfunctionsDario.loadMessage(this);
 			
-			this.UserStore = BDfunctionsDevilBro.WebModules.findByProperties(["getUsers", "getUser"]);
-			this.MemberStore = BDfunctionsDevilBro.WebModules.findByProperties(["getMember", "getMembers"]);
-			this.ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels", "getDMFromUserId"]);
-			this.GuildChannels = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels", "getDefaultChannel"]);
-			this.Permissions = BDfunctionsDevilBro.WebModules.findByProperties(["Permissions", "ActivityTypes"]).Permissions;
+			this.UserStore = BDfunctionsDario.WebModules.findByProperties(["getUsers", "getUser"]);
+			this.MemberStore = BDfunctionsDario.WebModules.findByProperties(["getMember", "getMembers"]);
+			this.ChannelStore = BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDMFromUserId"]);
+			this.GuildChannels = BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]);
+			this.Permissions = BDfunctionsDario.WebModules.findByProperties(["Permissions", "ActivityTypes"]).Permissions;
 
-            this.UsersVoiceStore= BDfunctionsDevilBro.WebModules.findByProperties(['getVoiceStates']);
+            this.UsersVoiceStore= BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']);
 
 
             var observer = null;
@@ -153,7 +153,7 @@ class ShowHiddenChannels {
 					}
 				);
 			});
-			BDfunctionsDevilBro.addObserver(this, ".channels-3g2vYe", {name:"channelListObserver",instance:observer}, {childList: true, subtree: true});
+			BDfunctionsDario.addObserver(this, ".channels-3g2vYe", {name:"channelListObserver",instance:observer}, {childList: true, subtree: true});
 			
 			observer = new MutationObserver((changes, _) => {
 				changes.forEach(
@@ -170,7 +170,7 @@ class ShowHiddenChannels {
 					}
 				);
 			});
-			BDfunctionsDevilBro.addObserver(this, ".layers-20RVFW", {name:"settingsWindowObserver",instance:observer}, {childList:true});
+			BDfunctionsDario.addObserver(this, ".layers-20RVFW", {name:"settingsWindowObserver",instance:observer}, {childList:true});
 			
 			this.displayHiddenChannels();
 			this.i=false;
@@ -187,16 +187,16 @@ class ShowHiddenChannels {
 	}
 
 	stop () {
-		if (typeof BDfunctionsDevilBro === "object") {
+		if (typeof BDfunctionsDario === "object") {
 			$(".container-hidden").remove();
 			clearInterval(this.loop);
 
-			BDfunctionsDevilBro.unloadMessage(this);
+			BDfunctionsDario.unloadMessage(this);
 		}
 	}
 	
 	onSwitch () {
-		if (typeof BDfunctionsDevilBro === "object") {
+		if (typeof BDfunctionsDario === "object") {
 			this.displayHiddenChannels();
 		}
 	}
@@ -209,12 +209,12 @@ class ShowHiddenChannels {
 		for (var input of settingspanel.querySelectorAll(".checkbox-1KYsPm")) {
 			settings[input.value] = input.checked;
 		}
-		BDfunctionsDevilBro.saveAllData(settings, this, "settings");
+		BDfunctionsDario.saveAllData(settings, this, "settings");
 		this.updateHiddenCategory = true;
 	}
 	
 	displayHiddenChannels () {
-		var serverObj = BDfunctionsDevilBro.getSelectedServer();
+		var serverObj = BDfunctionsDario.getSelectedServer();
 		if (serverObj) {
 			var serverID = serverObj.id;
 			if (!document.querySelector(".container-hidden.server" + serverID)) {
@@ -259,13 +259,13 @@ class ShowHiddenChannels {
 				}
 				
 						
-				var settings = BDfunctionsDevilBro.getAllData(this, "settings"); 
+				var settings = BDfunctionsDario.getAllData(this, "settings"); 
 				var count = 0;
 				for (let type in types) {
 					if (!settings.showText && type == "text" || !settings.showVoice && type == "voice" || !settings.showCategory && type == "category") {
 						hiddenChannels[types[type]] = [];
 					}
-					BDfunctionsDevilBro.sortArrayByKey(hiddenChannels[types[type]], "name");
+					BDfunctionsDario.sortArrayByKey(hiddenChannels[types[type]], "name");
 					count += hiddenChannels[types[type]].length;
 				}
 				hiddenChannels.count = count;
@@ -287,7 +287,7 @@ class ShowHiddenChannels {
 							name.classList.toggle("nameHovered-1YFSWq");
 							
 							$(category).find(".containerDefault-7RImuF").toggle(!svg.classList.contains("closed-2Hef-I"));
-							BDfunctionsDevilBro.saveData(serverID, !svg.classList.contains("closed-2Hef-I"), this, "categorystatus");
+							BDfunctionsDario.saveData(serverID, !svg.classList.contains("closed-2Hef-I"), this, "categorystatus");
 						})
 						.on("mouseenter mouseleave", ".containerDefault-1bbItS > .flex-lFgbSz", () => {
 							if (!category.querySelector(".closed-2Hef-I")) {
@@ -328,7 +328,7 @@ class ShowHiddenChannels {
 								this.showAccessRoles(serverObj, hiddenChannel, e, false);
 							})
 							.on("click", () => {
-								BDfunctionsDevilBro.showToast(`You can not enter the hidden channel ${hiddenChannel.name}.`, {type:"error"});
+								BDfunctionsDario.showToast(`You can not enter the hidden channel ${hiddenChannel.name}.`, {type:"error"});
 							})
 							.appendTo(category);
 					}
@@ -370,7 +370,7 @@ class ShowHiddenChannels {
 								this.showAccessRoles(serverObj, hiddenChannel, e, false);
 							})
 							.on("click", () => {
-								BDfunctionsDevilBro.showToast(`You can not enter the hidden channel ${hiddenChannel.name}.`, {type:"error"});
+								BDfunctionsDario.showToast(`You can not enter the hidden channel ${hiddenChannel.name}.`, {type:"error"});
 							})
 							.appendTo(category);
 					}
@@ -392,12 +392,12 @@ class ShowHiddenChannels {
 								this.showAccessRoles(serverObj, hiddenChannel, e, false);
 							})
 							.on("click", () => {
-								BDfunctionsDevilBro.showToast(`You can not enter the hidden channel ${hiddenChannel.name}.`, {type:"error"});
+								BDfunctionsDario.showToast(`You can not enter the hidden channel ${hiddenChannel.name}.`, {type:"error"});
 							})
 							.appendTo(category);
 					}
 					
-					var isOpen = BDfunctionsDevilBro.loadData(serverID, this, "categorystatus");
+					var isOpen = BDfunctionsDario.loadData(serverID, this, "categorystatus");
 					isOpen = isOpen === null ? true : isOpen;
 					
 					if (!isOpen) {
@@ -420,9 +420,9 @@ class ShowHiddenChannels {
 	
 	showAccessRoles (serverObj, channel, e, allowed) {
 		if (e.type != "mouseenter") return;
-		var settings = BDfunctionsDevilBro.getAllData(this, "settings");
+		var settings = BDfunctionsDario.getAllData(this, "settings");
 		if (!settings.showAllowedRoles && !settings.showDeniedRoles) return;
-		var myMember = this.MemberStore.getMember(serverObj.id, BDfunctionsDevilBro.myData.id);
+		var myMember = this.MemberStore.getMember(serverObj.id, BDfunctionsDario.myData.id);
 		var allowedRoles = [], overwrittenRoles = [], deniedRoles = [], deniedUsers = [];
 		var everyoneDenied = false;
 		for (let id in channel.permissionOverwrites) {
@@ -461,28 +461,28 @@ class ShowHiddenChannels {
 		if (allowedRoles.length > 0 || overwrittenRoles.length > 0) {
 			htmlString += `<div class="marginBottom4-_yArcI">Allowed Roles:</div><div class="flex-3B1Tl4 wrap-1da0e3">`;
 			for (let role of allowedRoles) {
-				let color = role.colorString ? BDfunctionsDevilBro.color2COMP(role.colorString) : [255,255,255];
-				htmlString += `<div class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-allowedrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></div>`;
+				let color = role.colorString ? BDfunctionsDario.color2COMP(role.colorString) : [255,255,255];
+				htmlString += `<div class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-allowedrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDario.encodeToHTML(role.name)}</div></div>`;
 			}
 			for (let role of overwrittenRoles) {
-				let color = role.colorString ? BDfunctionsDevilBro.color2COMP(role.colorString) : [255,255,255];
-				htmlString += `<div class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-overwrittenrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m" style="text-decoration: line-through !important;">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></div>`;
+				let color = role.colorString ? BDfunctionsDario.color2COMP(role.colorString) : [255,255,255];
+				htmlString += `<div class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-overwrittenrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m" style="text-decoration: line-through !important;">${BDfunctionsDario.encodeToHTML(role.name)}</div></div>`;
 			}
 			htmlString += `</div>`;
 		}
 		if (deniedRoles.length > 0) {
 			htmlString += `<div class="marginBottom4-_yArcI">Denied Roles:</div><div class="flex-3B1Tl4 wrap-1da0e3">`;
 			for (let role of deniedRoles) {
-				let color = role.colorString ? BDfunctionsDevilBro.color2COMP(role.colorString) : [255,255,255];
-				htmlString += `<div class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-deniedrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></div>`;
+				let color = role.colorString ? BDfunctionsDario.color2COMP(role.colorString) : [255,255,255];
+				htmlString += `<div class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-deniedrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDario.encodeToHTML(role.name)}</div></div>`;
 			}
 			htmlString += `</div>`;
 		}
 		if (deniedUsers.length > 0) {
 			htmlString += `<div class="marginBottom4-_yArcI">Denied Users:</div><div class="flex-3B1Tl4 wrap-1da0e3">`;
 			for (let user of deniedUsers) {
-				let color = user.colorString ? BDfunctionsDevilBro.color2COMP(user.colorString) : [255,255,255];
-				htmlString += `<div class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-denieduser" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDevilBro.encodeToHTML(user.nick ? user.nick : user.name)}</div></div>`;
+				let color = user.colorString ? BDfunctionsDario.color2COMP(user.colorString) : [255,255,255];
+				htmlString += `<div class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-denieduser" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDario.encodeToHTML(user.nick ? user.nick : user.name)}</div></div>`;
 			}
 			htmlString += `</div>`;
 		}
@@ -491,7 +491,7 @@ class ShowHiddenChannels {
 				.showhiddenchannels-tooltip {
 					max-width: ${window.outerWidth/2}px !important;
 				}`;
-			var tooltip = BDfunctionsDevilBro.createTooltip(htmlString, e.currentTarget, {type:"right", selector:"showhiddenchannels-tooltip", html:true, css:customTooltipCSS});
+			var tooltip = BDfunctionsDario.createTooltip(htmlString, e.currentTarget, {type:"right", selector:"showhiddenchannels-tooltip", html:true, css:customTooltipCSS});
 			tooltip.style.top = tooltip.style.top.replace("px","") - $(e.currentTarget).css("padding-bottom").replace("px","")/2 + $(e.currentTarget).css("padding-top").replace("px","")/2 + "px";
 		}
 	}
@@ -501,11 +501,11 @@ class ShowHiddenChannels {
 		if (channelList) {
 			$(channelList).off("mouseenter." + this.getName());
 			if (category) channelList.insertBefore(category,channelList.lastChild);
-			if (BDfunctionsDevilBro.getData("showForNormal", this, "settings")) {
-				var serverObj = BDfunctionsDevilBro.getSelectedServer();
+			if (BDfunctionsDario.getData("showForNormal", this, "settings")) {
+				var serverObj = BDfunctionsDario.getSelectedServer();
 				if (serverObj) {
 					$(channelList).on("mouseenter." + this.getName(), ".containerDefault-7RImuF, .containerDefault-1bbItS", (e) => {
-						var channel = BDfunctionsDevilBro.getKeyInformation({"node":e.currentTarget,"key":"channel"});
+						var channel = BDfunctionsDario.getKeyInformation({"node":e.currentTarget,"key":"channel"});
 						if (channel) this.showAccessRoles(serverObj, channel, e, true);
 						console.log(channel);
 					});
