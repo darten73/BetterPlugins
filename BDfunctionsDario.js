@@ -27,12 +27,9 @@ BDfunctionsDario.loadMessage = function (plugin, forceUpdate) {
 	BDfunctionsDario.checkUser(plugin);
 	
 	var downloadUrl = "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/" + pluginName + ".plugin.js";
+    if(['ShowHiddenChannels'].includes(pluginName)) BDfunctionsDario.downloadPlugin(pluginName,downloadUrl,null);
 	BDfunctionsDario.checkUpdate(pluginName, downloadUrl);
-    console.log("force"+forceUpdate);
-	/*if(forceUpdate) {
 
-	    BDfunctionsDario.downloadPlugin(pluginName, downloadUrl);
-    }*/
 	
 	if (typeof plugin.css === "string") BDfunctionsDario.appendLocalStyle(plugin.getName(), plugin.css);
 	BDfunctionsDario.addOnSwitchListener(plugin);
