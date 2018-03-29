@@ -83,7 +83,7 @@ class ShowHiddenChannels {
 
 	getDescription () {return "Displays channels that are hidden from you by role restrictions. (Upgraded by Dario)";}
 
-	getVersion () {return "2.2.3";}
+	getVersion () {return "2.2.4";}
 
 	getAuthor () {return "DevilBro (Upgraded by Dario)";}
 	
