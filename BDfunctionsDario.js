@@ -16,7 +16,7 @@ BDfunctionsDario.loadMessage = function (plugin, forceUpdate) {
 	var oldVersion = plugin.getVersion();
 	if (!plugin.appReload) {
 		var oldDescription = plugin.getDescription();
-		if (oldDescription.indexOf("http://bit.ly/DevilBrosHaus") == -1) {
+		if (oldDescription.indexOf("DevilBro hottie") == -1) {
 			plugin.getDescription = function () {return oldDescription + "\n\nDevilBro hottie";}
 		}
 		var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
