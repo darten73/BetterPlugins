@@ -126,7 +126,7 @@ BDfunctionsDario.unloadMessage = function (plugin) {
         delete plugin.observers;
     }
 
-    var downloadUrl = "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/" + pluginName + "/" + pluginName + ".plugin.js";
+    var downloadUrl = "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/" + pluginName + ".plugin.js";
 
     delete window.PluginUpdates.plugins[downloadUrl];
 
