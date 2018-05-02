@@ -3,7 +3,7 @@
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
     getDescription () {return "ДАААРИИИИИООООО";}
-    getVersion () {return "2.1.9";}
+    getVersion () {return "2.2.0";}
     getAuthor () {return "Dario";}
 
 	initConstructor () {
@@ -151,7 +151,6 @@ class CoolAdmin {
                     if (change.addedNodes) {
                         change.addedNodes.forEach((node) => {
                             if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.popout)) {
-                            	console.log('pop');
                                 this.onPopouts(node);
                             }
                         });
@@ -194,15 +193,16 @@ class CoolAdmin {
         let react = BDfunctionsDario.getReactInstance(node).child.memoizedProps;
         	console.log(node);
         	let info=react.user;
-        	let header = node.querySelector(BDfunctionsDario.dotCN.userpopoutheader);
-        	let findBtns = `<div>
+        	let header = node.querySelector(BDfunctionsDario.dotCN.userpopoutusername);
+        	if(!header) return;
+        	let findBtns = `<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCN.horizontal2}">
 								<div align="center" style="padding: 5px">	
-								<button  id="find"  type="button" class="button-2t3of8 lookFilled-luDKDo colorBrand-3PmwCE sizeSmall-3g6RX8 grow-25YQ8u">
+								<button  id="find"  type="button" class="${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorbrand + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
 									<div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.find.name}</div>
 								</button>
 								</div>
 								<div align="center" style="padding: 5px">
-								<button  id="findAndConn" type="button" class="button-2t3of8 lookFilled-luDKDo colorRed-3HTNPV sizeSmall-3g6RX8 grow-25YQ8u">
+								<button  id="findAndConn" type="button" class="${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorred + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
 									<div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.findAndConn.name}</div>
 								</button>
 								</div>
@@ -437,48 +437,5 @@ class CoolAdmin {
         if(found) BDfunctionsDario.showToast('Channel: '+this.ChannelStore.getChannel(found.id));
         return(found?found:null)
 	}
-	execTextarea(textarea, commadn, userId, description){
-		console.log(textarea);
-		let msg={content:'test'};
-		this.test.createMessage('375802354928451584', 'msg');
-		BDfunctionsDario.WebModules.findByProperties(['fetchMessages']).sendMessage('375802354928451584', {content:'msg'});
-		textarea.focus();
-		textarea.selectionStart = 0;
-		textarea.selectionEnd = textarea.value.length;
-		if (document.activeElement === textarea) {
-				this.sendMessage(textarea, commadn, userId, description);
-		}
-	}
 
-	sendMessage(textarea, commadn, userId, description){
-		this.MessageActions.sendMessage()
-	}
-/*
-	execTextarea(textarea, commadn, userId, description){
-		console.log(textarea);
-		let msg={content:'test'};
-		this.test.createMessage('375802354928451584', 'msg');
-		textarea.focus();
-		textarea.selectionStart = 0;
-		textarea.selectionEnd = textarea.value.length;
-		if (document.activeElement === textarea) {
-				this.sendMessage(textarea, commadn, userId, description);
-		}
-	}
-
-	sendMessage(textarea, commadn, userId, description){
-		console.log('send');
-		const prefix=BDfunctionsDario.getData("debag", this, "settings")?"?":"!";
-		document.execCommand("insertText", false, prefix + commadn + ' <@!' + userId + '> ' + description);
-		const options = { key: "Enter", code: "Enter", which: 13, keyCode: 13, bubbles: true };
-		const down = new KeyboardEvent("keydown", options);
-		Object.defineProperty(down, "keyCode", {value: 13});
-		Object.defineProperty(down, "which", {value: 13});
-		const press = new KeyboardEvent("keypress", options);
-		Object.defineProperty(press, "keyCode", {value: 13});
-		Object.defineProperty(press, "which", {value: 13});
-		textarea.dispatchEvent(down);
-		textarea.dispatchEvent(press);
-	}
-	*/
 }
