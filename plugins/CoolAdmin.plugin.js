@@ -1,14 +1,16 @@
 //META{"name":"CoolAdmin"}*//
+
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
     getDescription () {return "ДАААРИИИИИООООО";}
-    getVersion () {return "2.1.7";}
+    getVersion () {return "2.1.9";}
     getAuthor () {return "Dario";}
 
-	constructor () {
+	initConstructor () {
 		this.delay=100;
 		this.serverId='259124796971941890';
 		this.botId='378642945827536896';
+		this.channelGeneralId='259124796971941890';
 		this.usersInVoice=new Map();
 		this.switchObserver = new MutationObserver(() => {});
 		this.documentObserver = new MutationObserver((changes) => {
@@ -30,42 +32,38 @@ class CoolAdmin {
 		};
 			this.userTribunalSettingsMarkup =
 			`<span class="cooladmin-modal DevilBro-modal">
-			<div class="backdrop-2ohBEd"></div>
-			<div class="modal-2LIEKY">
-				<div class="inner-1_1f7b">
-					<div class="modal-3HOjGZ sizeSmall-1sh0-r">
-						<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO header-3sp3cE" style="flex: 0 0 auto;">
+			<div class="${BDfunctionsDario.disCN.backdrop}"></div>
+			<div class="${BDfunctionsDario.disCN.modal}">
+				<div class="${BDfunctionsDario.disCN.modalinner}">
+					<div class=${BDfunctionsDario.disCNS.modalsub + BDfunctionsDario.disCN.modalsizemedium}">
+						<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.modalheader}" style="flex: 0 0 auto;">
 							<div class="flexChild-1KGW5q" style="flex: 1 1 auto;">
-								<h4 class="h4-2IXpeI title-1pmpPr size16-3IvaX_ height20-165WbF weightSemiBold-T8sxWH defaultColor-v22dK1 defaultMarginh4-jAopYe marginReset-3hwONl">REPLACE_modal_title</h4>
-								<div class="guildName-1u0hy7 small-3-03j1 size12-1IGJl9 height16-1qXrGy primary-2giqSn"></div>
+								<h4 class="${BDfunctionsDario.disCNS.h4 + BDfunctionsDario.disCNS.headertitle + BDfunctionsDario.disCNS.size16 + BDfunctionsDario.disCNS.height20 + BDfunctionsDario.disCNS.weightsemibold + BDfunctionsDario.disCNS.defaultcolor + BDfunctionsDario.disCNS.h4defaultmargin + BDfunctionsDario.disCN.marginreset}">REPLACE_modal_title</h4>
+								<div class="${BDfunctionsDario.disCNS.modalguildname + BDfunctionsDario.disCNS.small + BDfunctionsDario.disCNS.size12 + BDfunctionsDario.disCNS.height16 + BDfunctionsDario.disCN.primary}"></div>
 							</div>
-							<svg class="btn-cancel close-3ejNTg flexChild-1KGW5q" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
+							<svg class="${BDfunctionsDario.disCNS.modalclose + BDfunctionsDario.disCN.flexchild}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
 								<g fill="none" fill-rule="evenodd">
 									<path d="M0 0h12v12H0"></path>
 									<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
 								</g>
 							</svg>
 						</div>
-						<div class="scrollerWrap-2uBjct content-1Cut5s scrollerThemed-19vinI themeGhostHairline-2H8SiW">
-							<div class="scroller-fzNley inner-tqJwAU">
-								<div tab="user" class="flex-lFgbSz flex-3B1Tl4 vertical-3X17r5 flex-3B1Tl4 directionColumn-2h-LPR justifyStart-2yIZo0 alignStretch-1hwxMa noWrap-v6g9vO marginBottom20-2Ifj-2 tab-content" style="flex: 1 1 auto;">
-									<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginBottom8-1mABJ4" style="flex: 1 1 auto;">
-										<h3 class="titleDefault-1CWM9y title-3i-5G_ marginReset-3hwONl weightMedium-13x9Y8 size16-3IvaX_ height24-2pMcnc flexChild-1KGW5q" style="flex: 0 0 auto;">REPLACE_modal_reason_title</h3>
-									</div>
-									<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginBottom8-1mABJ4" style="flex: 1 1 auto;">
-										<div class="inputWrapper-3xoRWR vertical-3X17r5 flex-3B1Tl4 directionColumn-2h-LPR flexChild-1KGW5q" style="flex: 1 1 auto;"><input type="text" class="inputDefault-Y_U37D input-2YozMi size16-3IvaX_" id="input-reason"></div>
-									</div>
-									<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginBottom8-1mABJ4" style="flex: 1 1 auto;">
-										<h3 id="warning" class="titleDefault-1CWM9y title-3i-5G_ marginReset-3hwONl weightMedium-13x9Y8 size16-3IvaX_ height24-2pMcnc flexChild-1KGW5q" style="flex: 0 0 auto; color: rgb(240, 71, 71)">REPLACE_modal_warning</h3>
-									</div>
-								</div>
+						<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.vertical + BDfunctionsDario.disCNS.directioncolumn + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.alignstretch + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom20}" style="flex: 0 0 auto;">
+							<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom8}" style="flex: 1 1 auto;">
+								<h3 class="${BDfunctionsDario.disCNS.titledefault + BDfunctionsDario.disCNS.title + BDfunctionsDario.disCNS.marginreset + BDfunctionsDario.disCNS.weightmedium + BDfunctionsDario.disCNS.size16 + BDfunctionsDario.disCNS.height24 + BDfunctionsDario.disCN.flexchild}" style="flex: 0 0 auto;">REPLACE_modal_reason_title</h3>
+							</div>
+							<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCNS.marginbottom8 + BDfunctionsDario.disCN.modalsubinner}" style="flex: 1 1 auto;">
+								<div class="${BDfunctionsDario.disCNS.inputwrapper + BDfunctionsDario.disCNS.vertical + BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.directioncolumn + BDfunctionsDario.disCN.flexchild}" style="flex: 1 1 auto;"><input type="text" class="${BDfunctionsDario.disCNS.inputdefault + BDfunctionsDario.disCNS.input + BDfunctionsDario.disCN.size16}" id="input-reason"></div>
+							</div>
+							<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCNS.marginbottom8 + BDfunctionsDario.disCN.modalsubinner}" style="flex: 1 1 auto;">
+								<h3 id="warning" class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom8}" style="flex: 0 0 auto; color: rgb(240, 71, 71)">REPLACE_modal_warning</h3>
 							</div>
 						</div>
-						<div class="flex-lFgbSz flex-3B1Tl4 horizontalReverse-2LanvO horizontalReverse-k5PqxT flex-3B1Tl4 directionRowReverse-2eZTxP justifyStart-2yIZo0 alignStretch-1hwxMa noWrap-v6g9vO footer-1PYmcw">
-						<button type="button" disabled class="btn-save buttonBrandFilledDefault-2Rs6u5 buttonFilledDefault-AELjWf buttonDefault-2OLW-v buttonFilled-29g7b5 buttonBrandFilled-3Mv0Ra mediumGrow-uovsMu button-2t3of8 lookFilled-luDKDo colorBrand-3PmwCE sizeMedium-2VGNaF grow-25YQ8u">
-						<div>REPLACE_modal_button_name</div>
-							</button>
-						</div>
+						<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontalreverse + BDfunctionsDario.disCNS.horizontalreverse2 + BDfunctionsDario.disCNS.directionrowreverse + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.alignstretch + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.modalfooter}">
+								<button type="button" class="btn-save ${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorbrand + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
+									<div>REPLACE_modal_button_name</div>
+								</button>
+							</div>
 					</div>
 				</div>
 			</span>`;
@@ -100,26 +98,69 @@ class CoolAdmin {
 	load () {}
 
 	start () {
+		var libraryScript = null;
 		if (typeof BDfunctionsDario !== "object" || BDfunctionsDario.isLibraryOutdated()) {
 			if (typeof BDfunctionsDario === "object") BDfunctionsDario = "";
-			$('head script[src="https://raw.githubusercontent.com/darten73/BetterPlugins/master/BDfunctionsDario.js"]').remove();
-			$('head').append('<script src="https://raw.githubusercontent.com/darten73/BetterPlugins/master/BDfunctionsDario.js"></script>');
-			}
-		if (typeof BDfunctionsDario === "object") {
-			BDfunctionsDario.loadMessage(this);
-            this.MemberPerms = BDfunctionsDario.WebModules.findByProperties(["getNicknames", "getNick"]);
-			this.ChannelStore = BDfunctionsDario.WebModules.findByProperties(['getChannels']);
-			this.CurrentChannel = BDfunctionsDario.WebModules.findByProperties(['getChannelId']);
-			this.CurrentUser = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']);
-			this.ChannelActions = BDfunctionsDario.WebModules.findByProperties(['selectVoiceChannel']);
-			this.UsersVoiceStore= BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']);
-			this.documentObserver.observe(document.querySelector('#app-mount'), {childList: true, subtree: true});
-			this.adminActions=BDfunctionsDario.WebModules.findByProperties(['move']);
-			this.GuildStore = BDfunctionsDario.WebModules.findByProperties(["getGuilds"]);
-
+			libraryScript = document.querySelector('head script[src="https://darten73.github.io/BetterPlugins/BDfunctionsDario.js"]');
+			if (libraryScript) libraryScript.remove();
+			libraryScript = document.createElement("script");
+			libraryScript.setAttribute("type", "text/javascript");
+			libraryScript.setAttribute("src", "https://darten73.github.io/BetterPlugins/BDfunctionsDario.js");
+			document.head.appendChild(libraryScript);
 		}
+		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
+		if (typeof BDfunctionsDario === "object") this.initialize();
+		else libraryScript.addEventListener("load", () => {this.initialize();});
 	}
 
+
+    initialize (){
+        BDfunctionsDario.loadMessage(this);
+        this.MemberPerms = BDfunctionsDario.WebModules.findByProperties(["getNicknames", "getNick"]);
+        this.ChannelStore = BDfunctionsDario.WebModules.findByProperties(['getChannels']);
+        this.CurrentChannel = BDfunctionsDario.WebModules.findByProperties(['getChannelId']);
+        this.CurrentUser = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']);
+        this.ChannelActions = BDfunctionsDario.WebModules.findByProperties(['selectVoiceChannel']);
+        this.UsersVoiceStore= BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']);
+        this.documentObserver.observe(document.querySelector('#app-mount'), {childList: true, subtree: true});
+        this.adminActions=BDfunctionsDario.WebModules.findByProperties(['move']);
+        this.GuildStore = BDfunctionsDario.WebModules.findByProperties(["getGuilds"]);
+        this.MessageActions = BDfunctionsDario.WebModules.findByProperties(['fetchMessages']);
+        var observer = null;
+
+        observer = new MutationObserver((changes, _) => {
+            changes.forEach(
+                (change, i) => {
+                    if (change.addedNodes) {
+                        change.addedNodes.forEach((node) => {
+                            if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.contextmenu)) {
+                                this.onContextMenu(node);
+                                console.log('node');
+                            }
+                        });
+                    }
+                }
+            );
+        });
+        BDfunctionsDario.addObserver(this, BDfunctionsDario.dotCN.appmount, {name:"userContextObserver",instance:observer}, {childList: true});
+     
+
+     	observer = new MutationObserver((changes, _) => {
+            changes.forEach(
+                (change, i) => {
+                    if (change.addedNodes) {
+                        change.addedNodes.forEach((node) => {
+                            if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.popout)) {
+                            	console.log('pop');
+                                this.onPopouts(node);
+                            }
+                        });
+                    }
+                }
+            );
+        });
+        BDfunctionsDario.addObserver(this, BDfunctionsDario.dotCN.popouts, {name:"popoutObserver",instance:observer}, {childList: true});
+    }
 
 	stop () {
 		if (typeof BDfunctionsDario === "object") {
@@ -133,13 +174,12 @@ class CoolAdmin {
 	onSwitch () {
 
 	}
-
+/*
 	observe(e) {
 		if (!e.addedNodes.length || !(e.addedNodes[0] instanceof Element)) return;
-		try {
             let node = e.addedNodes[0];
             if (node && node.nodeType === 1 && (node.className.includes("context-menu") || node.className.includes("contextMenu-uoJTbz"))) {
-                this.onContextMenu(node);
+            	this.onContextMenu(node);
             }
             if (node && node.nodeType === 1 && (node.className.includes("popout"))) {
                 let body = node.querySelector(".userPopout-11hFKo");
@@ -147,16 +187,14 @@ class CoolAdmin {
                     this.onPopouts(node);
                 }
             }
-        }catch (err){
 
-
-        }
 	}
-
+*/
 	onPopouts(node){
         let react = BDfunctionsDario.getReactInstance(node).child.memoizedProps;
+        	console.log(node);
         	let info=react.user;
-        	let header = node.querySelector(".bodyTitle-18hsd9");
+        	let header = node.querySelector(BDfunctionsDario.dotCN.userpopoutheader);
         	let findBtns = `<div>
 								<div align="center" style="padding: 5px">	
 								<button  id="find"  type="button" class="button-2t3of8 lookFilled-luDKDo colorBrand-3PmwCE sizeSmall-3g6RX8 grow-25YQ8u">
@@ -235,17 +273,18 @@ class CoolAdmin {
 	}
 
 	onContextMenu (context) {
+		console.log('context-menu');
         let serverObj = BDfunctionsDario.getSelectedServer();
         serverObj=serverObj?serverObj: BDfunctionsDario.getSelectedChannel();
 		if (!context || !context.tagName || !context.parentElement || context.querySelector(".localusersettings-item") || (serverObj.id!==this.serverId && serverObj.id!==this.botId)) return;
         let info = BDfunctionsDario.getKeyInformation({"node":context, "key":"user"});
 		if (info && BDfunctionsDario.getKeyInformation({"node":context, "key":"displayName", "value":"UserNoteItem"})) {
-			let userContextMenuMarkup= '<div class=\"item-group itemGroup-oViAgA\">';
+			let userContextMenuMarkup= `<div class=${BDfunctionsDario.disCN.contextmenuitemgroup}>`;
 			for(let group in this.userContextMenuMarkup){
-				userContextMenuMarkup+='<div class="item-group itemGroup-oViAgA">';
+				userContextMenuMarkup+=`<div class=${BDfunctionsDario.disCN.contextmenuitemgroup}>`;
                 for(let item in this.userContextMenuMarkup[group]){
 					if(BDfunctionsDario.getData(item,this,"settings")) {
-                        userContextMenuMarkup += '<div class="item item-1XYaYf ' + item + '-item">';
+                        userContextMenuMarkup += `<div class="${BDfunctionsDario.disCN.contextmenuitem} ${item}-item">`;
                         if(!this.userContextMenuMarkup[group][item].warning) {
                             userContextMenuMarkup += '<span>' + this.userContextMenuMarkup[group][item].name + '</span>';
                         }else{
@@ -261,7 +300,7 @@ class CoolAdmin {
 			$(context).append(userContextMenuMarkup)
 				.on("click", ".moveToAfk-item", ()=>{
 					$(context).hide();
-					this.adminActions.setChannel(this.serverId,info.id,'289786584247828490');
+					this.adminActions.setChannel(this.serverId, info.id, '289786584247828490');
 				})
 				.on("click", ".find-item", () => {
 					$(context).hide();
@@ -280,10 +319,13 @@ class CoolAdmin {
 					this.showTribunalSettings(info, "warn");
 				})
 				.on("click", ".ban-item", () => {
+					console.log('tribunal')
 					$(context).hide();
 					this.showTribunalSettings(info, "ban");
 				});
 			BDfunctionsDario.updateContextPosition(context);
+			let buf = context;
+			console.log(userContextMenuMarkup);
 		}
 	}
 
@@ -312,6 +354,7 @@ class CoolAdmin {
 				button_name="Забанить";
 				break;
 		}
+		console.log(button_name);
         let userTribunalSettings = $(this.userTribunalSettingsMarkup
 															.replace("REPLACE_modal_title",title)
 															.replace("REPLACE_modal_reason_title",reason_title+(member.nick ? member.nick : info.username)+'?')
@@ -351,8 +394,10 @@ class CoolAdmin {
 					}else{return;}
 				}else{return;}
                 let self=this;
+                const prefix=BDfunctionsDario.getData("debag", this, "settings")?"?":"!";
+                this.MessageActions.sendMessage(this.channelGeneralId,{content: prefix + type + ' <@!' + member.userId + '> ' + description })
 				setTimeout(function(){
-					self.execTextarea($('.content .channelTextArea-1HTP3C textarea')[0], type, member.userId, description);
+					self.execTextarea($(BDfunctionsDario.dotCN.textareainnerenabled)[0], type, member.userId, description);
 				},self.delay);
 			 });
 		userTribunalSettings.find("#input-reason").focus();
@@ -392,8 +437,11 @@ class CoolAdmin {
         if(found) BDfunctionsDario.showToast('Channel: '+this.ChannelStore.getChannel(found.id));
         return(found?found:null)
 	}
-
 	execTextarea(textarea, commadn, userId, description){
+		console.log(textarea);
+		let msg={content:'test'};
+		this.test.createMessage('375802354928451584', 'msg');
+		BDfunctionsDario.WebModules.findByProperties(['fetchMessages']).sendMessage('375802354928451584', {content:'msg'});
 		textarea.focus();
 		textarea.selectionStart = 0;
 		textarea.selectionEnd = textarea.value.length;
@@ -403,6 +451,23 @@ class CoolAdmin {
 	}
 
 	sendMessage(textarea, commadn, userId, description){
+		this.MessageActions.sendMessage()
+	}
+/*
+	execTextarea(textarea, commadn, userId, description){
+		console.log(textarea);
+		let msg={content:'test'};
+		this.test.createMessage('375802354928451584', 'msg');
+		textarea.focus();
+		textarea.selectionStart = 0;
+		textarea.selectionEnd = textarea.value.length;
+		if (document.activeElement === textarea) {
+				this.sendMessage(textarea, commadn, userId, description);
+		}
+	}
+
+	sendMessage(textarea, commadn, userId, description){
+		console.log('send');
 		const prefix=BDfunctionsDario.getData("debag", this, "settings")?"?":"!";
 		document.execCommand("insertText", false, prefix + commadn + ' <@!' + userId + '> ' + description);
 		const options = { key: "Enter", code: "Enter", which: 13, keyCode: 13, bubbles: true };
@@ -415,4 +480,5 @@ class CoolAdmin {
 		textarea.dispatchEvent(down);
 		textarea.dispatchEvent(press);
 	}
+	*/
 }
