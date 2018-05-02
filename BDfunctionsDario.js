@@ -11,9 +11,9 @@ BDfunctionsDario.loadMessage = function (plugin) {
     if (!plugin.appReload) {
         if (typeof plugin.getDescription === "function") {
             var oldDescription = plugin.getDescription();
-            if (oldDescription.indexOf("http://bit.ly/DevilBrosHaus") == -1) {
-                plugin.getDescription = function () {return oldDescription + "\n\nMy Support Server: http://bit.ly/DevilBrosHaus or https://discordapp.com/invite/Jx3TjNS";};
-            }
+		if (oldDescription.indexOf("DevilBro hottie") == -1) {
+			plugin.getDescription = function () {return oldDescription + "\n\nDevilBro hottie";}
+		}
         }
         var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
         console.log(loadMessage);
