@@ -2,9 +2,9 @@
 
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
-    getDescription () {return "ДАААРИИИИИООООО";}
-    getVersion () {return "2.2.0";}
-    getAuthor () {return "Dario";}
+	getDescription () {return "А кто такие фиксики большой большой секрет";}
+	getVersion () {return "2.2.0";}
+	getAuthor () {return "Dario";}
 
 	initConstructor () {
 		this.delay=100;
@@ -12,10 +12,7 @@ class CoolAdmin {
 		this.botId='378642945827536896';
 		this.channelGeneralId='259124796971941890';
 		this.usersInVoice=new Map();
-		this.switchObserver = new MutationObserver(() => {});
-		this.documentObserver = new MutationObserver((changes) => {
-			for (let change in changes) this.observe(changes[change]);
-		});
+	
 		this.userContextMenuMarkup = {
 			moveGroup:{
 				moveToAfk: {name: "Перенести в АФК", warning:false}
@@ -163,8 +160,6 @@ class CoolAdmin {
 
 	stop () {
 		if (typeof BDfunctionsDario === "object") {
-			this.switchObserver.disconnect();
-		    this.documentObserver.disconnect();
 			BDfunctionsDario.removeLocalStyle(this.getName());
 			BDfunctionsDario.unloadMessage(this);
 		}
@@ -173,22 +168,6 @@ class CoolAdmin {
 	onSwitch () {
 
 	}
-/*
-	observe(e) {
-		if (!e.addedNodes.length || !(e.addedNodes[0] instanceof Element)) return;
-            let node = e.addedNodes[0];
-            if (node && node.nodeType === 1 && (node.className.includes("context-menu") || node.className.includes("contextMenu-uoJTbz"))) {
-            	this.onContextMenu(node);
-            }
-            if (node && node.nodeType === 1 && (node.className.includes("popout"))) {
-                let body = node.querySelector(".userPopout-11hFKo");
-                if (body) {
-                    this.onPopouts(node);
-                }
-            }
-
-	}
-*/
 	onPopouts(node){
         let react = BDfunctionsDario.getReactInstance(node).child.memoizedProps;
         	console.log(node);
@@ -437,5 +416,4 @@ class CoolAdmin {
         if(found) BDfunctionsDario.showToast('Channel: '+this.ChannelStore.getChannel(found.id));
         return(found?found:null)
 	}
-
 }
