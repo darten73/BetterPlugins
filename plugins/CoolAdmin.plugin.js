@@ -2,9 +2,9 @@
 
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
-	getDescription () {return "А кто такие фиксики большой большой секрет";}
-	getVersion () {return "2.2.1";}
-	getAuthor () {return "Dario";}
+    getDescription () {return "ДАААРИИИИИООООО";}
+    getVersion () {return "2.2.2";}
+    getAuthor () {return "Dario";}
 
 	initConstructor () {
 		this.delay=100;
@@ -119,7 +119,6 @@ class CoolAdmin {
         this.CurrentUser = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']);
         this.ChannelActions = BDfunctionsDario.WebModules.findByProperties(['selectVoiceChannel']);
         this.UsersVoiceStore= BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']);
-        this.documentObserver.observe(document.querySelector('#app-mount'), {childList: true, subtree: true});
         this.adminActions=BDfunctionsDario.WebModules.findByProperties(['move']);
         this.GuildStore = BDfunctionsDario.WebModules.findByProperties(["getGuilds"]);
         this.MessageActions = BDfunctionsDario.WebModules.findByProperties(['fetchMessages']);
