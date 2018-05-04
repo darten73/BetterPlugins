@@ -2,7 +2,7 @@
 
 class CoolAdmin {
 	getName () {return "CoolAdmin";}
-    getDescription () {return "ДАААРИИИИИООООО";}
+    getDescription () {return "Ты пидор";}
     getVersion () {return "2.2.2";}
     getAuthor () {return "Dario";}
 
