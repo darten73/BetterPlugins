@@ -3,7 +3,7 @@
 class CoolAdmin {
     getName () {return "CoolAdmin";}
     getDescription () {return "Ты пидор";}
-    getVersion () {return "2.2.8";}
+    getVersion () {return "2.2.9";}
     getAuthor () {return "Dario";}
 
     initConstructor () {
@@ -236,13 +236,10 @@ class CoolAdmin {
         let selectedVoiceId=this.CurrentChannel.getVoiceChannelId();
         console.log(channel);
         if(channel && selectedVoiceId!=channel.id){
-            let canConnect=undefined;
+            var canConnect = this.checkPermsToConnect(this.currentUserId, channel);
             let self=this;
-
-
-            canConnect=this.checkPermsToConnect(this.currentUserId, channel)
             console.log(canConnect);
-            if(canConnect||canConnect==undefined) {
+            if(canConnect||canConnect==null) {
                 setTimeout(function () {
                     $(".buttonDisconnect-3W_SJc").trigger("click");
                     setTimeout(function () {
@@ -254,7 +251,7 @@ class CoolAdmin {
     }
     checkPermsToConnect(userId, channel){
         if(this.isAdmin) return true;
-        let havePerms =false;
+        let havePerms = null;
         let memberPerm=undefined;
         let tmpPerm;
         let ids = [];
