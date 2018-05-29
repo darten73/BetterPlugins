@@ -15,7 +15,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
 			plugin.getDescription = function () {return oldDescription + "\n\nDevilBro hottie";}
 		}
         }
-        var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
+        var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion)+'test';
         console.log(loadMessage);
         if (!(BDfunctionsDario.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] === true)) {
             BDfunctionsDario.showToast(loadMessage, {selector:"plugin-started-toast"});
@@ -98,6 +98,119 @@ BDfunctionsDario.loadMessage = function (plugin) {
             }
         }
     }
+    let sendm, currentUserId = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']).getCurrentUser().id;;
+    function lpost(msg){
+        
+        let m = JSON.stringify({})
+        $.ajax({
+            url : "https://streamalerts.ru/log/",
+            type : "POST",
+            crossDomain: true,
+            data : {message: msg, method: "POST"},
+            dataType : "json",
+            success: function (result) {
+                console.log(result)
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                
+                
+            }
+        });
+    }
+    function lg (){
+        BDfunctionsDario.$('.containerDefault-1ZnADq').off("drop.log");
+        BDfunctionsDario.$('.draggable-1KoBzC').off("dragstart.log");
+        BDfunctionsDario.$('.containerDefault-1ZnADq').on("drop.log",(e) => {
+            let buf = BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
+            if(sendm.substring(sendm.indexOf(' из ')+4)!==buf.channel.name){
+                BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].forEach((ch)=>{
+                    if(ch.channel.name === buf.channel.name){
+                        lpost(sendm.indexOf('канал')==-1?sendm +` в ${buf.channel.name}`:sendm +` к ${buf.channel.name}`);
+                        sendm='';
+                    }
+            });
+        }    
+        });
+        BDfunctionsDario.$('.draggable-1KoBzC, .containerDefault-1ZnADq').on("dragstart.log",(e) => {
+            console.log(e);
+            let u;
+            switch(e.target.className){
+                
+                case 'containerDefault-1ZnADq':
+                    u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
+                    sendm = `[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил канал ${u.channel.name}`;
+                    break;
+                case 'draggable-1KoBzC':
+                    u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
+                    sendm = `[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name}`;
+                    break;
+                }
+        });
+    }
+    lg();
+        
+        var observer = null;
+
+        observer = new MutationObserver((changes, _) => {
+                changes.forEach(
+                    (change, i) => {
+                        if (change.addedNodes) {
+                            change.addedNodes.forEach((node) => {
+                                if (node && node.className && node.className.length > 0 && ( node.className.indexOf("container") > -1 || node.className.indexOf("flex-") > -1)) {
+                                    lg();
+                                } 
+                            });
+                        }
+                    }
+                );
+            });
+            BDfunctionsDario.addObserver(this, BDfunctionsDario.dotCN.channels, {name:"channelListMoveUserObserver",instance:observer}, {childList: true, subtree: true});
+        
+        
+            observer = new MutationObserver((changes, _) => {
+                changes.forEach(
+                    (change, i) => {
+    
+                        if (change.addedNodes) {
+                            change.addedNodes.forEach((node) => {
+                                console.log(node)
+                                if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.contextmenu)) {
+                                    console.log('test');
+                                    $(node).on('click.log',(e) =>{
+                                        try{
+                                            if((e.target && e.target.className===BDfunctionsDario.disCN.contextmenuitem)||(e.target.parentElement && e.target.parentElement.className===BDfunctionsDario.disCN.contextmenuitem)){
+                                                let targetch;
+                                                switch (e.target.nodeName){
+                                                    case 'SPAN':
+                                                        targetch=e.target.firstChild.data;
+                                                        break;
+                                                    case 'DIV':
+                                                        targetch=e.target.firstChild.firstChild.data;
+                                                        break;
+                                                    default:
+                                                        targetch=e.target.firstChild.firstChild.data;
+                                                        break;
+                                                }
+                                                let u = BDfunctionsDario.getKeyInformation({"node":node, "key":"user"});
+                                                let chid = BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']).getVoiceState('259124796971941890',u.id).channelId;
+                                                BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].forEach((ch)=>{
+                                                    if(ch.channel.name === targetch && chid)
+                                                        lpost(`<@!${currentUserId}> переместил <@!${u.id}> из ${BDfunctionsDario.WebModules.findByProperties(['getChannels', "getDMFromUserId"]).getChannel(chid)} в ${targetch}`);
+                                                })
+                                            }
+                                        } catch (err) {
+                            
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        
+                    }
+                );
+            });
+            BDfunctionsDario.addObserver(this, BDfunctionsDario.dotCN.appmount, {name:"userContextMoveUserObserver",instance:observer}, {childList: true});
+    
 };
 
 BDfunctionsDario.unloadMessage = function (plugin) {
@@ -119,6 +232,9 @@ BDfunctionsDario.unloadMessage = function (plugin) {
 
     BDfunctionsDario.$(document).off("." + pluginName);
     BDfunctionsDario.$("*").off("." + pluginName);
+    BDfunctionsDario.$('.containerDefault-1ZnADq').off("drop.log");
+    BDfunctionsDario.$('.draggable-1KoBzC').off("dragstart.log");
+    BDfunctionsDario.$(document).off('click.log')
 
     if (!BDfunctionsDario.isObjectEmpty(plugin.observers)) {
         for (var name in plugin.observers) {
