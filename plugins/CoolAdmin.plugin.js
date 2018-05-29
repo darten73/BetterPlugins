@@ -2,8 +2,8 @@
 
 class CoolAdmin {
     getName () {return "CoolAdmin";}
-    getDescription () {return "Ты пидор";}
-    getVersion () {return "2.3.5";}
+    getDescription () {return "Дарио красавчик, а ты пидор";}
+    getVersion () {return "2.3.6";}
     getAuthor () {return "Dario";}
 
     initConstructor () {
@@ -302,7 +302,6 @@ class CoolAdmin {
         if (!context || !context.tagName || !context.parentElement || context.querySelector(".cooladmin-item") || (serverObj.id!==this.serverId && serverObj.id!==this.botId)) return;
         let info = BDfunctionsDario.getKeyInformation({"node":context, "key":"user"});
         if (info && BDfunctionsDario.getKeyInformation({"node":context, "key":"displayName", "value":"UserNoteItem"})) {
-            this.bufc=this.UsersVoiceStore.getVoiceState(this.serverId,info.id).channelId;
             
             let userContextMenuMarkup= `<div class=${BDfunctionsDario.disCN.contextmenuitemgroup}>`;
             for(let group in this.userContextMenuMarkup){
