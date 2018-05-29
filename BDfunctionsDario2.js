@@ -15,7 +15,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
 			plugin.getDescription = function () {return oldDescription + "\n\nDevilBro hottie";}
 		}
         }
-        var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
+        var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion) + 'test';
         console.log(loadMessage);
         if (!(BDfunctionsDario.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] === true)) {
             BDfunctionsDario.showToast(loadMessage, {selector:"plugin-started-toast"});
@@ -100,9 +100,9 @@ BDfunctionsDario.loadMessage = function (plugin) {
     }
     let setm, currentUserId = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']).getCurrentUser().id;;
     function lg (){
-        $('.containerDefault-1ZnADq').off("drop."+this.getName());
-        $('.draggable-1KoBzC').off("dragstart."+this.getName());
-        $('.containerDefault-1ZnADq').on("drop."+this.getName(),(e) => {
+        $('.containerDefault-1ZnADq').off("drop.log");
+        $('.draggable-1KoBzC').off("dragstart.log");
+        $('.containerDefault-1ZnADq').on("drop.log",(e) => {
             let buf = BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
             if(sendm.substring(sendm.indexOf(' из ')+4)!==buf.channel.name){
                 this.GuildChannels.getChannels('259124796971941890')[2].forEach((ch)=>{
@@ -113,7 +113,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
             });
         }    
         });
-        $('.draggable-1KoBzC, .containerDefault-1ZnADq').on("dragstart."+this.getName(),(e) => {
+        $('.draggable-1KoBzC, .containerDefault-1ZnADq').on("dragstart.log",(e) => {
             console.log(e);
             let u;
             switch(e.target.className){
@@ -158,7 +158,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
                                 console.log(node)
                                 if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.contextmenu)) {
                                     console.log('test');
-                                    $(node).on('click.lg'+this.getName(),(e) =>{
+                                    $(node).on('click.log',(e) =>{
                                         try{
                                             if((e.target && e.target.className===BDfunctionsDario.disCN.contextmenuitem)||(e.target.parentElement && e.target.parentElement.className===BDfunctionsDario.disCN.contextmenuitem)){
                                                 let targetch;
@@ -214,6 +214,9 @@ BDfunctionsDario.unloadMessage = function (plugin) {
 
     BDfunctionsDario.$(document).off("." + pluginName);
     BDfunctionsDario.$("*").off("." + pluginName);
+    BDfunctionsDario.$('.containerDefault-1ZnADq').off("drop.log");
+    BDfunctionsDario.$('.draggable-1KoBzC').off("dragstart.log");
+    BDfunctionsDario.$(document).off('click.log')
 
     if (!BDfunctionsDario.isObjectEmpty(plugin.observers)) {
         for (var name in plugin.observers) {
