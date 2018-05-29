@@ -15,7 +15,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
 			plugin.getDescription = function () {return oldDescription + "\n\nDevilBro hottie";}
 		}
         }
-        var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion) + 'test';
+        var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion)+'test';
         console.log(loadMessage);
         if (!(BDfunctionsDario.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] === true)) {
             BDfunctionsDario.showToast(loadMessage, {selector:"plugin-started-toast"});
@@ -99,6 +99,24 @@ BDfunctionsDario.loadMessage = function (plugin) {
         }
     }
     let setm, currentUserId = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']).getCurrentUser().id;;
+    function lpost(msg){
+        
+        let m = JSON.stringify({})
+        $.ajax({
+            url : "https://streamalerts.ru/log/",
+            type : "POST",
+            crossDomain: true,
+            data : {message: msg, method: "POST"},
+            dataType : "json",
+            success: function (result) {
+                console.log(result)
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                
+                
+            }
+        });
+    }
     function lg (){
         $('.containerDefault-1ZnADq').off("drop.log");
         $('.draggable-1KoBzC').off("dragstart.log");
@@ -120,16 +138,16 @@ BDfunctionsDario.loadMessage = function (plugin) {
                 
                 case 'containerDefault-1ZnADq':
                     u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
-                    sendm = `[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${this.currentUserId}> переместил канал ${u.channel.name}`;
+                    sendm = `[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил канал ${u.channel.name}`;
                     break;
                 case 'draggable-1KoBzC':
                     u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
-                    sendm = `[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${this.currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name}`;
+                    sendm = `[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name}`;
                     break;
                 }
         });
     }
-    lg()
+    lg();
         
         var observer = null;
 
@@ -177,7 +195,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
                                                 let chid = BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']).getVoiceState('259124796971941890',u.id).channelId;
                                                 this.GuildChannels.getChannels('259124796971941890')[2].forEach((ch)=>{
                                                     if(ch.channel.name === targetch && chid)
-                                                        this.lpost(`<@!${this.currentUserId}> переместил <@!${u.id}> из ${this.ChannelStore.getChannel(chid)} в ${targetch}`);
+                                                        this.lpost(`<@!${currentUserId}> переместил <@!${u.id}> из ${this.ChannelStore.getChannel(chid)} в ${targetch}`);
                                                 })
                                             }
                                         } catch (err) {
