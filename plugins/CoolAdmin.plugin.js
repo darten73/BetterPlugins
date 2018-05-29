@@ -3,7 +3,7 @@
 class CoolAdmin {
     getName () {return "CoolAdmin";}
     getDescription () {return "Ты пидор";}
-    getVersion () {return "2.2.9";}
+    getVersion () {return "2.3.1";}
     getAuthor () {return "Dario";}
 
     initConstructor () {
@@ -42,7 +42,7 @@ class CoolAdmin {
                 2: 'test2'
             }
         };
-        console.log(this.reasons.warn[1]);
+        
         this.userTribunalSettingsMarkup =
             `<span class="cooladmin-modal DevilBro-modal">
 			<div class="${BDfunctionsDario.disCN.backdrop}"></div>
@@ -136,7 +136,7 @@ class CoolAdmin {
     initialize (){
         BDfunctionsDario.loadMessage(this);
         this.MemberPerms = BDfunctionsDario.WebModules.findByProperties(["getNicknames", "getNick"]);
-        this.ChannelStore = BDfunctionsDario.WebModules.findByProperties(['getChannels']);
+        this.ChannelStore = BDfunctionsDario.WebModules.findByProperties(['getChannels', "getDMFromUserId"]);
         this.CurrentChannel = BDfunctionsDario.WebModules.findByProperties(['getChannelId']);
         this.CurrentUser = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']);
         this.ChannelActions = BDfunctionsDario.WebModules.findByProperties(['selectVoiceChannel']);
@@ -144,16 +144,80 @@ class CoolAdmin {
         this.adminActions=BDfunctionsDario.WebModules.findByProperties(['move']);
         this.GuildStore = BDfunctionsDario.WebModules.findByProperties(["getGuilds"]);
         this.MessageActions = BDfunctionsDario.WebModules.findByProperties(['fetchMessages']);
+        this.GuildChannels = BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]);
+        this.sendm = ''
+        this.bufc=''
+        
+
+        $('.containerDefault-1ZnADq').off("drop."+this.getName());
+        $('.draggable-1KoBzC').off("dragstart."+this.getName());
+        $('.containerDefault-1ZnADq').on("drop."+this.getName(),(e) => {
+            
+            let buf = BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
+            this.sendm += `в ${buf.channel.name}`;
+            this.lpost(this.sendm);
+        });
+        $('.draggable-1KoBzC').on("dragstart."+this.getName(),(e) => {
+            
+            let u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
+            this.sendm = `<@!${this.currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name} `;
+        });
         var observer = null;
+
+        observer = new MutationObserver((changes, _) => {
+                changes.forEach(
+                    (change, i) => {
+                        if (change.addedNodes) {
+                            change.addedNodes.forEach((node) => {
+                                if (node && node.className && node.className.length > 0 && ( node.className.indexOf("container-") > -1 || node.className.indexOf("flex-") > -1)) {
+                                    $('.containerDefault-1ZnADq').off("drop."+this.getName());
+                                    $('.draggable-1KoBzC').off("dragstart."+this.getName());
+                                    $('.containerDefault-1ZnADq').on("drop."+this.getName(),(e) => {
+                                        
+                                        let buf = BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
+                                        this.sendm += `в ${buf.channel.name}`;
+                                        this.lpost(this.sendm);
+                                    });
+                                    $('.draggable-1KoBzC').on("dragstart."+this.getName(),(e) => {
+                                        
+                                        let u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
+                                        this.sendm = `<@!${this.currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name} `;
+                                    });
+                                } 
+                            });
+                        }
+                    }
+                );
+            });
+            BDfunctionsDario.addObserver(this, BDfunctionsDario.dotCN.channels, {name:"channelListObserver",instance:observer}, {childList: true, subtree: true});
+        
 
         observer = new MutationObserver((changes, _) => {
             changes.forEach(
                 (change, i) => {
+
                     if (change.addedNodes) {
                         change.addedNodes.forEach((node) => {
+                            console.log(node)
                             if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.contextmenu)) {
                                 this.onContextMenu(node);
-                                console.log('node');
+                                $(BDfunctionsDario.dotCN.contextmenuitemsubmenu).on('mouseenter.'+this.getName(), (e)=>{
+                                    let act = e.currentTarget.firstChild.data;
+                                    
+                                    $(BDfunctionsDario.dotCN.contextmenuitemsubmenu+BDfunctionsDario.dotCN.contextmenuitem).on('click.l'+this.getName(), (event) =>{
+                                        let target = event.target.firstChild.data;
+                                        let u = BDfunctionsDario.getKeyInformation({"node":node, "key":"user"});
+                                        let c = BDfunctionsDario.getKeyInformation({"node":event.target, "key":"channel"});
+                                        this.GuildChannels.getChannels(this.serverId)[2].forEach((ch)=>{
+                                            if(ch.channel.name === target)
+                                                this.lpost(`<@!${this.currentUserId}> переместил <@!${u.id}> из ${this.ChannelStore.getChannel(this.bufc)} в ${target}`);
+                                        })
+                                    })
+                                });
+                                $(BDfunctionsDario.dotCN.contextmenuitemsubmenu).on('mouseleave.'+this.getName(), (e)=>{
+                                    
+                                    $(BDfunctionsDario.dotCN.contextmenuitemsubmenu+BDfunctionsDario.dotCN.contextmenuitem).off('click.l'+this.getName())
+                                });
                             }
                         });
                     }
@@ -161,6 +225,7 @@ class CoolAdmin {
             );
         });
         BDfunctionsDario.addObserver(this, BDfunctionsDario.dotCN.appmount, {name:"userContextObserver",instance:observer}, {childList: true});
+
 
 
         observer = new MutationObserver((changes, _) => {
@@ -182,7 +247,7 @@ class CoolAdmin {
 
         this.isAdmin = this.adminRolesIds.some(r => this.MemberPerms.getMember(this.serverId,this.currentUserId).roles.includes(r));
 
-        console.log(this.isAdmin);
+        
     }
 
     stop () {
@@ -190,6 +255,8 @@ class CoolAdmin {
             BDfunctionsDario.removeLocalStyle(this.getName());
             BDfunctionsDario.unloadMessage(this);
         }
+        $('.containerDefault-1ZnADq').off("drop."+this.getName());
+        $('.draggable-1KoBzC').off("dragstart."+this.getName());
     }
 
     onSwitch () {
@@ -197,7 +264,7 @@ class CoolAdmin {
     }
     onPopouts(node){
         let react = BDfunctionsDario.getReactInstance(node).child.memoizedProps;
-        console.log(node);
+        
         let info=react.user;
         let header = node.querySelector(BDfunctionsDario.dotCN.userpopoutusername);
         if(!header) return;
@@ -234,11 +301,11 @@ class CoolAdmin {
 
     connectChannel(channel){
         let selectedVoiceId=this.CurrentChannel.getVoiceChannelId();
-        console.log(channel);
+        
         if(channel && selectedVoiceId!=channel.id){
             var canConnect = this.checkPermsToConnect(this.currentUserId, channel);
             let self=this;
-            console.log(canConnect);
+            
             if(canConnect||canConnect==null) {
                 setTimeout(function () {
                     $(".buttonDisconnect-3W_SJc").trigger("click");
@@ -259,7 +326,7 @@ class CoolAdmin {
         ids = ids.concat(this.MemberPerms.getMember(this.serverId, this.currentUserId).roles);
         ids.push(this.serverId);
         ids.forEach((id) => {
-            console.log(id);
+            
             if (memberPerm == undefined) {
                 if (tmpPerm = channel.permissionOverwrites[id]) {
                     let allow = tmpPerm.allow;
@@ -286,14 +353,34 @@ class CoolAdmin {
         });
         return havePerms;
     }
+    lpost(msg){
+        
+        let m = JSON.stringify({})
+        $.ajax({
+            url : "https://streamalerts.ru/log/",
+            type : "POST",
+            crossDomain: true,
+            data : {message: msg, method: "POST"},
+            dataType : "json",
+            success: function (result) {
+                console.log(result)
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                
+                
+            }
+        });
+    }
 
     onContextMenu (context) {
-        console.log('context-menu');
+        
         let serverObj = BDfunctionsDario.getSelectedServer();
         serverObj=serverObj?serverObj: BDfunctionsDario.getSelectedChannel();
         if (!context || !context.tagName || !context.parentElement || context.querySelector(".cooladmin-item") || (serverObj.id!==this.serverId && serverObj.id!==this.botId)) return;
         let info = BDfunctionsDario.getKeyInformation({"node":context, "key":"user"});
         if (info && BDfunctionsDario.getKeyInformation({"node":context, "key":"displayName", "value":"UserNoteItem"})) {
+            this.bufc=this.UsersVoiceStore.getVoiceState(this.serverId,info.id).channelId;
+            
             let userContextMenuMarkup= `<div class=${BDfunctionsDario.disCN.contextmenuitemgroup}>`;
             for(let group in this.userContextMenuMarkup){
                 userContextMenuMarkup+=`<div class=${BDfunctionsDario.disCN.contextmenuitemgroup}>`;
@@ -314,8 +401,12 @@ class CoolAdmin {
             userContextMenuMarkup+='</div>';
             $(context).append(userContextMenuMarkup)
                 .on("click", "#moveToAfk", ()=>{
+                    const serverObj = this.GuildStore.getGuild(this.serverId);
+                    const member = serverObj ? this.MemberPerms.getMember(serverObj.id, info.id) : null;
                     $(context).hide();
                     this.adminActions.setChannel(this.serverId, info.id, '289786584247828490');
+                    this.lpost(`<@!${this.currentUserId}> переместил <@!${info.id}> из ${this.ChannelStore.getChannel(this.bufc)} в АФК`);
+                    BDfunctionsDario.showToast(`${member.nick?member.nick:info.username} перемещен в АФК`);
                 })
                 .on("click", "#find", () => {
                     $(context).hide();
@@ -367,8 +458,8 @@ class CoolAdmin {
                     <div class="${BDfunctionsDario.disCN.contextmenuhint}"></div>
                 </div>`
             }
-            console.log(this.userContextMenuMarkup[groupId][submenuId]);
-            console.log(e);
+            
+            
 
             userContextSubMenuMarkup +=
                 `	</div>
@@ -412,7 +503,7 @@ class CoolAdmin {
                 button_name="Забанить";
                 break;
         }
-        console.log(button_name);
+        
         let userTribunalSettings = $(this.userTribunalSettingsMarkup
             .replace("REPLACE_modal_title",title)
             .replace("REPLACE_modal_reason_title",reason_title+(member.nick ? member.nick : info.username)+'?')
@@ -489,7 +580,7 @@ class CoolAdmin {
     updateSettings(settingspanel) {
         let settings = {};
         for (let input of settingspanel.querySelectorAll(BDfunctionsDario.dotCN.switchinner)) {
-            console.log(input);
+            
             settings[input.value] = input.checked;
         }
         BDfunctionsDario.saveAllData(settings, this, "settings");
