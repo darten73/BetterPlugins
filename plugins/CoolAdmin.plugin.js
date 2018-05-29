@@ -2,8 +2,8 @@
 
 class CoolAdmin {
     getName () {return "CoolAdmin";}
-    getDescription () {return "Дарио красавчик, а ты пидор";}
-    getVersion () {return "2.3.6";}
+    getDescription () {return "дарио красавчик а ты пидор";}
+    getVersion () {return "2.3.5";}
     getAuthor () {return "Dario";}
 
     initConstructor () {
@@ -309,7 +309,6 @@ class CoolAdmin {
                 for(let item in this.userContextMenuMarkup[group]){
                     if(BDfunctionsDario.getData(item, this, "settings")) {
                         if(this.userContextMenuMarkup[group][item].admin && !this.isAdmin) continue;
-                        console.log(this.userContextMenuMarkup[group][item].submunu + item)
                         userContextMenuMarkup += `<div id="${item}" class="${BDfunctionsDario.disCNS.contextmenuitem+ group +' '+(this.userContextMenuMarkup[group][item].submunu?BDfunctionsDario.disCNS.contextmenuitemsubmenu+'dario-submenu':'')} cooladmin-item">`;
 
                         userContextMenuMarkup += `<span ${this.userContextMenuMarkup[group][item].warning?'style="color:#f04747!important"':''} >${this.userContextMenuMarkup[group][item].name}</span>`;
@@ -353,7 +352,6 @@ class CoolAdmin {
                     this.sendMessageInGeneral(prefix + type + ' <@!' + info.id + '>');
                 })
                 .on("click", "#ban", () => {
-                    console.log('tribunal')
                     $(context).hide();
                     this.showTribunalSettings(info, "ban");
                 })
