@@ -3,7 +3,7 @@
 class CoolAdmin {
     getName () {return "CoolAdmin";}
     getDescription () {return "Ты пидор";}
-    getVersion () {return "2.3.1";}
+    getVersion () {return "2.3.5";}
     getAuthor () {return "Dario";}
 
     initConstructor () {
@@ -145,53 +145,7 @@ class CoolAdmin {
         this.GuildStore = BDfunctionsDario.WebModules.findByProperties(["getGuilds"]);
         this.MessageActions = BDfunctionsDario.WebModules.findByProperties(['fetchMessages']);
         this.GuildChannels = BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]);
-        this.sendm = ''
-        this.bufc=''
-        
-
-        $('.containerDefault-1ZnADq').off("drop."+this.getName());
-        $('.draggable-1KoBzC').off("dragstart."+this.getName());
-        $('.containerDefault-1ZnADq').on("drop."+this.getName(),(e) => {
-            
-            let buf = BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
-            this.sendm += `в ${buf.channel.name}`;
-            this.lpost(this.sendm);
-        });
-        $('.draggable-1KoBzC').on("dragstart."+this.getName(),(e) => {
-            
-            let u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
-            this.sendm = `<@!${this.currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name} `;
-        });
         var observer = null;
-
-        observer = new MutationObserver((changes, _) => {
-                changes.forEach(
-                    (change, i) => {
-                        if (change.addedNodes) {
-                            change.addedNodes.forEach((node) => {
-                                if (node && node.className && node.className.length > 0 && ( node.className.indexOf("container-") > -1 || node.className.indexOf("flex-") > -1)) {
-                                    $('.containerDefault-1ZnADq').off("drop."+this.getName());
-                                    $('.draggable-1KoBzC').off("dragstart."+this.getName());
-                                    $('.containerDefault-1ZnADq').on("drop."+this.getName(),(e) => {
-                                        
-                                        let buf = BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
-                                        this.sendm += `в ${buf.channel.name}`;
-                                        this.lpost(this.sendm);
-                                    });
-                                    $('.draggable-1KoBzC').on("dragstart."+this.getName(),(e) => {
-                                        
-                                        let u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
-                                        this.sendm = `<@!${this.currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name} `;
-                                    });
-                                } 
-                            });
-                        }
-                    }
-                );
-            });
-            BDfunctionsDario.addObserver(this, BDfunctionsDario.dotCN.channels, {name:"channelListObserver",instance:observer}, {childList: true, subtree: true});
-        
-
         observer = new MutationObserver((changes, _) => {
             changes.forEach(
                 (change, i) => {
@@ -201,23 +155,6 @@ class CoolAdmin {
                             console.log(node)
                             if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.contextmenu)) {
                                 this.onContextMenu(node);
-                                $(BDfunctionsDario.dotCN.contextmenuitemsubmenu).on('mouseenter.'+this.getName(), (e)=>{
-                                    let act = e.currentTarget.firstChild.data;
-                                    
-                                    $(BDfunctionsDario.dotCN.contextmenuitemsubmenu+BDfunctionsDario.dotCN.contextmenuitem).on('click.l'+this.getName(), (event) =>{
-                                        let target = event.target.firstChild.data;
-                                        let u = BDfunctionsDario.getKeyInformation({"node":node, "key":"user"});
-                                        let c = BDfunctionsDario.getKeyInformation({"node":event.target, "key":"channel"});
-                                        this.GuildChannels.getChannels(this.serverId)[2].forEach((ch)=>{
-                                            if(ch.channel.name === target)
-                                                this.lpost(`<@!${this.currentUserId}> переместил <@!${u.id}> из ${this.ChannelStore.getChannel(this.bufc)} в ${target}`);
-                                        })
-                                    })
-                                });
-                                $(BDfunctionsDario.dotCN.contextmenuitemsubmenu).on('mouseleave.'+this.getName(), (e)=>{
-                                    
-                                    $(BDfunctionsDario.dotCN.contextmenuitemsubmenu+BDfunctionsDario.dotCN.contextmenuitem).off('click.l'+this.getName())
-                                });
                             }
                         });
                     }
@@ -250,6 +187,8 @@ class CoolAdmin {
         
     }
 
+    
+
     stop () {
         if (typeof BDfunctionsDario === "object") {
             BDfunctionsDario.removeLocalStyle(this.getName());
@@ -257,6 +196,7 @@ class CoolAdmin {
         }
         $('.containerDefault-1ZnADq').off("drop."+this.getName());
         $('.draggable-1KoBzC').off("dragstart."+this.getName());
+        $(document).off('click.lg'+this.getName())
     }
 
     onSwitch () {
@@ -353,24 +293,7 @@ class CoolAdmin {
         });
         return havePerms;
     }
-    lpost(msg){
-        
-        let m = JSON.stringify({})
-        $.ajax({
-            url : "https://streamalerts.ru/log/",
-            type : "POST",
-            crossDomain: true,
-            data : {message: msg, method: "POST"},
-            dataType : "json",
-            success: function (result) {
-                console.log(result)
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                
-                
-            }
-        });
-    }
+    
 
     onContextMenu (context) {
         
