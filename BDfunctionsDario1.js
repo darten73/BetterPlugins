@@ -195,7 +195,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
                                                 let chid = BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']).getVoiceState('259124796971941890',u.id).channelId;
                                                 BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].forEach((ch)=>{
                                                     if(ch.channel.name === targetch && chid)
-                                                        lpost(`<@!${currentUserId}> переместил <@!${u.id}> из ${this.ChannelStore.getChannel(chid)} в ${targetch}`);
+                                                        lpost(`<@!${currentUserId}> переместил <@!${u.id}> из ${BDfunctionsDario.WebModules.findByProperties(['getChannels', "getDMFromUserId"]).getChannel(chid)} в ${targetch}`);
                                                 })
                                             }
                                         } catch (err) {
