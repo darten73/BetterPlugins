@@ -98,7 +98,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
             }
         }
     }
-    let setm, currentUserId = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']).getCurrentUser().id;;
+    let sendm, currentUserId = BDfunctionsDario.WebModules.findByProperties(['getCurrentUser']).getCurrentUser().id;;
     function lpost(msg){
         
         let m = JSON.stringify({})
