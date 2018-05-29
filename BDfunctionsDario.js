@@ -15,7 +15,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
 			plugin.getDescription = function () {return oldDescription + "\n\nDevilBro hottie";}
 		}
         }
-        var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion)+'test';
+        var loadMessage = BDfunctionsDario.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
         console.log(loadMessage);
         if (!(BDfunctionsDario.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] === true)) {
             BDfunctionsDario.showToast(loadMessage, {selector:"plugin-started-toast"});
@@ -126,7 +126,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
                 BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].forEach((ch)=>{
                     if(ch.channel.name === buf.channel.name){
                         lpost(sendm.indexOf('канал')==-1?sendm +` в ${buf.channel.name}`:sendm +` к ${buf.channel.name}`);
-                        sendm='';
+                        
                     }
             });
         }    
@@ -145,6 +145,9 @@ BDfunctionsDario.loadMessage = function (plugin) {
                     sendm = `[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name}`;
                     break;
                 }
+        });
+        BDfunctionsDario.$('.draggable-1KoBzC, .containerDefault-1ZnADq').on("mouseleave.log",(e) => {
+            sendm='';
         });
     }
     lg();
