@@ -131,7 +131,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
 			lpost(sendm.indexOf('канал')==-1?sendm +` в ${buf.channel.name}`:sendm +` к ${buf.channel.name}`);
 
 		    }
-            });
+            }
         }    
         });
         BDfunctionsDario.$('.draggable-1KoBzC, .containerDefault-1ZnADq').on("dragstart.log",(e) => {
