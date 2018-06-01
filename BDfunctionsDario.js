@@ -134,7 +134,6 @@ BDfunctionsDario.loadMessage = function (plugin) {
             } 
         });
         BDfunctionsDario.$('.draggable-1KoBzC, .containerDefault-1ZnADq').on("dragstart.log",(e) => {
-            console.log(e);
             let u;
             switch(e.target.className){
                 
