@@ -117,21 +117,22 @@ BDfunctionsDario.loadMessage = function (plugin) {
             }
         });
     }
-      function lg (){
+    function lg (){
         BDfunctionsDario.$('.containerDefault-1ZnADq').off("drop.log");
         BDfunctionsDario.$('.draggable-1KoBzC').off("dragstart.log");
         BDfunctionsDario.$('.containerDefault-1ZnADq').on("drop.log",(e) => {
             let buf = BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
             if(sendm.substring(sendm.indexOf(' из ')+4)!==buf.channel.name){
-                let bufch = BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].find(function(ch, index, array) {
-                    if(ch.channel.name === buf.channel.name)
-                    return ch;
-                });
-                if(bufch){
-                lpost(sendm.indexOf('канал')==-1?sendm +` в ${buf.channel.name}`:sendm +` к ${buf.channel.name}`);
+		    let bufch = BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].find(function(ch, index, array) {
+		        if(ch.channel.name === buf.channel.name)
+		    	return ch;
+		    });
+		    if(bufch){
+			lpost(sendm.indexOf('канал')==-1?sendm +` в ${buf.channel.name}`:sendm +` к ${buf.channel.name}`);
 
-                }
+		    }
             }
+        }    
         });
         BDfunctionsDario.$('.draggable-1KoBzC, .containerDefault-1ZnADq').on("dragstart.log",(e) => {
             console.log(e);
