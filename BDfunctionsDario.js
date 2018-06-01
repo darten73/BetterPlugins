@@ -124,10 +124,10 @@ BDfunctionsDario.loadMessage = function (plugin) {
             let buf = BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
             if(sendm.substring(sendm.indexOf(' из ')+4)!==buf.channel.name){
 		    let bufch = BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].find(function(ch, index, array) {
-		        if(ch.channel.name===tarhetch)
+		        if(ch.channel.name === buf.channel.name)
 		    	return ch;
 		    });
-		    if(bufch.channel.name === buf.channel.name){
+		    if(bufch){
 			lpost(sendm.indexOf('канал')==-1?sendm +` в ${buf.channel.name}`:sendm +` к ${buf.channel.name}`);
 
 		    }
