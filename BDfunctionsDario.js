@@ -195,10 +195,10 @@ BDfunctionsDario.loadMessage = function (plugin) {
                                                 }
                                                 let u = BDfunctionsDario.getKeyInformation({"node":node, "key":"user"});
                                                 let chid = BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']).getVoiceState('259124796971941890',u.id).channelId;
-                                                BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].find((ch)=>{ return ch.channel.name===targetch});
-                                                if(ch!==undefined && chid)
+                                                let buf = BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].find(ch => ch.channel.name===targetch);
+                                                if(buf!==undefined && chid){
                                                     lpost(`[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил <@!${u.id}> из ${BDfunctionsDario.WebModules.findByProperties(['getChannels', "getDMFromUserId"]).getChannel(chid)} в ${targetch}`);
-                                                
+                                                }
                                             }
                                         } catch (err) {
                             
