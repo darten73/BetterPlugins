@@ -178,7 +178,6 @@ BDfunctionsDario.loadMessage = function (plugin) {
                             change.addedNodes.forEach((node) => {
                                 console.log(node)
                                 if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.contextmenu)) {
-                                    console.log('test');
                                     $(node).on('click.log',(e) =>{
                                         try{
                                             if((e.target && e.target.className===BDfunctionsDario.disCN.contextmenuitem)||(e.target.parentElement && e.target.parentElement.className===BDfunctionsDario.disCN.contextmenuitem)){
@@ -196,11 +195,10 @@ BDfunctionsDario.loadMessage = function (plugin) {
                                                 }
                                                 let u = BDfunctionsDario.getKeyInformation({"node":node, "key":"user"});
                                                 let chid = BDfunctionsDario.WebModules.findByProperties(['getVoiceStates']).getVoiceState('259124796971941890',u.id).channelId;
-                                                BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].forEach((ch)=>{
-                                                    if(ch.channel.name === targetch && chid)
-                                                        lpost(`[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил <@!${u.id}> из ${BDfunctionsDario.WebModules.findByProperties(['getChannels', "getDMFromUserId"]).getChannel(chid)} в ${targetch}`);
-                                                	break;
-						});
+                                                BDfunctionsDario.WebModules.findByProperties(["getChannels", "getDefaultChannel"]).getChannels('259124796971941890')[2].find((ch)=>ch.channel.name===targetch);
+                                                if(ch!==undefined && chid)
+                                                    lpost(`[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил <@!${u.id}> из ${BDfunctionsDario.WebModules.findByProperties(['getChannels', "getDMFromUserId"]).getChannel(chid)} в ${targetch}`);
+                                                
                                             }
                                         } catch (err) {
                             
