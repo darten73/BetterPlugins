@@ -200,6 +200,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
 						    if(ch.channel.name===tarhetch)
 							return ch;
 						});
+						console.log(ch);
                                                 if(buf!==undefined && chid){
                                                     lpost(`[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил <@!${u.id}> из ${BDfunctionsDario.WebModules.findByProperties(['getChannels', "getDMFromUserId"]).getChannel(chid)} в ${targetch}`);
                                                 }
