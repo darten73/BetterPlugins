@@ -177,9 +177,9 @@ BDfunctionsDario.loadMessage = function (plugin) {
     
                         if (change.addedNodes) {
                             change.addedNodes.forEach((node) => {
-                                console.log(node)
                                 if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDfunctionsDario.disCN.contextmenu)) {
-                                    $(node).on('click.log',(e) =>{
+                                    console.log(node);    
+				    $(node).on('click.log',(e) =>{
                                         try{
                                             if((e.target && e.target.className===BDfunctionsDario.disCN.contextmenuitem)||(e.target.parentElement && e.target.parentElement.className===BDfunctionsDario.disCN.contextmenuitem)){
                                                 let targetch;
