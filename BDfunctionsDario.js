@@ -206,7 +206,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
                                                 }
                                             }
                                         } catch (err) {
-                            
+                            			console.log(err);
                                         }
                                     });
                                 }
