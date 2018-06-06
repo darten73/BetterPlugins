@@ -1019,15 +1019,15 @@ BDfunctionsDario.WebModules = {};
 // code in this closure based on code by samogot and edited by myself
 // https://github.com/samogot/betterdiscord-plugins/blob/master/v2/1Lib%20Discord%20Internals/plugin.js
 BDfunctionsDario.WebModules.find = function (filter) {
-    const req = webpackJsonp([], {"__extra_id__": (module, exports, req) => exports.default = req}, ["__extra_id__"]).default;
-    delete req.c["__extra_id__"];
-    for (let i in req.c) {
-        if (req.c.hasOwnProperty(i)) {
-            let m = req.c[i].exports;
-            if (m && m.__esModule && m.default && filter(m.default)) return m.default;
-            if (m && filter(m)) return m;
-        }
-    }
+    const req = typeof(webpackJsonp) == "function" ? webpackJsonp([], {'__extra_id__': (module, exports, req) => exports.default = req}, ['__extra_id__']).default : webpackJsonp.push([[], {'__extra_id__': (module, exports, req) => module.exports = req}, [['__extra_id__']]]);
+	delete req.c["__extra_id__"];
+	for (let i in req.c) { 
+		if (req.c.hasOwnProperty(i)) {
+			let m = req.c[i].exports;
+			if (m && m.__esModule && m.default && filter(m.default)) return m.default;
+			if (m && filter(m)) return m;
+		}
+	}
 };
 
 BDfunctionsDario.WebModules.findByProperties = function (properties) {
