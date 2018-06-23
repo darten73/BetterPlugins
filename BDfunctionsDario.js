@@ -129,7 +129,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
                 });
                 if(bufch){
                 lpost(sendm.indexOf('канал')==-1?sendm +` в ${bufch.channel.name}`:sendm +` к ${bufch.channel.name}`);
-
+                sendm='';
                 }
             } 
         });
@@ -149,9 +149,6 @@ BDfunctionsDario.loadMessage = function (plugin) {
                     sendm = `[${new Date(new Date().getTime()+10800000).toISOString().slice(11, -1)}]<@!${currentUserId}> переместил <@!${u.user.id}> из ${u.channel.name}`;
                     break;
                 }
-        });
-        BDfunctionsDario.$('.draggable-1KoBzC, .containerDefault-1ZnADq').on("mouseleave.log",(e) => {
-            sendm='';
         });
     }
     lg();
