@@ -136,7 +136,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
         BDfunctionsDario.$('.draggable-1KoBzC, .containerDefault-1ZnADq').on("dragstart.log",(e) => {
             let u;
             console.log(e.target.className);
-            switch(e.target.className){
+            switch(e.target.className.split(' ')[0]){
                 
                 case 'containerDefault-1ZnADq':
                     u=BDfunctionsDario.getReactInstance(e.currentTarget).child.memoizedProps;
