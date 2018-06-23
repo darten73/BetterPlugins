@@ -135,7 +135,7 @@ BDfunctionsDario.loadMessage = function (plugin) {
         });
         BDfunctionsDario.$('.draggable-1KoBzC, .containerDefault-1ZnADq').on("dragstart.log",(e) => {
             let u;
-            console.log(BDfunctionsDario.getReactInstance(e.currentTarget));
+            console.log(e.target.className);
             switch(e.target.className){
                 
                 case 'containerDefault-1ZnADq':
