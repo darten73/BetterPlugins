@@ -6,5 +6,6 @@ $.get('https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js', functi
 	libraryScript.setAttribute("id", "DarioLib")
 	libraryScript.innerHTML = '<script>'+lib+'</script>';
 	document.body.appendChild(libraryScript);
+	console.log("appended")
 });
 
