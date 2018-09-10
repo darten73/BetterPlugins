@@ -1,0 +1,6 @@
+{
+  'test': {desciption:'тест'},
+  'stats': {desciption:'Статистика аккаунта'},
+  'plsban': {desciption:'Просьба забанить'},
+  'yapidor': {desciption:'Разминировать мину'}
+}
