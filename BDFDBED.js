@@ -7,7 +7,7 @@ BDFDBED.BratishkinCmds = {
   "yapidor": {desciption:"Разминировать мину"}
 };
 
-BDFDBED.prefix = "!";
+BDFDBED.BratishkinPrefix = "!";
 
 BDFDBED.isLibraryOutdated = function () {
 	return performance.now() - BDFDBED.creationTime > 600000;
