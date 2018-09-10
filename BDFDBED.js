@@ -1,5 +1,14 @@
 var BDFDBED = {$: BDFDBED && BDFDBED.$ ? BDFDBED.$ : global.$, BDv2Api: BDFDBED && BDFDBED.BDv2Api ? BDFDBED.BDv2Api : undefined, creationTime:performance.now(), myData:{}, pressedKeys:[], mousePosition:{x:0,y:0}};
 
+BDFDBED.BratishkinCmds = {
+  "test": {desciption:"тест"},
+  "stats": {desciption:"Статистика аккаунта"},
+  "plsban": {desciption:"Просьба забанить"},
+  "yapidor": {desciption:"Разминировать мину"}
+};
+
+BDFDBED.prefix = "!";
+
 BDFDBED.isLibraryOutdated = function () {
 	return performance.now() - BDFDBED.creationTime > 600000;
 };
