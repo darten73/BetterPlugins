@@ -1,10 +1,29 @@
 var BDFDBED = {$: BDFDBED && BDFDBED.$ ? BDFDBED.$ : global.$, BDv2Api: BDFDBED && BDFDBED.BDv2Api ? BDFDBED.BDv2Api : undefined, creationTime:performance.now(), myData:{}, pressedKeys:[], mousePosition:{x:0,y:0}};
 
 BDFDBED.BratishkinCmds = {
-  "test": {desciption:"тест"},
-  "stats": {desciption:"Статистика аккаунта"},
-  "plsban": {desciption:"Просьба забанить"},
-  "yapidor": {desciption:"Разминировать мину"}
+  	"free": 		{channel_id:"482898257006166016", desciption: "Получить бесплатные коины"},
+	"game": 		{channel_id:"378842479195193345", args:["Роль", "Сообщение"], desciption: "Создание лобби"},
+	"duel": 		{channel_id:"376523276731809794", args:["Количество коинов"], desciption: "Позволяет сразиться с кем-то на коины"},
+	"accept": 		{channel_id:"376523276731809794", desciption: "Позволяет сразиться с кем-то на коины"},
+
+
+	"stats": 		{desciption: "Выводит информацию по Вашему аккаунту"},
+	"report": 		{args:["текст вопроса или жалобы"], desciption: "Позволяет отправить жалобу или вопрос редакторам и модератором"},
+	"gc": 			{args:["@Пользователь", "Количество коинов"], desciption: "Передача коинов другому человеку. Комиссия 5 процентов"},
+	"buyroom": 		{args:["количество дней"], desciption: "Позволяет купить комнату"},
+	"room": 		{args:["up, stat"], desciption: "Управление комнатой"},
+	"top": 			{args:["voice, coins"], desciption: "Вывод в чат различных топов"},
+	"coinsinfo": 		{desciption: "Позволяет подробнее узнать про коины"},
+	//"newsss": 		{desciption: "НОВЫЙ ХОД"},
+	"plsban": 		{args:["@Пользователь"], desciption: "Попросить забанить"},
+	"yapidor": 		{desciption: "Позволяет принять участие в разинировании бомбы"},
+	"cms": 			{desciption: "Показывает все команды сервера"},
+	//"buykey": 		{desciption: "Купить рандомный ключ за коины"},
+	//"roll": 		{desciption: "Зароллить случайное число"},
+	"dog": 			{desciption: "Рандомная собачка"},
+	//"vip": 		{args:["@Пользователь", "Вип уровень", "Количество дней"], desciption: "Сделать випом"},
+	"ar": 			{args:["csgo, pubg, dota, gtav, minecraft"], desciption: "Получить игровую роль"},
+	"rr": 			{args:["csgo, pubg, dota, gtav, minecraft"], desciption: "Удалить игровую роль"}
 };
 
 BDFDBED.BratishkinPrefix = "!";
