@@ -11,7 +11,7 @@ BDFDBED.BratishkinCmds = {
 	"report": 		{args:["текст вопроса или жалобы"], desciption: "Позволяет отправить жалобу или вопрос редакторам и модератором"},
 	"gc": 			{args:["@Пользователь", "Количество коинов"], desciption: "Передача коинов другому человеку. Комиссия 5 процентов"},
 	"buyroom": 		{args:["количество дней"], desciption: "Позволяет купить комнату"},
-	"room": 		{args:["up, stat"], desciption: "Управление комнатой"},
+	"room": 		{args:["up, stat, extend"], desciption: "Управление комнатой"},
 	"top": 			{args:["voice, coins"], desciption: "Вывод в чат различных топов"},
 	"coinsinfo": 		{desciption: "Позволяет подробнее узнать про коины"},
 	//"newsss": 		{desciption: "НОВЫЙ ХОД"},
