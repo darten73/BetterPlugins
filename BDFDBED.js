@@ -8,7 +8,7 @@ BDFDBED.BratishkinCmds = {
 
 
 	"stats": 		{desciption: "Выводит информацию по Вашему аккаунту"},
-	"report": 		{args:["текст вопроса или жалобы"], desciption: "Позволяет отправить жалобу или вопрос редакторам и модератором"},
+	"report": 		{args:["@Пользователь", "текст вопроса или жалобы"], desciption: "Позволяет отправить жалобу или вопрос редакторам и модератором"},
 	"gc": 			{args:["@Пользователь", "Количество коинов"], desciption: "Передача коинов другому человеку. Комиссия 15 процентов"},
 	"buyroom": 		{args:["количество дней"], desciption: "Позволяет купить комнату"},
 	"room": 		{args:["up, stat, extend"], desciption: "Управление комнатой"},
@@ -22,8 +22,8 @@ BDFDBED.BratishkinCmds = {
 	//"roll": 		{desciption: "Зароллить случайное число"},
 	"dog": 			{desciption: "Рандомная собачка"},
 	//"vip": 		{args:["@Пользователь", "Вип уровень", "Количество дней"], desciption: "Сделать випом"},
-	"ar": 			{args:["csgo, pubg, dota, gtav, minecraft"], desciption: "Получить игровую роль"},
-	"rr": 			{args:["csgo, pubg, dota, gtav, minecraft"], desciption: "Удалить игровую роль"}
+	"ar": 			{args:["csgo, pubg, dota, gtav, minecraft, fortnite"], desciption: "Получить игровую роль"},
+	"rr": 			{args:["csgo, pubg, dota, gtav, minecraft, fortnite"], desciption: "Удалить игровую роль"}
 };
 
 BDFDBED.BratishkinPrefix = "!";
