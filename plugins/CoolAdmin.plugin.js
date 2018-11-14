@@ -3,7 +3,7 @@
 class CoolAdmin {
     getName () {return "CoolAdmin";}
     getDescription () {return "дарио красавчик ";}
-    getVersion () {return "2.4.1";}
+    getVersion () {return "2.4.3";}
     getAuthor () {return "Dario";}
 
     initConstructor () {
@@ -83,7 +83,7 @@ class CoolAdmin {
             settings: {
                 debag:      {value:false,   description:"Debag"},
                 moveToAfk:  {value:true, description: "Перенос в АФК"},
-                moveAndComeIn: {value: "Перенести и зайти в", admin:true},
+                moveAndComeIn: {value: "Перенести и зайти в"},
                 find:       {value:true,    description:"Найти"},
                 findAndConn:        {value:true,    description:"Найти и уничтожить"},
                 mute:       {value:true,    description:"Мут"},
@@ -99,7 +99,7 @@ class CoolAdmin {
                     }},
                 contextMenu:    {name:"Пункты контекстного меню", settings: {
                         moveToAfk: {name: "Перенос в АФК"},
-                        moveAndComeIn: {name: "Перенести и зайти в", admin:true},
+                        moveAndComeIn: {name: "Перенести и зайти в"},
                         find:       {name: "Найти"},
                         findAndConn:        {name: "Найти и УНИЧТОЖИТЬ"},
                         mute:       {name: "Замутить"},
