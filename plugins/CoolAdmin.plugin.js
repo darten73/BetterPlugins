@@ -2,8 +2,8 @@
 
 class CoolAdmin {
     getName () {return "CoolAdmin";}
-    getDescription () {return "дарио красавчик а ты пидор";}
-    getVersion () {return "2.3.7";}
+    getDescription () {return "дарио красавчик ";}
+    getVersion () {return "2.3.8";}
     getAuthor () {return "Dario";}
 
     initConstructor () {
@@ -16,14 +16,11 @@ class CoolAdmin {
         this.userContextMenuMarkup = {
             moveGroup:{
                 moveToAfk: {name: "Перенести в АФК", warning:false},
-                moveAndComeIn: {name: "Перенести и зайти в", warning:false, admin:true,
+                moveAndComeIn: {name: "Перенести и зайти в", warning:false, 
                     submunu:{
-                        ceilingRoom: {name: "Потолок", id:"377077054350295042"},
-                        MskRoom: {name: "МСК", id:"419560015440117771"},
-                        CloudVapersRoom: {name: "Cloud Vapers", id:"418849720643878914"},
-                        AdminRoom: {name: "Администрирование", id:"374969273480773633"},
-                        ModerRoom: {name: "Модерирование", id:"299219272658321418"}
-                    }},
+                        meetingRoom: {name: "Переговорная", id:"510961674312876058"}
+                    }
+                }
             },
             findGroup:{
                 find: {name: "Найти", warning:false},
@@ -41,73 +38,73 @@ class CoolAdmin {
                 1: 'Test1',
                 2: 'test2'
             }
-        };
+        }   
         
         this.userTribunalSettingsMarkup =
             `<span class="cooladmin-modal DevilBro-modal">
-			<div class="${BDfunctionsDario.disCN.backdrop}"></div>
-			<div class="${BDfunctionsDario.disCN.modal}">
-				<div class="${BDfunctionsDario.disCN.modalinner}">
-					<div class=${BDfunctionsDario.disCNS.modalsub + BDfunctionsDario.disCN.modalsizemedium}">
-						<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.modalheader}" style="flex: 0 0 auto;">
-							<div class="flexChild-1KGW5q" style="flex: 1 1 auto;">
-								<h4 class="${BDfunctionsDario.disCNS.h4 + BDfunctionsDario.disCNS.headertitle + BDfunctionsDario.disCNS.size16 + BDfunctionsDario.disCNS.height20 + BDfunctionsDario.disCNS.weightsemibold + BDfunctionsDario.disCNS.defaultcolor + BDfunctionsDario.disCNS.h4defaultmargin + BDfunctionsDario.disCN.marginreset}">REPLACE_modal_title</h4>
-								<div class="${BDfunctionsDario.disCNS.modalguildname + BDfunctionsDario.disCNS.small + BDfunctionsDario.disCNS.size12 + BDfunctionsDario.disCNS.height16 + BDfunctionsDario.disCN.primary}"></div>
-							</div>
-							<svg class="${BDfunctionsDario.disCNS.modalclose + BDfunctionsDario.disCN.flexchild}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
-								<g fill="none" fill-rule="evenodd">
-									<path d="M0 0h12v12H0"></path>
-									<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
-								</g>
-							</svg>
-						</div>
-						<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.vertical + BDfunctionsDario.disCNS.directioncolumn + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.alignstretch + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom20}" style="flex: 0 0 auto;">
-							<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom8}" style="flex: 1 1 auto;">
-								<h3 class="${BDfunctionsDario.disCNS.titledefault + BDfunctionsDario.disCNS.title + BDfunctionsDario.disCNS.marginreset + BDfunctionsDario.disCNS.weightmedium + BDfunctionsDario.disCNS.size16 + BDfunctionsDario.disCNS.height24 + BDfunctionsDario.disCN.flexchild}" style="flex: 0 0 auto;">REPLACE_modal_reason_title</h3>
-							</div>
-							<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCNS.marginbottom8 + BDfunctionsDario.disCN.modalsubinner}" style="flex: 1 1 auto;">
-								<div class="${BDfunctionsDario.disCNS.inputwrapper + BDfunctionsDario.disCNS.vertical + BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.directioncolumn + BDfunctionsDario.disCN.flexchild}" style="flex: 1 1 auto;"><input type="text" class="${BDfunctionsDario.disCNS.inputdefault + BDfunctionsDario.disCNS.input + BDfunctionsDario.disCN.size16}" id="input-reason"></div>
-							</div>
+            <div class="${BDfunctionsDario.disCN.backdrop}"></div>
+            <div class="${BDfunctionsDario.disCN.modal}">
+                <div class="${BDfunctionsDario.disCN.modalinner}">
+                    <div class=${BDfunctionsDario.disCNS.modalsub + BDfunctionsDario.disCN.modalsizemedium}">
+                        <div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.modalheader}" style="flex: 0 0 auto;">
+                            <div class="flexChild-1KGW5q" style="flex: 1 1 auto;">
+                                <h4 class="${BDfunctionsDario.disCNS.h4 + BDfunctionsDario.disCNS.headertitle + BDfunctionsDario.disCNS.size16 + BDfunctionsDario.disCNS.height20 + BDfunctionsDario.disCNS.weightsemibold + BDfunctionsDario.disCNS.defaultcolor + BDfunctionsDario.disCNS.h4defaultmargin + BDfunctionsDario.disCN.marginreset}">REPLACE_modal_title</h4>
+                                <div class="${BDfunctionsDario.disCNS.modalguildname + BDfunctionsDario.disCNS.small + BDfunctionsDario.disCNS.size12 + BDfunctionsDario.disCNS.height16 + BDfunctionsDario.disCN.primary}"></div>
+                            </div>
+                            <svg class="${BDfunctionsDario.disCNS.modalclose + BDfunctionsDario.disCN.flexchild}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
+                                <g fill="none" fill-rule="evenodd">
+                                    <path d="M0 0h12v12H0"></path>
+                                    <path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.vertical + BDfunctionsDario.disCNS.directioncolumn + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.alignstretch + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom20}" style="flex: 0 0 auto;">
+                            <div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom8}" style="flex: 1 1 auto;">
+                                <h3 class="${BDfunctionsDario.disCNS.titledefault + BDfunctionsDario.disCNS.title + BDfunctionsDario.disCNS.marginreset + BDfunctionsDario.disCNS.weightmedium + BDfunctionsDario.disCNS.size16 + BDfunctionsDario.disCNS.height24 + BDfunctionsDario.disCN.flexchild}" style="flex: 0 0 auto;">REPLACE_modal_reason_title</h3>
+                            </div>
+                            <div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCNS.marginbottom8 + BDfunctionsDario.disCN.modalsubinner}" style="flex: 1 1 auto;">
+                                <div class="${BDfunctionsDario.disCNS.inputwrapper + BDfunctionsDario.disCNS.vertical + BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.directioncolumn + BDfunctionsDario.disCN.flexchild}" style="flex: 1 1 auto;"><input type="text" class="${BDfunctionsDario.disCNS.inputdefault + BDfunctionsDario.disCNS.input + BDfunctionsDario.disCN.size16}" id="input-reason"></div>
+                            </div>
 
-							<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCNS.marginbottom8 + BDfunctionsDario.disCN.modalsubinner}" style="flex: 1 1 auto;">
-								<h3 id="warning" class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom8}" style="flex: 0 0 auto; color: rgb(240, 71, 71)">REPLACE_modal_warning</h3>
-							</div>
-						</div>
-						<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontalreverse + BDfunctionsDario.disCNS.horizontalreverse2 + BDfunctionsDario.disCNS.directionrowreverse + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.alignstretch + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.modalfooter}">
-								<button type="button" class="btn-save ${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorbrand + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
-									<div>REPLACE_modal_button_name</div>
-								</button>
-							</div>
-					</div>
-				</div>
-			</span>`;
+                            <div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCNS.marginbottom8 + BDfunctionsDario.disCN.modalsubinner}" style="flex: 1 1 auto;">
+                                <h3 id="warning" class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom8}" style="flex: 0 0 auto; color: rgb(240, 71, 71)">REPLACE_modal_warning</h3>
+                            </div>
+                        </div>
+                        <div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontalreverse + BDfunctionsDario.disCNS.horizontalreverse2 + BDfunctionsDario.disCNS.directionrowreverse + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.alignstretch + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.modalfooter}">
+                                <button type="button" class="btn-save ${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorbrand + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
+                                    <div>REPLACE_modal_button_name</div>
+                                </button>
+                            </div>
+                    </div>
+                </div>
+            </span>`;
         this.defaults = {
             settings: {
-                debag:		{value:false, 	description:"Debag"},
-                moveToAfk: 	{value:true, description: "Перенос в АФК"},
+                debag:      {value:false,   description:"Debag"},
+                moveToAfk:  {value:true, description: "Перенос в АФК"},
                 moveAndComeIn: {value: "Перенести и зайти в", admin:true},
-                find:		{value:true, 	description:"Найти"},
-                findAndConn:		{value:true, 	description:"Найти и уничтожить"},
-                mute:		{value:true, 	description:"Мут"},
-                warn:		{value:true, 	description:"Варн"},
-                unwarn:		{value:true, 	description:"Снять варн", admin:true},
-                ban:		{value:true, 	description:"Бан"}
+                find:       {value:true,    description:"Найти"},
+                findAndConn:        {value:true,    description:"Найти и уничтожить"},
+                mute:       {value:true,    description:"Мут"},
+                warn:       {value:true,    description:"Варн"},
+                unwarn:     {value:true,    description:"Снять варн", admin:true},
+                ban:        {value:true,    description:"Бан"}
             }
         };
         this.markup = {
             category:{
-                dev: 			{name:"Разработка",settings: {
-                        debag:		{}
+                dev:            {name:"Разработка",settings: {
+                        debag:      {}
                     }},
-                contextMenu: 	{name:"Пункты контекстного меню", settings: {
+                contextMenu:    {name:"Пункты контекстного меню", settings: {
                         moveToAfk: {name: "Перенос в АФК"},
                         moveAndComeIn: {name: "Перенести и зайти в", admin:true},
-                        find:		{name: "Найти"},
-                        findAndConn:		{name: "Найти и УНИЧТОЖИТЬ"},
-                        mute:		{name: "Замутить"},
-                        warn:		{name: "Заварнить"},
-                        unwarn:		{name:"Снять варн", admin:true},
-                        ban:		{name: "Забанить"}
+                        find:       {name: "Найти"},
+                        findAndConn:        {name: "Найти и УНИЧТОЖИТЬ"},
+                        mute:       {name: "Замутить"},
+                        warn:       {name: "Заварнить"},
+                        unwarn:     {name:"Снять варн", admin:true},
+                        ban:        {name: "Забанить"}
                     }}
             }
         };
@@ -209,17 +206,17 @@ class CoolAdmin {
         let header = node.querySelector(BDfunctionsDario.dotCN.userpopoutusername);
         if(!header) return;
         let findBtns = `<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal + BDfunctionsDario.disCN.horizontal2}">
-								<div align="center" style="padding: 5px">	
-								<button  id="find"  type="button" class="${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorbrand + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
-									<div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.find.name}</div>
-								</button>
-								</div>
-								<div align="center" style="padding: 5px">
-								<button  id="findAndConn" type="button" class="${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorred + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
-									<div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.findAndConn.name}</div>
-								</button>
-								</div>
-							</div>`;
+                                <div align="center" style="padding: 5px">   
+                                <button  id="find"  type="button" class="${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorbrand + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
+                                    <div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.find.name}</div>
+                                </button>
+                                </div>
+                                <div align="center" style="padding: 5px">
+                                <button  id="findAndConn" type="button" class="${BDfunctionsDario.disCNS.button + BDfunctionsDario.disCNS.buttonlookfilled + BDfunctionsDario.disCNS.buttoncolorred + BDfunctionsDario.disCNS.buttonsizemedium + BDfunctionsDario.disCN.buttongrow}">
+                                    <div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.findAndConn.name}</div>
+                                </button>
+                                </div>
+                            </div>`;
         header.innerHTML=findBtns+header.innerHTML;
         $(node).on("click", "#find", () => {
             $(node).hide();
@@ -370,7 +367,7 @@ class CoolAdmin {
         if(submenuId==='moveAndComeIn') {
             let userContextSubMenuMarkup =
                 `<div class="${BDfunctionsDario.disCN.contextmenu} editusers-submenu">
-				<div class="${BDfunctionsDario.disCN.contextmenuitemgroup}">`;
+                <div class="${BDfunctionsDario.disCN.contextmenuitemgroup}">`;
             for (let item in this.userContextMenuMarkup[groupId][submenuId].submunu) {
                 userContextSubMenuMarkup += `
                 <div id="${this.userContextMenuMarkup[groupId][submenuId].submunu[item].id}" class="${BDfunctionsDario.disCN.contextmenuitem} moveAndComeIn-item">
@@ -382,8 +379,8 @@ class CoolAdmin {
             
 
             userContextSubMenuMarkup +=
-                `	</div>
-			</div>`
+                `   </div>
+            </div>`
             userContextSubMenu = $(userContextSubMenuMarkup);
             userContextSubMenu.on('click', '.moveAndComeIn-item', (e)=>{
                 $(context).hide();
@@ -482,9 +479,9 @@ class CoolAdmin {
             for (let key in this.markup.category[cat].settings) {
                 if(this.defaults.settings[key].admin && !this.isAdmin) continue;
                 settingshtml += `<div class="${BDfunctionsDario.disCNS.flex + BDfunctionsDario.disCNS.flex2 + BDfunctionsDario.disCNS.horizontal +BDfunctionsDario.disCNS.horizontal2 + BDfunctionsDario.disCNS.directionrow + BDfunctionsDario.disCNS.justifystart + BDfunctionsDario.disCNS.aligncenter + BDfunctionsDario.disCNS.nowrap + BDfunctionsDario.disCN.marginbottom8}" style="flex: 1 1 auto;">
-										<h3 class="${BDfunctionsDario.disCNS.titledefault + BDfunctionsDario.disCNS.headertitle + BDfunctionsDario.disCNS.marginreset + BDfunctionsDario.disCNS.weightmedium + BDfunctionsDario.disCNS.size16 + BDfunctionsDario.disCNS.height24 + BDfunctionsDario.disCN.flexchild}" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3>
-										<div class="${BDfunctionsDario.disCNS.flexchild + BDfunctionsDario.disCNS.switchenabled + BDfunctionsDario.disCNS.switch + BDfunctionsDario.disCNS.switchvalue + BDfunctionsDario.disCNS.switchsizedefault + BDfunctionsDario.disCNS.switchsize + BDfunctionsDario.disCN.switchthemedefault}" style="flex: 0 0 auto;">
-										<input type="checkbox" value="${key}" class="${BDfunctionsDario.disCNS.switchinnerenabled + BDfunctionsDario.disCN.switchinner}"${settings[key] ? " checked" : ""}></div></div>`;
+                                        <h3 class="${BDfunctionsDario.disCNS.titledefault + BDfunctionsDario.disCNS.headertitle + BDfunctionsDario.disCNS.marginreset + BDfunctionsDario.disCNS.weightmedium + BDfunctionsDario.disCNS.size16 + BDfunctionsDario.disCNS.height24 + BDfunctionsDario.disCN.flexchild}" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3>
+                                        <div class="${BDfunctionsDario.disCNS.flexchild + BDfunctionsDario.disCNS.switchenabled + BDfunctionsDario.disCNS.switch + BDfunctionsDario.disCNS.switchvalue + BDfunctionsDario.disCNS.switchsizedefault + BDfunctionsDario.disCNS.switchsize + BDfunctionsDario.disCN.switchthemedefault}" style="flex: 0 0 auto;">
+                                        <input type="checkbox" value="${key}" class="${BDfunctionsDario.disCNS.switchinnerenabled + BDfunctionsDario.disCN.switchinner}"${settings[key] ? " checked" : ""}></div></div>`;
             }
             settingshtml+=`</div>`
         }
