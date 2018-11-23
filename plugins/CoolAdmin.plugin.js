@@ -1,10 +1,11 @@
-﻿//META{"name":"CoolAdmin"}*//
+//META{"name":"CoolAdmin"}*//
 
 class CoolAdmin {
     getName () {return "CoolAdmin";}
     getDescription () {return "дарио красавчик ";}
-    getVersion () {return "2.4.5";}
+    getVersion () {return "2.4.4";}
     getAuthor () {return "Dario";}
+    getRawUrl() {return "https://github.com/darten73/BetterPlugins/raw/master/plugins/CoolAdmin.plugin.js"}
 
     initConstructor () {
         this.serverId='259124796971941890';
@@ -12,6 +13,37 @@ class CoolAdmin {
         this.channelGeneralId='259124796971941890';
         this.isAdmin = false;
         this.adminRolesIds = ['375000541316775946', '299569797027463178'] //Неадекват, Администратор
+        this.Permission = {
+    			CREATE_INSTANT_INVITE: 1,
+                KICK_MEMBERS: 2,
+                BAN_MEMBERS: 4,
+                ADMINISTRATOR: 8,
+                MANAGE_CHANNELS: 16,
+                MANAGE_GUILD: 32,
+                CHANGE_NICKNAME: 1 << 26,
+                MANAGE_NICKNAMES: 1 << 27,
+                MANAGE_ROLES: 1 << 28,
+                MANAGE_WEBHOOKS: 1 << 29,
+                MANAGE_EMOJIS: 1 << 30,
+                VIEW_AUDIT_LOG: 128,
+                VIEW_CHANNEL: 1024,
+                SEND_MESSAGES: 2048,
+                SEND_TSS_MESSAGES: 4096,
+                MANAGE_MESSAGES: 8192,
+                EMBED_LINKS: 16384,
+                ATTACH_FILES: 32768,
+                READ_MESSAGE_HISTORY: 65536,
+                MENTION_EVERYONE: 1 << 17,
+                USE_EXTERNAL_EMOJIS: 1 << 18,
+                ADD_REACTIONS: 64,
+                CONNECT: 1 << 20,
+                SPEAK: 1 << 21,
+                MUTE_MEMBERS: 1 << 22,
+                DEAFEN_MEMBERS: 1 << 23,
+                MOVE_MEMBERS: 1 << 24,
+                USE_VAD: 1 << 25,
+                PRIORITY_SPEAKER: 256
+    	};
 
         this.userContextMenuMarkup = {
             moveGroup:{
@@ -142,14 +174,15 @@ class CoolAdmin {
         this.GuildStore = BDFDB.WebModules.findByProperties(["getGuilds"]);
         this.MessageActions = BDFDB.WebModules.findByProperties(['fetchMessages']);
         this.GuildChannels = BDFDB.WebModules.findByProperties(["getChannels", "getDefaultChannel"]);
+        this.checkPerms = BDFDB.WebModules.findByProperties(["can", "canUser"]);
+ 
         var observer = null;
-        observer = new MutationObserver((changes, _) => {
+        observer = new MutationObserver((changes, _) => {	
             changes.forEach(
                 (change, i) => {
 
                     if (change.addedNodes) {
                         change.addedNodes.forEach((node) => {
-                            console.log(node)
                             if (node && node.nodeType == 1 && node.classList.length > 0 && node.className.includes(BDFDB.disCN.contextmenu)) {
                                 this.onContextMenu(node);
                             }
@@ -191,9 +224,6 @@ class CoolAdmin {
             BDFDB.removeLocalStyle(this.getName());
             BDFDB.unloadMessage(this);
         }
-        $('.containerDefault-1ZnADq').off("drop."+this.getName());
-        $('.draggable-1KoBzC').off("dragstart."+this.getName());
-        $(document).off('click.lg'+this.getName())
     }
 
     onSwitch () {
@@ -254,41 +284,7 @@ class CoolAdmin {
         }
     }
     checkPermsToConnect(userId, channel){
-        if(this.isAdmin) return true;
-        let havePerms = null;
-        let memberPerm=undefined;
-        let tmpPerm;
-        let ids = [];
-        ids.push(this.currentUserId);
-        ids = ids.concat(this.MemberPerms.getMember(this.serverId, this.currentUserId).roles);
-        ids.push(this.serverId);
-        ids.forEach((id) => {
-            
-            if (memberPerm == undefined) {
-                if (tmpPerm = channel.permissionOverwrites[id]) {
-                    let allow = tmpPerm.allow;
-                    let deny = tmpPerm.deny;
-                    let tmp;
-                    if (allow >= 1048576) {
-                        tmp = allow.toString(2);
-                        if (tmp[tmp.length - 21] === '1') {
-                            havePerms = true;
-                            if (id === this.currentUserId) memberPerm = true;
-                        }
-                    }
-                    if (deny >= 1048576) {
-                        tmp = deny.toString(2);
-                        if (tmp[tmp.length - 21] === '1' && havePerms !== true) {
-                            BDFDB.showToast("Нет доступа на вход в канал");
-                            havePerms = false;
-                            if (id === this.currentUserId) memberPerm = false;
-                        }
-                    }
-
-                }
-            }
-        });
-        return havePerms;
+        return this.checkPerms.canUser(userId, this.Permission.CONNECT, {channelId: channel.id});
     }
     
 
@@ -323,7 +319,6 @@ class CoolAdmin {
                     const member = serverObj ? this.MemberPerms.getMember(serverObj.id, info.id) : null;
                     $(context).hide();
                     this.adminActions.setChannel(this.serverId, info.id, '289786584247828490');
-                    this.lpost(`<@!${this.currentUserId}> переместил <@!${info.id}> из ${this.ChannelStore.getChannel(this.bufc)} в АФК`);
                     BDFDB.showToast(`${member.nick?member.nick:info.username} перемещен в АФК`);
                 })
                 .on("click", "#find", () => {
@@ -352,11 +347,12 @@ class CoolAdmin {
                     $(context).hide();
                     this.showTribunalSettings(info, "ban");
                 })
-                .on("mouseenter", ".dario-submenu", (e) => {
+                .on("mouseenter", ".dario-submenu, .cooladmin-item", (e) => {
                     this.createContextSubMenu(info, e, context);
                 });
 
-            BDFDB.updateContextPosition(context);;
+
+            BDFDB.updateContextPosition(context);
         }
     }
 
@@ -366,7 +362,7 @@ class CoolAdmin {
         let userContextSubMenu
         if(submenuId==='moveAndComeIn') {
             let userContextSubMenuMarkup =
-                `<div class="${BDFDB.disCN.contextmenu} editusers-submenu">
+                `<div class="${BDFDB.disCN.contextmenu} cooladmin-submenu">
                 <div class="${BDFDB.disCN.contextmenuitemgroup}">`;
             for (let item in this.userContextMenuMarkup[groupId][submenuId].submunu) {
                 userContextSubMenuMarkup += `
@@ -386,7 +382,7 @@ class CoolAdmin {
                 $(context).hide();
                 let channel = this.ChannelStore.getChannel( e.currentTarget.id);
 
-                //if(!this.checkPermsToConnect() || channel==undefined) return;
+                if(channel==undefined || !this.checkPermsToConnect(this.currentUserId, channel)) return;
                 this.adminActions.setChannel(this.serverId, info.id, channel.id);
                 this.connectChannel(channel)
             })
