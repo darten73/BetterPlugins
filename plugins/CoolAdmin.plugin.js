@@ -3,7 +3,7 @@
 class CoolAdmin {
     getName () {return "CoolAdmin";}
     getDescription () {return "дарио красавчик ";}
-    getVersion () {return "2.4.8";}
+    getVersion () {return "2.4.9";}
     getAuthor () {return "Dario";}
     getRawUrl() {return "https://github.com/darten73/BetterPlugins/raw/master/plugins/CoolAdmin.plugin.js"}
 
@@ -233,7 +233,7 @@ class CoolAdmin {
         let react = BDFDB.getReactInstance(node).child.memoizedProps;
         
         let info=react.user;
-        let header = node.querySelector(BDFDB.dotCN.userpopoutheadernormal);
+        let header = node.querySelector(BDFDB.dotCN.userpopoutheadertext);
         if(!header) return;
         let channel = this.ChannelStore.getChannel(this.UsersVoiceStore.getVoiceState(this.serverId,info.id).channelId);
         console.log(channel);
