@@ -3,7 +3,7 @@
 class CoolAdmin {
     getName () {return "CoolAdmin";}
     getDescription () {return "дарио красавчик ";}
-    getVersion () {return "2.4.9";}
+    getVersion () {return "2.5.0";}
     getAuthor () {return "Dario";}
     getRawUrl() {return "https://github.com/darten73/BetterPlugins/raw/master/plugins/CoolAdmin.plugin.js"}
 
