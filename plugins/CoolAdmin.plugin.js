@@ -3,7 +3,7 @@
 class CoolAdmin {
     getName () {return "CoolAdmin";}
     getDescription () {return "дарио красавчик ";}
-    getVersion () {return "2.4.6";}
+    getVersion () {return "2.4.8";}
     getAuthor () {return "Dario";}
     getRawUrl() {return "https://github.com/darten73/BetterPlugins/raw/master/plugins/CoolAdmin.plugin.js"}
 
@@ -57,7 +57,7 @@ class CoolAdmin {
             },
             findGroup:{
                 find: {name: "Найти", warning:false},
-                findAndConn: {name: "Найти и Перейти", warning:true}
+                findAndConn: {name: "Увлечтожить", warning:true}
             },
             moderateGroup:{
                 mute: {name:"Мут", warning:false},
@@ -233,26 +233,23 @@ class CoolAdmin {
         let react = BDFDB.getReactInstance(node).child.memoizedProps;
         
         let info=react.user;
-        let header = node.querySelector(BDFDB.dotCN.userpopoutusername);
+        let header = node.querySelector(BDFDB.dotCN.userpopoutheadernormal);
         if(!header) return;
-        let findBtns = `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCN.horizontal2}">
+        let channel = this.ChannelStore.getChannel(this.UsersVoiceStore.getVoiceState(this.serverId,info.id).channelId);
+        console.log(channel);
+        if(!channel) return;
+        let findBtns = `
                                 <div align="center" style="padding: 5px">   
-                                <button  id="find"  type="button" class="${BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow}">
-                                    <div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.find.name}</div>
-                                </button>
+                                <div class="contents-4L4hQM"> ${channel}</div>
                                 </div>
                                 <div align="center" style="padding: 5px">
-                                <button  id="findAndConn" type="button" class="${BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorred + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow}">
-                                    <div class="contents-4L4hQM"> ${this.userContextMenuMarkup.findGroup.findAndConn.name}</div>
-                                </button>
+                                <a  id="findAndConn">
+                                    <div class="contents-4L4hQM"> (${this.userContextMenuMarkup.findGroup.findAndConn.name})</div>
+                                </a>
                                 </div>
-                            </div>`;
-        header.innerHTML=findBtns+header.innerHTML;
-        $(node).on("click", "#find", () => {
-            $(node).hide();
-            this.find(info);
-        })
-            .on("click", "#findAndConn", () => {
+                            `;
+        header.innerHTML+=findBtns;
+        $(node).on("click", "#findAndConn", () => {
                 $(node).hide();
                 this.find(info, true);
             })
@@ -263,7 +260,7 @@ class CoolAdmin {
         let userChannelId=(userChannel=this.UsersVoiceStore.getVoiceState(this.serverId,info.id))?userChannel.channelId:'';
         let visibleUserChannel;
         BDFDB.showToast((visibleUserChannel=this.ChannelStore.getChannel(userChannelId))?'Channel: '+visibleUserChannel:'не найден');
-        if(destroy) this.connectChannel(visibleUserChannel)
+        if(destroy) this.connectChannel(visibleUserChannel);
     }
 
     connectChannel(channel){
