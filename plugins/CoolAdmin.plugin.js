@@ -16,6 +16,10 @@ class CoolAdmin {
 	getDescription() {
 		return 'Le Cool Admin';
 	}
+	
+	getRawUrl() {
+		return "https://raw.githubusercontent.com/darten73/BetterPlugins/master/plugins/CoolAdmin.plugin.js"
+	}
 
 	constructor() {
 		this.changelog = {
