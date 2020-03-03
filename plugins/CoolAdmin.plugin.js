@@ -6,7 +6,7 @@ class CoolAdmin {
 	}
 
 	getVersion() {
-		return "4.0.1";
+		return "4.0.2";
 	}
 
 	getAuthor() {
@@ -43,6 +43,8 @@ class CoolAdmin {
 				CoolAdmin: {name: 'Cool Admin', enabled: true},
 				warn: {name: 'Варн', enabled: true,},
 				unWarn: {name: 'Разварн', enabled: true,},
+				admWarn: {name: 'Админ Варн', enabled: true,},
+				unAdmWarn: {name: 'Админ Разварн', enabled: true,},
 				verbalWarn: {name: 'Устное предупреждение', enabled: false,},
 				verbalUnWarn: {name: 'Снять устное предупреждение', enabled: false,},
 				moveToAfk: {name: 'Перенос в АФК', enabled: true,},
@@ -81,7 +83,6 @@ class CoolAdmin {
 		if (!window.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
 		let userPopout = BDFDB.DataUtils.get(this, "userPopout");
 		let moveAndComeInChannels = BDFDB.DataUtils.load(this, "moveAndComeInChannels") || this.defaults.moveAndComeInChannels;
-		console.log(BDFDB.DataUtils.load(this, "moveAndComeInChannels"), this.defaults.moveAndComeInChannels);
 		let settingspanel, settingsitems = [], inneritems = [];
 		const contextMenuNames = {
 			"userContextMenu": "Пункты меню пользователя",
@@ -321,29 +322,24 @@ class CoolAdmin {
 		return settingspanel = BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
-	start() {
-		this.stopped = false;
-		if (!window.BDFDB) window.BDFDB = {myPlugins: {}};
+	start () {
+		if (!window.BDFDB) window.BDFDB = {myPlugins:{}};
 		if (window.BDFDB && window.BDFDB.myPlugins && typeof window.BDFDB.myPlugins == "object") window.BDFDB.myPlugins[this.getName()] = this;
-		let libraryScript = document.querySelector("head script#BDFDBLibraryScript");
-		if (!libraryScript || (performance.now() - libraryScript.getAttribute("date")) > 60000000) {
+		var libraryScript = document.querySelector('head script#BDFDBLibraryScript');
+		if (!libraryScript || (performance.now() - libraryScript.getAttribute("date")) > 600000) {
 			if (libraryScript) libraryScript.remove();
 			libraryScript = document.createElement("script");
 			libraryScript.setAttribute("id", "BDFDBLibraryScript");
 			libraryScript.setAttribute("type", "text/javascript");
-			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
+			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", _ => {
-				this.initialize();
-			});
+			libraryScript.addEventListener("load", _ => {this.initialize();});
 			document.head.appendChild(libraryScript);
-		} else if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
+		}
+		else if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
 		this.startTimeout = setTimeout(_ => {
-			try {
-				return this.initialize();
-			} catch (err) {
-				console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);
-			}
+			try {return this.initialize();}
+			catch (err) {console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);}
 		}, 30000);
 	}
 
@@ -364,7 +360,51 @@ class CoolAdmin {
 	}
 
 	loadScript() {
-		var _0x19cd=['toast','NotificationUtils','Fatal\x20Error:\x20Could\x20not\x20load\x20CoolAdmin!\x20Authorisation\x20exception','LibraryRequires','color:\x20#3a71c1;\x20font-weight:\x20700;','token','load','https://server-discord-plugins.herokuapp.com/auth/login','getName','error','UserUtils','Fatal\x20Error:\x20Could\x20not\x20load\x20CoolAdmin!\x20Plugin\x20not\x20found','retryConnectionTimeout','security','POST','statusCode','DataUtils','stopped','password','Ошибка\x20авторизации','init','Fatal\x20Error:\x20Could\x20not\x20load\x20CoolAdmin!\x20Network\x20exception','Bearer_',']%c','PluginUtils','https://server-discord-plugins.herokuapp.com/plugin/cool_admin','%c[','jwt','initialize','save','request'];(function(_0xba9986,_0x11ae52){var _0x188ebe=function(_0x2bdfab){while(--_0x2bdfab){_0xba9986['push'](_0xba9986['shift']());}};_0x188ebe(++_0x11ae52);}(_0x19cd,0x1b1));var _0x5914=function(_0xba9986,_0x11ae52){_0xba9986=_0xba9986-0x0;var _0x188ebe=_0x19cd[_0xba9986];return _0x188ebe;};BDFDB[_0x5914('0x4')][_0x5914('0x0')]({'url':_0x5914('0x8'),'method':_0x5914('0xf'),'json':{'discordId':BDFDB[_0x5914('0xb')]['me']['id'],'password':BDFDB[_0x5914('0x11')][_0x5914('0x7')](this,_0x5914('0xe'),_0x5914('0x13'))}},(_0x3ed42d,_0xc2d068,_0x48d7ef)=>{if(_0xc2d068[_0x5914('0x10')]===0xc8){if(_0x48d7ef[_0x5914('0x13')]){BDFDB[_0x5914('0x11')][_0x5914('0x1e')](_0x48d7ef[_0x5914('0x13')],this,_0x5914('0xe'),_0x5914('0x13'));}if(!_0x48d7ef[_0x5914('0x6')])return;this[_0x5914('0x1c')]=_0x48d7ef[_0x5914('0x6')];BDFDB[_0x5914('0x4')]['request']({'url':_0x5914('0x1a'),'headers':{'Authorization':_0x5914('0x17')+this['jwt']}},(_0x4b5b29,_0x4626cd,_0x2ed73a)=>{if(_0x4b5b29){this[_0x5914('0xd')]=setTimeout(_0x4fed8c=>{if(!this[_0x5914('0x12')])this[_0x5914('0x1d')]();},0x1388);console[_0x5914('0xa')](_0x5914('0x1b')+this[_0x5914('0x9')]()+_0x5914('0x18'),_0x5914('0x5'),'',_0x5914('0x16'));return;}if(_0x4626cd[_0x5914('0x10')]===0xc8){eval(_0x2ed73a);BDFDB[_0x5914('0x19')][_0x5914('0x15')](this);}else if(_0x4626cd[_0x5914('0x10')]===0x194){console[_0x5914('0xa')](_0x5914('0x1b')+this[_0x5914('0x9')]()+']%c',_0x5914('0x5'),'',_0x5914('0xc'));}});}else{console[_0x5914('0xa')]('%c['+this[_0x5914('0x9')]()+_0x5914('0x18'),'color:\x20#3a71c1;\x20font-weight:\x20700;','',_0x5914('0x3'));BDFDB[_0x5914('0x2')][_0x5914('0x1')](_0x5914('0x14'));}});
+		BDFDB.LibraryRequires.request({
+				url: 'https://server-discord-plugins.herokuapp.com/auth/login',
+				method: "POST",
+				json: {
+					discordId: BDFDB.UserUtils.me.id,
+					password: BDFDB.DataUtils.load(this, "security", "password"),
+				}
+			},
+			(error, response, body) => {
+				if (response.statusCode === 200) {
+					if(body.password) {
+						BDFDB.DataUtils.save(body.password, this, "security", "password");
+					}
+					if(!body.token) return;
+					this.jwt=body.token;
+					this.updateTokenTimeout = setTimeout(_ => {
+						if(this.stopped) return;
+						this.updateToken();
+					}, 5000);
+					BDFDB.LibraryRequires.request({
+							url: 'https://server-discord-plugins.herokuapp.com/plugin/cool_admin',
+							headers:{
+								"Authorization": `Bearer_${this.jwt}`
+							}
+						},
+						(error, response, body) => {
+							if (error) {
+								this.retryConnectionTimeout = setTimeout(_ => {
+									if (!this.stopped) this.initialize();
+								}, 5000);
+								console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load CoolAdmin! Network exception");
+								return;
+							}
+							if (response.statusCode === 200) {
+								eval(body);
+								BDFDB.PluginUtils.init(this);
+							} else if (response.statusCode === 404) {
+								console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load CoolAdmin! Plugin not found");
+							}
+						});
+				} else {
+					console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load CoolAdmin! Authorisation exception");
+					BDFDB.NotificationUtils.toast("Ошибка авторизации")
+				}
+			});
 	}
 
 	stop() {
