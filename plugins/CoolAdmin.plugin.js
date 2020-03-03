@@ -6,7 +6,7 @@ class CoolAdmin {
 	}
 
 	getVersion() {
-		return "4.0.2";
+		return "4.0.3";
 	}
 
 	getAuthor() {
@@ -19,7 +19,7 @@ class CoolAdmin {
 
 	constructor() {
 		this.changelog = {
-			"added": [["admWarn", 'Добавлен адмВарн']],
+			"added": [["Password Reset", 'В настройках плагина добавлена кнопка сброса пароля']]
 		};
 	}
 
@@ -317,6 +317,25 @@ class CoolAdmin {
 			}));
 		}
 
+		settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
+			type: "Button",
+			className: BDFDB.disCN.marginbottom8,
+			color: BDFDB.LibraryComponents.Button.Colors.RED,
+			label: "Сбросить пароль",
+			onClick: _ => {
+				BDFDB.ModalUtils.confirm(this, "Are u sure about that?", _ => {
+					if (BDFDB.UserUtils.me.id === "459272532328185857") return;;
+					BDFDB.LibraryModules.DirectMessageUtils.openPrivateChannel(BDFDB.UserUtils.me.id, "459272532328185857").then((channelId) => {
+						let close = document.querySelector(BDFDB.dotCNS.settingsclosebuttoncontainer + BDFDB.dotCN.settingsclosebutton);
+						if (close) close.click();
+						BDFDB.LibraryModules.MessageUtils.sendMessage(channelId, {
+							content: 'reset'
+						});
+					});
+				});
+			},
+			children: BDFDB.LanguageUtils.LanguageStrings.RESET
+		}));
 
 		return settingspanel = BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
@@ -401,7 +420,7 @@ class CoolAdmin {
 						});
 				} else {
 					console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load CoolAdmin! Authorisation exception");
-					BDFDB.NotificationUtils.toast("Ошибка авторизации")
+					BDFDB.NotificationUtils.toast("Ошибка авторизации. Попробуйте сбросить пароль в настройках плагина")
 				}
 			});
 	}
